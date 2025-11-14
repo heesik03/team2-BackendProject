@@ -1,0 +1,64 @@
+### Eclipse ###
+.metadata/
+bin/
+build/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders/
+.externalToolBuilders/
+*.launch
+*.pydevproject
+.cproject
+.autotools
+.factorypath
+.buildpath
+.target
+.tern-project
+.texlipse
+.springBeans
+.apt_generated/
+.apt_generated_test/
+.cache-main
+.scala_dependencies
+.worksheet
+.sts4-cache/
+
+# 서버 환경
+Servers/
+
+# 로컬 설정 파일
+dbconfig.properties
+
+### Java ###
+*.class
+*.log
+*.ctxt
+.mtj.tmp/
+hs_err_pid*
+replay_pid*
+
+# 빌드 산출물
+/target/
+/build/
+
+# 압축 파일
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# JSP 자동 생성 서블릿 코드 (Tomcat이 생성)
+org/apache/jsp/
+
+# IDE 캐시 / OS 캐시
+.DS_Store
+Thumbs.db

@@ -1,0 +1,58 @@
+package com.visitJapan.controller;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
+import com.visitJapan.config.HashUtil;
+import com.visitJapan.dao.SignUpDAO;
+import com.visitJapan.dto.db.UsersDTO;
+
+@WebServlet("/signup.do")
+public class SignUpController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  {
+		try {
+			SignUpDAO signupDAO = new SignUpDAO();
+			RequestDispatcher dispatcher = request.getRequestDispatcher("pages/signup.jsp");
+			
+			String name = request.getParameter("name");
+		    String email = request.getParameter("email");
+		    String password = request.getParameter("password");
+		    String city = request.getParameter("city");
+		    
+		    String confirmPassword = request.getParameter("confirm_password");
+		    LocalDateTime seoulDate = ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDateTime(); // 서울 시간대
+		    
+		    if (!password.equals(confirmPassword)) {
+		    	request.setAttribute("error", "암호와 확인용 암호가 다릅니다.");
+		    	dispatcher.forward(request, response); 
+		    	return;
+		    }
+			String hashPassword = HashUtil.hashPassword(password);
+			
+			// 관리자 여부는 나중에 false로 바꾸기
+	        UsersDTO signUpData = new UsersDTO(null, name, email, hashPassword, city, true, seoulDate);
+	        boolean signupResult = signupDAO.createUser(signUpData);
+	        
+	        if (signupResult) {
+	        	System.out.println(email + " 회원가입 성공!");
+	        	response.sendRedirect("index.jsp");
+	        } else {
+		    	request.setAttribute("error", "서버 문제로 회원가입 실패");
+		    	dispatcher.forward(request, response); 
+	        }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}
