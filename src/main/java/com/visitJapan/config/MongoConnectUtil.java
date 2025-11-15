@@ -35,10 +35,9 @@ public class MongoConnectUtil {
           
             	// 지정한 CodecRegistry(pojoCodecRegistry)를 현재 데이터베이스에 적용
                 database = mongoClient.getDatabase(DB_NAME).withCodecRegistry(pojoCodecRegistry);
-                System.out.println("✅ MongoDB 연결 성공");
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println("❌ MongoDB 연결 실패");
+                System.out.println("MongoDB 연결 실패");
             }
         }
         return database;
@@ -48,7 +47,6 @@ public class MongoConnectUtil {
         if (mongoClient != null) {
             mongoClient.close();
             mongoClient = null;
-            System.out.println("MongoDB 연결 종료");
         }
     }
 }

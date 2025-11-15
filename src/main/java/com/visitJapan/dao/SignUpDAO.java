@@ -18,8 +18,9 @@ public class SignUpDAO {
 			}
 		} catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            MongoConnectUtil.close();
         }
-		MongoConnectUtil.close();
         return result;
 	}
 }

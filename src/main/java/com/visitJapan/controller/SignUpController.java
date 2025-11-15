@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 
 import com.visitJapan.config.HashUtil;
 import com.visitJapan.dao.SignUpDAO;
@@ -40,7 +41,8 @@ public class SignUpController extends HttpServlet {
 			String hashPassword = HashUtil.hashPassword(password);
 			
 			// 관리자 여부는 나중에 false로 바꾸기
-	        UsersDTO signUpData = new UsersDTO(null, name, email, hashPassword, city, true, seoulDate);
+	        UsersDTO signUpData = new UsersDTO
+	        		(null, name, email, hashPassword, city, new ArrayList<>(), false, seoulDate);
 	        boolean signupResult = signupDAO.createUser(signUpData);
 	        
 	        if (signupResult) {

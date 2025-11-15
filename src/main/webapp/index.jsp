@@ -11,6 +11,7 @@
 	
 	<main>
 		<h3>시작 페이지</h3>
+		<a href="pages/p.jsp">이동</a>
 		
 		<%@ include file="/view/searchForm.jsp" %>
 	</main>
