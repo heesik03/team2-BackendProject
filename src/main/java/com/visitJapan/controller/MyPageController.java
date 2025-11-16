@@ -1,0 +1,61 @@
+package com.visitJapan.controller;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.stream.Collectors;
+
+import org.json.JSONObject;
+
+import com.visitJapan.dao.DeleteCityDAO;
+import com.visitJapan.dao.GetUserDAO;
+import com.visitJapan.dto.db.UsersDTO;
+
+@WebServlet("/mypage.do")
+public class MyPageController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		GetUserDAO getUserDAO = new GetUserDAO();
+		String userId = (String) request.getSession().getAttribute("id"); // 유저 아이디
+		
+		UsersDTO userData = getUserDAO.findUserData(userId);
+		if (userData != null)
+			request.setAttribute("userData", userData);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("pages/mypage.jsp");
+		dispatcher.forward(request, response); 	
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+	
+	@Override
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException {
+		DeleteCityDAO deleteCityDAO = new DeleteCityDAO();
+	    request.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json; charset=UTF-8");
+	    
+	    String body = request.getReader().lines().collect(Collectors.joining()); // js 요청 본문
+	    JSONObject json = new JSONObject(body); // json 읽기
+
+	    String spot = json.getString("spot");
+	    String city = json.getString("city");
+	    String userId = (String) request.getSession().getAttribute("id");
+	    
+	    boolean result = deleteCityDAO.removeSpot(spot, city, userId);
+	    
+	    response.setContentType("application/json; charset=UTF-8");
+	    response.getWriter().write("{\"success\": " + result + "}");
+	}
+
+}

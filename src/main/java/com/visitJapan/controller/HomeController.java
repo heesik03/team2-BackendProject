@@ -9,7 +9,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -67,35 +69,17 @@ public class HomeController extends HttpServlet {
 		AddCityDAO addCityDAO = new AddCityDAO();
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=UTF-8");
-
-		String userId = (String) request.getSession().getAttribute("id"); // 유저 아이디
-	    StringBuilder sb = new StringBuilder(); 
-	    String line;
-
-	    try (BufferedReader reader = request.getReader()) {
-	        while ((line = reader.readLine()) != null) {
-	            sb.append(line);
-	        }
-	    }
-
-	    String body = sb.toString(); // 응답 본문 Ex {"spot":"도쿄","region":"관동"}
-	    body = body.replace("{", "").replace("}", "").replace("\"", "");
+		
+	    String body = request.getReader().lines().collect(Collectors.joining()); // js 요청 본문
+	    JSONObject json = new JSONObject(body); // json 읽기
 	    
-	    String spot = "";
-	    String city = "";
-
-	    int dataIndex = body.indexOf("data-region=");
-	    if (dataIndex != -1) {
-	        // spot = "spot:" 이후부터 " data-region=" 직전까지
-	        spot = body.substring(body.indexOf("spot:") + 5, dataIndex).trim();
-	        
-	        // region = "data-region=" 이후부터 끝까지
-	        city = body.substring(dataIndex + 12).trim();
-	    }
-
+		String userId = (String) request.getSession().getAttribute("id"); // 유저 아이디
+	    String spot = json.getString("spot");
+	    String city = json.getString("city");
+	    
 	    boolean result = addCityDAO.appendCityToUser(spot, city, userId);
 	    if (result) {
-		    System.out.println(spot);
+		    response.setContentType("application/json; charset=UTF-8");
 	    	response.getWriter().write("{\"status\":\"ok\", \"spot\":\"" + spot + "\"}");
 	    } else {
 	    	System.out.println("추가 실패");

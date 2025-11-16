@@ -11,8 +11,6 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 import com.visitJapan.dao.LoginDAO;
-import com.visitJapan.dto.db.UsersDTO;
-
 
 @WebServlet("/login.do")
 public class LoginController extends HttpServlet {
@@ -23,13 +21,12 @@ public class LoginController extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         
-        UsersDTO foundUser  = loginDAO.checkUser(email, password); // 아이디, 비밀번호 검증
+        String userId  = loginDAO.checkUser(email, password); // 아이디, 비밀번호 검증
         
-		if (foundUser != null) {
+		if (userId != null) {
 		    HttpSession session = request.getSession();
 		    session.setMaxInactiveInterval(6 * 10 * 60); // 1시간
-		    session.setAttribute("name", foundUser.getUserName());    
-		    session.setAttribute("id", foundUser.getId().toString());    
+		    session.setAttribute("id", userId);    
 		    response.sendRedirect("index.jsp"); 
 		} else {
 			request.setAttribute("message", "아이디나 비밀번호가 다릅니다.");

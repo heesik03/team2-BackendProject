@@ -1,0 +1,30 @@
+@charset "UTF-8";
+body {
+    font-family: 'Playfair Display', 'Noto Serif KR', serif;
+}
+
+/* .city-card: 도시(도쿄, 교토 등) 이미지 카드 */
+.city-card {
+    position: relative;
+    color: white;
+    margin-bottom: 32px; 
+}
+/* .city-card img: 도시 카드 내부 이미지 */
+.city-card img {
+    border-radius: 8px; 
+}
+/* .city-card h3: 도시 카드 위 텍스트(도시 이름) */
+.city-card h3 {
+    position: absolute;
+    bottom: 16px; 
+    left: 24px;  
+    font-size: 64px; 
+    font-weight: 400;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7); 
+}
+
+/* 이미지 카드 링크 스타일 추가 (밑줄/색상 제거) */
+#city-group a {
+    text-decoration: none;
+    color: inherit;        
+}

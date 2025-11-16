@@ -9,18 +9,17 @@ import com.visitJapan.dto.db.UsersDTO;
 
 public class LoginDAO {
 	
-	public UsersDTO checkUser(String email, String password) {
-		UsersDTO foundUser = null;
+	public String checkUser(String email, String password) {
+		String userId = null;
 		try {
 			if (email != null && password != null) {
 				MongoDatabase database = MongoConnectUtil.getConnection();
 		        MongoCollection<UsersDTO> collection = database.getCollection("users", UsersDTO.class);
-		        System.out.println(collection);
 		        
 		        UsersDTO user = collection.find(Filters.eq("email", email)).first(); 
 	            if (user != null) { // 이메일을 가진 사용자가 있다면
 	            	if (HashUtil.verifyPassword(password, user.getPassword())) { // 비밀번호가 일치한다면
-	            		foundUser = user;
+	            		userId = user.getId().toString();
 	            	}
 	            }
 			}
@@ -29,6 +28,6 @@ public class LoginDAO {
 		} finally {
             MongoConnectUtil.close();
         }
-		return foundUser;
+		return userId;
 	}
 }

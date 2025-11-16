@@ -1,26 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>    
+    pageEncoding="UTF-8" errorPage="/pages/errorPage.jsp" %>    
 <%@ page import="com.visitJapan.dto.response.HomeResponseDTO" %>
 <%@ page import="org.jsoup.nodes.Element" %>
 <%@ page import="org.jsoup.select.Elements" %>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>여행 정보</title>
-</head>
+<html lang="ko">
+<!-- head (페이지 설정) 영역 -->
+<c:set var="pageTitle" value="마이페이지" />
+<%@ include file="/components/pageHead.jsp" %>
 <body>
 
 	<jsp:include page="/layout/header.jsp" />
 	
 	<main>
-		<h3>크롤링 테스트</h3>
-		
-		<%@ include file="/view/searchForm.jsp" %>
+		<!-- 도시 검색 입력창 -->		
+		<%@ include file="/components/searchForm.jsp" %>
 		
 		<h4>
 		    엔/원 환율 :
@@ -43,9 +40,11 @@
 		                
 		                <!-- 스크랩 추가  -->
 		               <c:if test="${not empty sessionScope.id}">
-						    <form class="add-city-form" data-spot="${spot.text()} data-region=${region}">
+							<form class="add-city-form"
+							      data-spot="${spot.text()}"
+							      data-region="${region}">
 							    <button type="submit">
-							    	스크랩 추가
+							        스크랩 추가
 							    </button>
 							</form>
 						</c:if>
@@ -96,7 +95,7 @@
 		        })
 		        .then(res => res.json())
 		        .then(data => {
-		            console.log("응답:", data);
+		            alert("스크랩 추가 성공!");
 		        })
 		        .catch(err => console.error(err));
 		    });

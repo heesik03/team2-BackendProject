@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage="/pages/errorPage.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!-- 로그인 상태라면 home.do 로 이동 -->
-<c:if test="${not empty sessionScope.name}">
-    <c:redirect url="home.do" />
+<!DOCTYPE html>
+<html lang="ko">
+<!-- head (페이지 설정) 영역 -->
+<c:set var="pageTitle" value="로그인" />
+<%@ include file="/components/pageHead.jsp" %>
+
+<!-- 로그인 상태라면 홈 화면으로 로 이동 -->
+<c:if test="${not empty sessionScope.id}">
+    <c:redirect url="${pageContext.request.contextPath}/index.jsp" />
 </c:if>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>로그인 페이지</title>
-</head>
 <body>
 	<jsp:include page="/layout/header.jsp" />
 	

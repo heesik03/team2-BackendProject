@@ -15,7 +15,7 @@ public class LogoutController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute("name") != null) {
+        if (session != null && session.getAttribute("id") != null) {
             session.invalidate(); // 세션 무효화
         }
 		response.sendRedirect("index.jsp");
