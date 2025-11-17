@@ -1,4 +1,4 @@
-package com.visitJapan.config;
+package com.visitJapan.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

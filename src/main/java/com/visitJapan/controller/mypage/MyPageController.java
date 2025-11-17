@@ -1,4 +1,4 @@
-package com.visitJapan.controller;
+package com.visitJapan.controller.mypage;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -7,14 +7,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
 import org.json.JSONObject;
 
-import com.visitJapan.dao.DeleteCityDAO;
-import com.visitJapan.dao.GetUserDAO;
+import com.visitJapan.dao.users.DeleteCityDAO;
+import com.visitJapan.dao.users.GetUserDAO;
 import com.visitJapan.dto.db.UsersDTO;
 
 @WebServlet("/mypage.do")
@@ -29,7 +28,7 @@ public class MyPageController extends HttpServlet {
 		if (userData != null)
 			request.setAttribute("userData", userData);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("pages/mypage.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("pages/mypage/mypage.jsp");
 		dispatcher.forward(request, response); 	
 	}
 
@@ -43,7 +42,6 @@ public class MyPageController extends HttpServlet {
 	        throws ServletException, IOException {
 		DeleteCityDAO deleteCityDAO = new DeleteCityDAO();
 	    request.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json; charset=UTF-8");
 	    
 	    String body = request.getReader().lines().collect(Collectors.joining()); // js 요청 본문
 	    JSONObject json = new JSONObject(body); // json 읽기

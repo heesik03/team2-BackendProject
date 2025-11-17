@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" errorPage="/pages/errorPage.jsp" %>
-<%@ page import="com.visitJapan.dto.db.UsersDTO" %>
-<%@ page import="com.visitJapan.dto.db.CityDTO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -12,7 +10,7 @@
 
 <!-- 로그아웃 상태라면 홈 화면으로 이동 -->
 <c:if test="${empty sessionScope.id}">
-    <c:redirect url="${pageContext.request.contextPath}/index.jsp" />
+    <c:redirect url="/index.jsp" />
 </c:if>
 <body>
 	<jsp:include page="/layout/header.jsp" />
@@ -54,6 +52,8 @@
 			        </ul>
 			    </c:forEach>
 			</section>
+			
+			<a href="${pageContext.request.contextPath}/mypage/itinerary.do">여행 일정</a>
 		</main>
 		
 	<script>

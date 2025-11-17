@@ -1,6 +1,4 @@
-package com.visitJapan.dao;
-
-import java.util.Arrays;
+package com.visitJapan.dao.users;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -10,7 +8,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
-import com.visitJapan.config.MongoConnectUtil;
+import com.visitJapan.util.MongoConnectUtil;
 
 public class DeleteCityDAO {
 	

@@ -17,7 +17,6 @@ public class UsersDTO {
 	
 	public UsersDTO() {}
 	
-
 	public UsersDTO(ObjectId id, String userName, String email, String password, String likeCity,
 			List<CityDTO> cityList, boolean admin, LocalDateTime createAt) {
 		super();

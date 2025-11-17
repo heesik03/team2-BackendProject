@@ -1,4 +1,4 @@
-package com.visitJapan.dao;
+package com.visitJapan.dao.users;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -11,9 +11,9 @@ import org.bson.types.ObjectId;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
-import com.visitJapan.config.MongoConnectUtil;
 import com.visitJapan.dto.db.CityDTO;
 import com.visitJapan.dto.db.UsersDTO;
+import com.visitJapan.util.MongoConnectUtil;
 
 public class GetUserDAO {
 	

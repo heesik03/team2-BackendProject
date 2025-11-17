@@ -1,8 +1,9 @@
-package com.visitJapan.config;
+package com.visitJapan.util;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
+import com.visitJapan.config.DBConfigReader;
 
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistry;

@@ -1,9 +1,9 @@
-package com.visitJapan.dao;
+package com.visitJapan.dao.users;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.visitJapan.config.MongoConnectUtil;
 import com.visitJapan.dto.db.UsersDTO;
+import com.visitJapan.util.MongoConnectUtil;
 
 public class SignUpDAO {
 	

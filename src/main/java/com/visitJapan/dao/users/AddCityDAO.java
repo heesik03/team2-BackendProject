@@ -1,4 +1,4 @@
-package com.visitJapan.dao;
+package com.visitJapan.dao.users;
 
 import java.util.Arrays;
 
@@ -9,7 +9,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
-import com.visitJapan.config.MongoConnectUtil;
+import com.visitJapan.util.MongoConnectUtil;
 
 public class AddCityDAO {
 
@@ -59,4 +59,3 @@ public class AddCityDAO {
         return result;
     }
 }
-

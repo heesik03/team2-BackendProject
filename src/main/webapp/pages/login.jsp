@@ -10,7 +10,7 @@
 
 <!-- 로그인 상태라면 홈 화면으로 로 이동 -->
 <c:if test="${not empty sessionScope.id}">
-    <c:redirect url="${pageContext.request.contextPath}/index.jsp" />
+    <c:redirect url="/index.jsp" />
 </c:if>
 
 <body>

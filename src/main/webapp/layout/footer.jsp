@@ -46,7 +46,7 @@
 			        <c:when test="${not empty sessionScope.id}"> 
 			        	<!-- 유저가 로그인 상태라면 -->
 			            <p>
-			            	<a href="#">
+			            <a href="${pageContext.request.contextPath}/mypage.do">
 			            		my page
 			            	</a>
 			           	</p>
@@ -55,9 +55,9 @@
 			        <c:otherwise>	
 			        	<!-- 유저가 로그아웃 상태라면 -->		
 			  			<p>
-			            	<a href="${pageContext.request.contextPath}/pages/signup.jsp">
-			            		sign up
-			            	</a>
+				            	<a href="${pageContext.request.contextPath}/pages/signup.jsp">
+				            		sign up
+				            	</a>
 			           	</p>	            
 			        </c:otherwise>
 			    </c:choose>

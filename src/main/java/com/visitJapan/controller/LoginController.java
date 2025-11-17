@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-import com.visitJapan.dao.LoginDAO;
+import com.visitJapan.dao.users.LoginDAO;
 
 @WebServlet("/login.do")
 public class LoginController extends HttpServlet {
