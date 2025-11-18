@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
+import org.bson.types.ObjectId;
+
 import com.visitJapan.dao.users.LoginDAO;
 
 @WebServlet("/login.do")
@@ -21,7 +23,7 @@ public class LoginController extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         
-        String userId  = loginDAO.checkUser(email, password); // 아이디, 비밀번호 검증
+        ObjectId userId  = loginDAO.checkUser(email, password); // 아이디, 비밀번호 검증
         
 		if (userId != null) {
 		    HttpSession session = request.getSession();

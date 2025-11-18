@@ -20,7 +20,9 @@
 			<section>
 				<h3>${userData.userName} 님 환영합니다!</h3>
 				<p>${userData.email}</p>
-				<p>가입일 : ${userData.createAt}</p>
+				<p>
+					가입일 : <span id="createAt" data-date="${userData.createAt}"></span> <!-- js로 변환 후 출력 (가입일) -->
+				</p>
 				<p>${userData.admin ? '관리자' : '일반 사용자'}</p>
 				<p>선호도시 <strong>${userData.likeCity}</strong></p>
 			</section>
@@ -71,13 +73,16 @@
 		                "Content-Type": "application/json"
 		            },
 		            body: JSON.stringify({
-		                spot : spot,
-		                city : city
+		                spot,
+		                city
 		            })
 		        })
-		        .then(res => res.json())
-		        .then(data => {
-		        	li.remove();
+		        .then(res => {
+		            if (res.status === 204) {
+		                li.remove();   // 성공이므로 삭제
+		            } else {
+		                return res.json().then(data => console.error(data.message));
+		            }
 		        })
 		        .catch(err => console.error(err));
 		    });
@@ -86,5 +91,7 @@
 		
 	<%@ include file="/layout/footer.jsp" %>
 	
+	<!-- js 파일 불러옴 -->
+	<script src="${pageContext.request.contextPath}/resource/js/changeDate.js"></script>
 </body>
 </html>

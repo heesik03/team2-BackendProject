@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -22,7 +23,7 @@ public class CreateItineraryController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GetUserDAO getUserDAO = new GetUserDAO();
-		String userId = (String) request.getSession().getAttribute("id"); // 유저 아이디
+		ObjectId userId = (ObjectId) request.getSession().getAttribute("id"); // 유저 아이디
 		
 		UsersDTO userData = getUserDAO.findUserData(userId);
 		// 선호 관광지만 보내기
@@ -40,16 +41,24 @@ public class CreateItineraryController extends HttpServlet {
 	    String body = request.getReader().lines().collect(Collectors.joining()); // js 요청 본문
 	    JSONObject json = new JSONObject(body); // json 읽기
 	    
-	    String userId = (String) request.getSession().getAttribute("id"); 
+	    ObjectId userId = (ObjectId) request.getSession().getAttribute("id");
 		String title = json.getString("title");
 	    String startDate = json.getString("start");
 	    String endDate = json.getString("end");
 	    JSONArray spotList = json.getJSONArray("spotList");
 	    
 	    boolean result = createItineraryDAO.appendSpotList(userId, title, startDate, endDate, spotList);
+	    String responseBody = "{\"result\": \"" + (result ? "success" : "fail") + "\"}";
 	    
         response.setContentType("application/json; charset=UTF-8");
-        response.getWriter().write("{\"result\": \"" + (result ? "success" : "fail") + "\"}");
+        if (result) {
+            response.setStatus(HttpServletResponse.SC_CREATED); // 201
+            response.getWriter().write(responseBody);
+        } else {
+            // 실패 (500)
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // 실패 (500)
+            response.getWriter().write(responseBody);
+        }
 	}
 
 }

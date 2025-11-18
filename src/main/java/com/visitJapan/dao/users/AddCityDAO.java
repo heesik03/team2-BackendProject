@@ -13,18 +13,17 @@ import com.visitJapan.util.MongoConnectUtil;
 
 public class AddCityDAO {
 
-    public boolean appendCityToUser(String spot, String city, String id) {
+    public boolean appendCityToUser(String spot, String city, ObjectId id) {
         boolean result = false;
         try {
             if (spot != null && city != null && id != null) {
                 MongoDatabase database = MongoConnectUtil.getConnection();
                 MongoCollection<Document> collection = database.getCollection("users");
-                ObjectId objectId = new ObjectId(id);
 
              // cityList 안에 cityName 이 city 와 같은 Document가 있는지 확인
                 Document existingCity = collection.find(
                         Filters.and(
-                                Filters.eq("_id", objectId),
+                                Filters.eq("_id", id),
                                 Filters.elemMatch("cityList", Filters.eq("cityName", city))
                         )
                 ).first();
@@ -33,7 +32,7 @@ public class AddCityDAO {
                     // 이미 존재하는 도시 → 해당 spots 배열에 spot 추가
                     collection.updateOne(
                             Filters.and(
-                                    Filters.eq("_id", objectId),
+                                    Filters.eq("_id", id),
                                     Filters.elemMatch("cityList", Filters.eq("cityName", city))
                             ),
                             Updates.addToSet("cityList.$.spots", spot)
@@ -45,7 +44,7 @@ public class AddCityDAO {
                             .append("spots", Arrays.asList(spot));
 
                     collection.updateOne(
-                            Filters.eq("_id", objectId),
+                            Filters.eq("_id", id),
                             Updates.addToSet("cityList", newCityDoc)
                     );
                 }

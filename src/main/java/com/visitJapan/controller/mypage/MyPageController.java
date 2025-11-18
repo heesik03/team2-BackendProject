@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+import org.bson.types.ObjectId;
 import org.json.JSONObject;
 
 import com.visitJapan.dao.users.DeleteCityDAO;
@@ -22,7 +23,7 @@ public class MyPageController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GetUserDAO getUserDAO = new GetUserDAO();
-		String userId = (String) request.getSession().getAttribute("id"); // 유저 아이디
+		ObjectId userId = (ObjectId) request.getSession().getAttribute("id"); // 유저 아이디
 		
 		UsersDTO userData = getUserDAO.findUserData(userId);
 		if (userData != null)
@@ -48,12 +49,19 @@ public class MyPageController extends HttpServlet {
 
 	    String spot = json.getString("spot");
 	    String city = json.getString("city");
-	    String userId = (String) request.getSession().getAttribute("id");
+	    ObjectId userId = (ObjectId) request.getSession().getAttribute("id");
 	    
 	    boolean result = deleteCityDAO.removeSpot(spot, city, userId);
 	    
 	    response.setContentType("application/json; charset=UTF-8");
-	    response.getWriter().write("{\"success\": " + result + "}");
+	    if (result) {
+	    		response.setStatus(HttpServletResponse.SC_NO_CONTENT); // 204
+	    } else {
+	        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // 500
+	        response.getWriter().write(
+	            "{\"status\":\"error\", \"message\":\"도시 또는 관광지 삭제 실패\"}"
+	        );
+	    }
 	}
 
 }

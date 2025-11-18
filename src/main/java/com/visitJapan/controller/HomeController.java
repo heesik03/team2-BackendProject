@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -72,18 +73,24 @@ public class HomeController extends HttpServlet {
 	    String body = request.getReader().lines().collect(Collectors.joining()); // js 요청 본문
 	    JSONObject json = new JSONObject(body); // json 읽기
 	    
-		String userId = (String) request.getSession().getAttribute("id"); // 유저 아이디
+	    ObjectId userId = (ObjectId) request.getSession().getAttribute("id");
 	    String spot = json.getString("spot");
 	    String city = json.getString("city");
 	    
 	    boolean result = addCityDAO.appendCityToUser(spot, city, userId);
-	    if (result) {
-		    response.setContentType("application/json; charset=UTF-8");
-	    	response.getWriter().write("{\"status\":\"ok\", \"spot\":\"" + spot + "\"}");
-	    } else {
-	    	System.out.println("추가 실패");
-	    }
+	    response.setContentType("application/json; charset=UTF-8");
 
+	    if (result) {
+	        response.setStatus(HttpServletResponse.SC_OK); // 200
+	        response.getWriter().write(
+	            "{\"status\":\"ok\", \"spot\":\"" + spot + "\"}"
+	        );
+	    } else {
+	        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // 500
+	        response.getWriter().write(
+	            "{\"status\":\"error\", \"message\":\"도시 또는 관광지 추가 실패\"}"
+	        );
+	    }
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.visitJapan.dao.users;
 
+import org.bson.types.ObjectId;
+
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
@@ -9,8 +11,8 @@ import com.visitJapan.util.MongoConnectUtil;
 
 public class LoginDAO {
 	
-	public String checkUser(String email, String password) {
-		String userId = null;
+	public ObjectId checkUser(String email, String password) {
+		ObjectId userId = null;
 		try {
 			if (email != null && password != null) {
 				MongoDatabase database = MongoConnectUtil.getConnection();
@@ -18,9 +20,9 @@ public class LoginDAO {
 		        
 		        UsersDTO user = collection.find(Filters.eq("email", email)).first(); 
 	            if (user != null) { // 이메일을 가진 사용자가 있다면
-	            	if (HashUtil.verifyPassword(password, user.getPassword())) { // 비밀번호가 일치한다면
-	            		userId = user.getId().toString();
-	            	}
+		            	if (HashUtil.verifyPassword(password, user.getPassword())) { // 비밀번호가 일치한다면
+		            		userId = user.getId();
+		            	}
 	            }
 			}
 		} catch (Exception e) {

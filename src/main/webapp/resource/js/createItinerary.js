@@ -82,28 +82,47 @@ endDateInput.addEventListener("change", function () {
 	 }
  });
  
+ 
 // 일정 추가 시 배열에 추가 + day-box div에 추가
 document.getElementById("input-itinerary-button").addEventListener('click', function() {
 	const spotValue = document.getElementById("selectd-spot").value; // 선택한 관광지
+	const spotOption = document.querySelector('#selectd-spot option:checked'); // 선택한 관광지의 optgroup
+	const spotCity = spotOption.parentElement.label; // optgroup의 label (도쿄, 후쿠오카 등)
+	
 	const dayText = selectdDay.options[selectdDay.selectedIndex].text; // "1일차"
 	const dayValue = selectdDay.value; // 선택한 일자
 	const dayBox = document.getElementById(dayValue); // 선택한 일자의 div
 
 	// spots 배열에 관광지추가 
-	const existDay = spotList.find(item => item.day === dayText);
-	existDay.spots.push(spotValue);
-	console.log(spotList);
+	const spotData = `${spotValue} [${spotCity}]`; // 관광지 (도시) 방식으로 배열 저장 (ex 도쿄타워 (도쿄)
+	const existDay = spotList.find(item => item.day === dayText); // 특정 일자만
+	existDay.spots.push(spotData); 
+	console.log(spotList)
 	
 	const div = document.createElement("div");
 	const span = document.createElement("span");
 	const button = document.createElement("button");
 
 	// 태그 설정
-	div.class = "itinerary-item"; 
-	div.id = spotValue;
+	div.classList.add("itinerary-item");
+	div.id = spotData;
 	span.textContent = spotValue;
+	
+	// 삭제 버튼 설정
 	button.class = "itinerary-item-delete"
+	button.type = "button";
 	button.textContent = 'X';
+	
+	// 클릭된 버튼의 상위 div(itinerary-item)만 삭제
+	button.addEventListener('click', function (e) {
+	    const parentDiv = e.target.closest('.itinerary-item'); // 부모 div
+	    if (parentDiv) {
+	        parentDiv.remove();
+			const removeValue = parentDiv.id;  // 삭제 대상 문자열
+			existDay.spots = existDay.spots.filter(spot => spot !== removeValue); // 배열에서 삭제 (해당 날짜의 spots에서만)
+			parentDiv.remove();
+	    }
+	});
 
 	div.appendChild(span);
 	div.appendChild(button);
@@ -143,6 +162,7 @@ document.getElementById("input-itinerary-button").addEventListener('click', func
      .then(data => {
          if(data.result === "success") {
              alert("저장 성공!");
+			 location.href = `${contextPath}/mypage/itinerary.do`
          } else {
              alert("저장 실패!");
          }

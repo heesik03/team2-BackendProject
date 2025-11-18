@@ -2,13 +2,13 @@ package com.visitJapan.dto.db;
 
 import java.util.List;
 
-public class DayPlanDTO {
+public class SpotListDTO {
     private String day;
     private List<String> spots;
     
-    public DayPlanDTO() {}
+    public SpotListDTO() {}
 
-	public DayPlanDTO(String day, List<String> spots) {
+	public SpotListDTO(String day, List<String> spots) {
 		super();
 		this.day = day;
 		this.spots = spots;

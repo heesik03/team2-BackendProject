@@ -44,7 +44,7 @@
 				<select id="selectd-spot"> 
 				    <option value="" disabled selected>관광지 선택</option>
 				    
-				    <c:forEach var="city" items="${cityList}">
+			    		<c:forEach var="city" items="${cityList}">
 				        <optgroup label="${city.cityName}">
 				        	<c:choose>
 				                <c:when test="${empty city.spots}">
@@ -61,9 +61,10 @@
 				            </c:choose>
 					    </optgroup>
 				    </c:forEach>
+				    			    
 				</select>
 							
-				<!-- 일자 선택 (js로 옵션 채워짐 -->
+				<!-- 일자 선택 (js로 옵션 채워짐) -->
 				<select id="selectd-day">
 					<option value="" disabled selected>일자 선택</option>
 				</select>
@@ -93,6 +94,6 @@
 	</script>
 	
 	<!-- js 파일 불러옴 -->
-	<script src="${pageContext.request.contextPath}/resource/js/create-itinerary.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/createItinerary.js"></script>
 </body>
 </html>

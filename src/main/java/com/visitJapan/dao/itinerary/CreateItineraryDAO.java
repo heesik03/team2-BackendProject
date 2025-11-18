@@ -12,22 +12,21 @@ import org.json.JSONObject;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.visitJapan.dto.db.DayPlanDTO;
+import com.visitJapan.dto.db.SpotListDTO;
 import com.visitJapan.dto.db.ItineraryDTO;
 import com.visitJapan.util.MongoConnectUtil;
 
 public class CreateItineraryDAO {
 	
-	public boolean appendSpotList(String id, String title, String startDate, String endDate, JSONArray spotList) {
+	public boolean appendSpotList(ObjectId userId, String title, String startDate, String endDate, JSONArray spotList) {
 		boolean result = false;
         try {
             if (title != null && startDate != null && endDate != null && spotList != null) {
                 MongoDatabase database = MongoConnectUtil.getConnection();
                 MongoCollection<ItineraryDTO> collection =  database.getCollection("itinerary", ItineraryDTO.class);
-                ObjectId userId = new ObjectId(id);
                 
-		    	    List<DayPlanDTO> dayPlan = new ArrayList<>();
-		    	    // JSONArray → DayPlanDTO List로 변환
+		    	    List<SpotListDTO> dayPlan = new ArrayList<>();
+		    	    // JSONArray → SpotListDTO List로 변환
 		    	    for (int i = 0; i < spotList.length(); i++) {
 		    	        JSONObject dayObj = spotList.getJSONObject(i);
 		
@@ -39,7 +38,7 @@ public class CreateItineraryDAO {
 		    	            spots.add(spotsArray.getString(j));
 		    	        }
 		
-		    	        DayPlanDTO dto = new DayPlanDTO(day, spots);
+		    	        SpotListDTO dto = new SpotListDTO(day, spots);
 		    	        dayPlan.add(dto);
 		    	    }
 		    	    

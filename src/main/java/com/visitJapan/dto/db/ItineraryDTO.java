@@ -11,13 +11,13 @@ public class ItineraryDTO {
     private String title;
     private String startDate;
     private String endDate;
-    private List<DayPlanDTO> spotList;
+    private List<SpotListDTO> spotList;
     private	LocalDateTime createAt;
     
     public ItineraryDTO () {}
 
 	public ItineraryDTO(ObjectId id, ObjectId userId, String title, String startDate, String endDate,
-			List<DayPlanDTO> spotList, LocalDateTime createAt) {
+			List<SpotListDTO> spotList, LocalDateTime createAt) {
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -68,11 +68,11 @@ public class ItineraryDTO {
 		this.endDate = endDate;
 	}
 
-	public List<DayPlanDTO> getSpotList() {
+	public List<SpotListDTO> getSpotList() {
 		return spotList;
 	}
 
-	public void setSpotList(List<DayPlanDTO> spotList) {
+	public void setSpotList(List<SpotListDTO> spotList) {
 		this.spotList = spotList;
 	}
 
