@@ -13,7 +13,7 @@ import com.visitJapan.dto.db.ItineraryDTO;
 
 
 @WebServlet("/mypage/show-itinerary.do")
-public class showItineraryController extends HttpServlet {
+public class ShowItineraryController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -27,7 +27,7 @@ public class showItineraryController extends HttpServlet {
 			request.setAttribute("itineraryData", itineraryData);
 		}
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/mypage/show-itinerary.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/mypage/showItinerary.jsp");
 		dispatcher.forward(request, response); 	
 	}
 

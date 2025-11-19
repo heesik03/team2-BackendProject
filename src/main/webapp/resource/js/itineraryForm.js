@@ -1,10 +1,6 @@
 const startDateInput = document.getElementById("start-date"); // 일정 시작 날짜 입력창
 const endDateInput = document.getElementById("end-date"); // 일정 완료 날짜 입력창
 const selectdDay = document.getElementById("selectd-day"); // 일정의 일자 select
-const submitButton = document.getElementById("submit-btn"); // 입력 button
-const hiddenSpotList = document.getElementById("spot-list-hidden"); // spotList를 저장 할 input
-
-const spotList = [];
 
 const today = new Date().toISOString().split("T")[0]; // 오늘 날짜(최소값)
 startDateInput.setAttribute("min", today); // 최소 날짜 설정
@@ -97,7 +93,6 @@ document.getElementById("input-itinerary-button").addEventListener('click', func
 	const spotData = `${spotValue} [${spotCity}]`; // 관광지 (도시) 방식으로 배열 저장 (ex 도쿄타워 (도쿄)
 	const existDay = spotList.find(item => item.day === dayText); // 특정 일자만
 	existDay.spots.push(spotData); 
-	console.log(spotList)
 	
 	const div = document.createElement("div");
 	const span = document.createElement("span");
@@ -117,7 +112,6 @@ document.getElementById("input-itinerary-button").addEventListener('click', func
 	button.addEventListener('click', function (e) {
 	    const parentDiv = e.target.closest('.itinerary-item'); // 부모 div
 	    if (parentDiv) {
-	        parentDiv.remove();
 			const removeValue = parentDiv.id;  // 삭제 대상 문자열
 			existDay.spots = existDay.spots.filter(spot => spot !== removeValue); // 배열에서 삭제 (해당 날짜의 spots에서만)
 			parentDiv.remove();
@@ -128,46 +122,4 @@ document.getElementById("input-itinerary-button").addEventListener('click', func
 	div.appendChild(button);
 	dayBox.appendChild(div);
  });
- 
-
- submitButton.addEventListener("click", function() {
-     // spotList 비어있으면 전송 막기
-     if (spotList.length === 0) {
-         alert("일정이 비었습니다.");
-         return; // 함수 종료
-     }
-
-     hiddenSpotList.value = JSON.stringify(spotList);
-
-     const title = document.getElementById("title-input").value;
-     const start = document.getElementById("start-date").value;
-     const end = document.getElementById("end-date").value;
-
-     const requestData = {
-         title: title,
-         start: start,
-         end: end,
-         spotList: spotList
-     };
-
-     // AJAX(JSON) 전송
-     fetch(`${contextPath}/mypage/create-itinerary.do`, {
-         method: "POST",
-         headers: {
-             "Content-Type": "application/json; charset=UTF-8"
-         },
-         body: JSON.stringify(requestData)
-     })
-     .then(res => res.json())
-     .then(data => {
-         if(data.result === "success") {
-             alert("저장 성공!");
-			 location.href = `${contextPath}/mypage/itinerary.do`
-         } else {
-             alert("저장 실패!");
-         }
-     })
-     .catch(err => console.error(err));
- });
- 
  

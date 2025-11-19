@@ -1,5 +1,7 @@
 package com.visitJapan.dao.users;
 
+import java.util.List;
+
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -26,6 +28,14 @@ public class DeleteCityDAO {
                         Filters.eq("cityList.cityName", city)
                     ),
                     Updates.pull("cityList.$.spots", spot)
+                );
+                
+               // spots 배열 비어있는 city 객체 제거
+                collection.updateOne(
+                    Filters.eq("_id", id),
+                    Updates.pull("cityList",
+                        new Document("cityName", city).append("spots", List.of())
+                    )
                 );
                 
                 result = updateResult.getModifiedCount() > 0;

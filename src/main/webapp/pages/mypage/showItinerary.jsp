@@ -52,6 +52,10 @@
 						<button type="button" class="delete-btn" data-id="${itineraryData.id}">
 							삭제
 						</button>
+		
+				         <a href="${pageContext.request.contextPath}/mypage/edit-itinerary.do?id=${itineraryData.id}">
+                      		수정
+                      	</a>
 					</div>
                 </c:otherwise>
 			</c:choose>

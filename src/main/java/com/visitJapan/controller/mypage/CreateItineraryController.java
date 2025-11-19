@@ -30,7 +30,7 @@ public class CreateItineraryController extends HttpServlet {
 		if (userData != null)
 			request.setAttribute("cityList", userData.getCityList());
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/mypage/create-itinerary.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/mypage/createItinerary.jsp");
 		dispatcher.forward(request, response); 	
 	}
 	

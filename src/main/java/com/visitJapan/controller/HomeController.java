@@ -68,7 +68,6 @@ public class HomeController extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		AddCityDAO addCityDAO = new AddCityDAO();
 		request.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json; charset=UTF-8");
 		
 	    String body = request.getReader().lines().collect(Collectors.joining()); // js 요청 본문
 	    JSONObject json = new JSONObject(body); // json 읽기
@@ -78,8 +77,8 @@ public class HomeController extends HttpServlet {
 	    String city = json.getString("city");
 	    
 	    boolean result = addCityDAO.appendCityToUser(spot, city, userId);
+	    
 	    response.setContentType("application/json; charset=UTF-8");
-
 	    if (result) {
 	        response.setStatus(HttpServletResponse.SC_OK); // 200
 	        response.getWriter().write(
