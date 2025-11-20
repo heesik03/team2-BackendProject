@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" errorPage="/pages/errorPage.jsp" %>    
+    pageEncoding="UTF-8" %>    
 <%@ page import="com.visitJapan.dto.response.HomeResponseDTO" %>
 <%@ page import="org.jsoup.nodes.Element" %>
 <%@ page import="org.jsoup.select.Elements" %>
@@ -18,14 +18,7 @@
 	<main>
 		<!-- 도시 검색 입력창 -->		
 		<%@ include file="/components/searchForm.jsp" %>
-		
-		<h4>
-		    엔/원 환율 :
-		    <fmt:formatNumber value="${homeResponse.yenValue}" pattern="#,##0.00" /> 원 (100엔 당)
-		</h4>
-		
-		<p>기준일 : ${homeResponse.yenDate}</p>
-		
+
 		<c:set var="region" value="${param.region}" />  <!-- 파라미터 region 가져옴  -->
 		<h3>${region} 관광지</h3>
 		
