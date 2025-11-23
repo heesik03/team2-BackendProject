@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <!-- head (페이지 설정) 영역 -->
-<c:set var="pageTitle" value="마이페이지" />
+<c:set var="pageTitle" value="지역 정보" />
 <%@ include file="/components/pageHead.jsp" %>
 <body>
 
@@ -29,7 +29,6 @@
 		            <li>
 		                ${spot.text()} <br>
 		                <a href="${spot.attr('href')}" target="_blank">관광지 상세 주소</a>
-		                <hr>
 		                
 		                <!-- 스크랩 추가  -->
 		               <c:if test="${not empty sessionScope.id}">
@@ -41,6 +40,8 @@
 							    </button>
 							</form>
 						</c:if>
+						
+						<hr>
 					
 		            </li>
 		        </c:forEach>

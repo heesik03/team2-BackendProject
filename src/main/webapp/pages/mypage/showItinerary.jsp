@@ -28,7 +28,7 @@
                 <c:otherwise>
                 		<h3>${itineraryData.title}</h3>
 					<p>시작일 ${itineraryData.startDate} | 종료일 ${itineraryData.endDate}</p>
-					<p id="createAt" data-date="${itineraryData.createAt}"></p> <!-- js로 변환 후 출력 -->
+					<p class="createAt" data-date="${itineraryData.createAt}"></p> <!-- js로 변환 후 출력 -->
 					
 					
 					<div id="day-container">

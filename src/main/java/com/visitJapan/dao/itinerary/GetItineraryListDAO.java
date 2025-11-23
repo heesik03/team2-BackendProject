@@ -14,7 +14,7 @@ import com.visitJapan.util.MongoConnectUtil;
 public class GetItineraryListDAO {
 	
 	public List<ItineraryDTO> findItineraryData(ObjectId userId) {
-		List<ItineraryDTO> findItinerary = null;
+		List<ItineraryDTO> findItinerarys = null;
 		try {
 			if (userId != null) {
                 MongoDatabase database = MongoConnectUtil.getConnection();
@@ -26,7 +26,7 @@ public class GetItineraryListDAO {
                         .into(new ArrayList<>()); // List<ItineraryDTO>로 반환
                 
 				if (itineraryList != null) {
-					findItinerary = itineraryList;
+					findItinerarys = itineraryList;
 				}
 			}
 		} catch (Exception e) {
@@ -34,6 +34,6 @@ public class GetItineraryListDAO {
         } finally {
             MongoConnectUtil.close();
         }
-        return findItinerary;
+        return findItinerarys;
 	}
 }

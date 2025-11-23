@@ -1,12 +1,15 @@
-const createAt = document.getElementById("createAt");
+const createAtElements = document.querySelectorAll(".createAt");
 
-const dateStr = createAt.dataset.date; 
-const dateObj = new Date(dateStr); // JS Date 객체로 변환
+createAtElements.forEach(el => {
+    const dateStr = el.dataset.date;
+    const dateObj = new Date(dateStr);
 
-const formatted = dateObj.getFullYear() + "-" + // 포맷 변환
-                  String(dateObj.getMonth() + 1).padStart(2, '0') + "-" +
-                  String(dateObj.getDate()).padStart(2, '0') + " " +
-                  String(dateObj.getHours()).padStart(2, '0') + ":" +
-                  String(dateObj.getMinutes()).padStart(2, '0');
-				  
-createAt.textContent = formatted;
+    const formatted =
+        dateObj.getFullYear() + "-" +
+        String(dateObj.getMonth() + 1).padStart(2, '0') + "-" +
+        String(dateObj.getDate()).padStart(2, '0') + " " +
+        String(dateObj.getHours()).padStart(2, '0') + ":" +
+        String(dateObj.getMinutes()).padStart(2, '0');
+
+    el.textContent = formatted;
+});

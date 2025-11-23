@@ -8,7 +8,7 @@
 <c:set var="pageTitle" value="회원가입" />
 <%@ include file="/components/pageHead.jsp" %>
 
-<!-- 로그아웃 상태라면 홈 화면으로 로 이동 -->
+<!-- 로그인 상태라면 홈 화면으로 로 이동 -->
 <c:if test="${not empty sessionScope.id}">
     <c:redirect url="/index.jsp" />
 </c:if>

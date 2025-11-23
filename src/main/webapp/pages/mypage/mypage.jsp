@@ -21,9 +21,11 @@
 				<h3>${userData.userName} 님 환영합니다!</h3>
 				<p>${userData.email}</p>
 				<p>
-					가입일 : <span id="createAt" data-date="${userData.createAt}"></span> <!-- js로 변환 후 출력 (가입일) -->
+					가입일 : <span class="createAt" data-date="${userData.createAt}"></span> <!-- js로 변환 후 출력 (가입일) -->
 				</p>
-				<p>${userData.admin ? '관리자' : '일반 사용자'}</p>
+				<p>
+					${userData.admin ? '관리자' : '일반 사용자'}
+				</p>
 				<p>선호도시 <strong>${userData.likeCity}</strong></p>
 			</section>
 			
@@ -56,6 +58,14 @@
 			</section>
 			
 			<a href="${pageContext.request.contextPath}/mypage/itinerary.do">여행 일정</a>
+			
+			<!-- 관리자면 보임 -->
+			<c:if test="${userData.admin}">
+				<a href="${pageContext.request.contextPath}/admin.do" target="_blank">
+					관리자 페이지
+				</a>
+			</c:if>
+			
 		</main>
 		
 	<script>
