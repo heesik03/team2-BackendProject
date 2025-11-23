@@ -1,4 +1,4 @@
-package com.visitJapan.dao.users;
+package com.visitJapan.dao.users.delete;
 
 import java.util.List;
 

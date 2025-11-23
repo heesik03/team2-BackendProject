@@ -1,4 +1,4 @@
-package com.visitJapan.dao.users;
+package com.visitJapan.dao.users.get;
 
 import java.util.ArrayList;
 import java.util.List;

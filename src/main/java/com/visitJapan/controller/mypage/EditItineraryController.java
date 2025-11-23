@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 import com.visitJapan.dao.itinerary.GetItineraryDAO;
 import com.visitJapan.dao.itinerary.UpdateItineraryDAO;
-import com.visitJapan.dao.users.GetUserDAO;
+import com.visitJapan.dao.users.get.GetUserDAO;
 import com.visitJapan.dto.db.ItineraryDTO;
 import com.visitJapan.dto.db.SpotListDTO;
 import com.visitJapan.dto.db.UsersDTO;
@@ -86,7 +86,7 @@ public class EditItineraryController extends HttpServlet {
 	    
         response.setContentType("application/json; charset=UTF-8");
         if (result) {
-            response.setStatus(HttpServletResponse.SC_OK); // 201
+            response.setStatus(HttpServletResponse.SC_OK); // 200
             response.getWriter().write(responseBody);
         } else {
             // 실패 (500)

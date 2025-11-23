@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
 
-import com.visitJapan.dao.users.DeleteCityDAO;
-import com.visitJapan.dao.users.GetUserDAO;
+import com.visitJapan.dao.users.delete.DeleteCityDAO;
+import com.visitJapan.dao.users.get.GetUserDAO;
 import com.visitJapan.dto.db.UsersDTO;
 
 @WebServlet("/mypage.do")
@@ -32,11 +32,7 @@ public class MyPageController extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("pages/mypage/mypage.jsp");
 		dispatcher.forward(request, response); 	
 	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+	
 	
 	@Override
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)

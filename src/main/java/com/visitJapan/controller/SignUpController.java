@@ -12,13 +12,36 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
-import com.visitJapan.dao.users.SignUpDAO;
+import com.visitJapan.dao.users.get.EmailCheckDAO;
+import com.visitJapan.dao.users.post.SignUpDAO;
 import com.visitJapan.dto.db.UsersDTO;
 import com.visitJapan.util.HashUtil;
 
 @WebServlet("/signup.do")
 public class SignUpController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+
+        request.setCharacterEncoding("UTF-8");
+        String email = request.getParameter("email");
+
+        EmailCheckDAO dao = new EmailCheckDAO();
+        boolean exists = dao.emailExists(email);
+
+        // JSON 결과 만들기
+        String resultJson;
+        if (exists) {
+            resultJson = "{\"result\":\"exists\"}";
+        } else {
+            resultJson = "{\"result\":\"ok\"}";
+        }
+
+        response.setContentType("application/json; charset=UTF-8");
+        response.getWriter().write(resultJson);
+    }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  {
 		try {

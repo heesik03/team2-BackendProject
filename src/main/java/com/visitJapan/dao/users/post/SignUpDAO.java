@@ -1,4 +1,4 @@
-package com.visitJapan.dao.users;
+package com.visitJapan.dao.users.post;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;

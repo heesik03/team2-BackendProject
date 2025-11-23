@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import org.bson.types.ObjectId;
 
-import com.visitJapan.dao.users.LoginDAO;
+import com.visitJapan.dao.users.post.LoginDAO;
 
 @WebServlet("/login.do")
 public class LoginController extends HttpServlet {

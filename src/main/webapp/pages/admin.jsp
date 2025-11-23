@@ -53,12 +53,14 @@
 								
                         		</td>
                         		<td class="createAt" data-date="${user.createAt}"></td> <!-- js로 변환 후 출력 -->
-                        		<!-- 삭제 버튼 -->
-                            <td>
-                            		<button type="button" class="delete-user-btn" data-user-id="${user.id}">
-                            			X
-                            		</button>
-                            </td>
+                        		<!-- 삭제 버튼 : 자신은 제외 ( ne => != ) -->
+                        		<c:if test="${sessionScope.id ne user.id}">
+	                        		<td>
+		                            	<button type="button" class="delete-user-btn" data-user-id="${user.id}">
+		                            			X
+		                            </button>
+	                            </td>
+                        		</c:if>
                             
                         </tr>
                     </c:forEach>

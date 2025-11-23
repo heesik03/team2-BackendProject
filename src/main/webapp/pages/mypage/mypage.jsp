@@ -12,7 +12,7 @@
 <c:if test="${empty sessionScope.id}">
     <c:redirect url="/index.jsp" />
 </c:if>
-<body>
+<body data-context-path="${pageContext.request.contextPath}">
 	<jsp:include page="/layout/header.jsp" />
 	
 		<main>
@@ -57,51 +57,34 @@
 			    </c:forEach>
 			</section>
 			
-			<a href="${pageContext.request.contextPath}/mypage/itinerary.do">여행 일정</a>
 			
-			<!-- 관리자면 보임 -->
-			<c:if test="${userData.admin}">
-				<a href="${pageContext.request.contextPath}/admin.do" target="_blank">
-					관리자 페이지
-				</a>
-			</c:if>
+			<nav>
+				<a href="${pageContext.request.contextPath}/pages/mypage/changeInfo.jsp">정보 수정</a>
+				<!-- bootstrap으로 여백 설정 -->
+				<br>
+				<br>
+				
+				<a href="${pageContext.request.contextPath}/mypage/itinerary.do">여행 일정</a>
+				
+				<!-- 관리자면 보임 -->
+				<c:if test="${userData.admin}">
+					<a href="${pageContext.request.contextPath}/admin.do" target="_blank">
+						관리자 페이지
+					</a>
+				</c:if>
+			</nav>
+			
+			<br>
+			<button id="delete-account-btn" type="button">
+				회원탈퇴
+			</button>
 			
 		</main>
-		
-	<script>
-		document.querySelectorAll(".delete-city-form").forEach(form => {
-		    form.addEventListener("submit", function(e) {
-		        e.preventDefault();  // 새로고침 방지
-		
-		        const spot = this.dataset.spot;  // EL에서 넘긴 spot
-		        const city = this.dataset.city; // EL에서 넘긴 cityName
-		        const li = this.closest("li"); // 현재 li
-		
-		        fetch("mypage.do", {
-		            method: "DELETE",
-		            headers: {
-		                "Content-Type": "application/json"
-		            },
-		            body: JSON.stringify({
-		                spot,
-		                city
-		            })
-		        })
-		        .then(res => {
-		            if (res.status === 204) {
-		                li.remove();   // 성공이므로 삭제
-		            } else {
-		                return res.json().then(data => console.error(data.message));
-		            }
-		        })
-		        .catch(err => console.error(err));
-		    });
-		});
-	</script>
 		
 	<%@ include file="/layout/footer.jsp" %>
 	
 	<!-- js 파일 불러옴 -->
 	<script src="${pageContext.request.contextPath}/resource/js/changeDate.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/mypage.js"></script>
 </body>
 </html>

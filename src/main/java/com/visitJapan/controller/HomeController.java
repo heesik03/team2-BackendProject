@@ -17,7 +17,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import com.visitJapan.dao.users.AddCityDAO;
+import com.visitJapan.dao.users.put.AddCityDAO;
 import com.visitJapan.dto.response.HomeResponseDTO;
 
 

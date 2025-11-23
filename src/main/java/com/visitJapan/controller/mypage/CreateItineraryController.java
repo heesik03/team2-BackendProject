@@ -14,7 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.visitJapan.dao.itinerary.CreateItineraryDAO;
-import com.visitJapan.dao.users.GetUserDAO;
+import com.visitJapan.dao.users.get.GetUserDAO;
 import com.visitJapan.dto.db.UsersDTO;
 
 @WebServlet("/mypage/create-itinerary.do")
