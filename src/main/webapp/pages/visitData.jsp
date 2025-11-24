@@ -25,10 +25,11 @@
 		
 		<c:if test="${not empty homeResponse.spotList}">  <!-- spotList가 비어있지 않다면 -->
 		    <ul>
-		        <c:forEach var="spot" items="${homeResponse.spotList}">
+		        <c:forEach var="spot" items="${homeResponse.spotList}" varStatus="sp">
 		            <li>
 		                ${spot.text()} <br>
 		                <a href="${spot.attr('href')}" target="_blank">관광지 상세 주소</a>
+		                <br>
 		                
 		                <!-- 스크랩 추가  -->
 		               <c:if test="${not empty sessionScope.id}">
@@ -41,12 +42,20 @@
 							</form>
 						</c:if>
 						
+						 <!-- 대응되는 이미지 -->
+		                <c:if test="${not empty homeResponse.spotImgList[sp.index]}">
+		                    <img src="${homeResponse.spotImgList[sp.index]}" 
+		                         class="img-fluid rounded"
+		                         style="max-width: 300px;">
+		                </c:if>
+						
 						<hr>
 					
 		            </li>
 		        </c:forEach>
 		    </ul>
 		</c:if>
+		
 		<c:if test="${empty homeResponse.spotList}"> <!-- spotList가 비어있다면 -->
 		    <p>크롤링 결과가 없습니다.</p>
 		</c:if>
@@ -54,13 +63,27 @@
 		<h3>${region} 맛집</h3>
 		<c:if test="${not empty homeResponse.restaurantList}">
 		    <ul class="list-group">
-		        <c:forEach var="res" items="${homeResponse.restaurantList}">
+		        <c:forEach var="res" items="${homeResponse.restaurantList}" varStatus="st">
 		            <li class="list-group-item">
-		                ${res.text()} <br>
-		                <a href="${res.absUrl('href')}" target="_blank">타베로그 주소</a>
+		                <!-- 식당 이름 -->
+		                <strong>${res.text()}</strong><br>
+		
+		                <!-- 타베로그 링크 -->
+		                <a href="${res.absUrl('href')}" target="_blank" class="text-primary">
+		                    타베로그 주소
+		                </a><br>
+				
+		                <!-- 대응되는 이미지 -->
+		                <c:if test="${not empty homeResponse.restaurantImgList[st.index]}">
+		                    <img src="${homeResponse.restaurantImgList[st.index]}" 
+		                         class="img-fluid rounded"
+		                         style="max-width: 300px;">
+		                </c:if>
+		                
 		                <hr>
 		            </li>
 		        </c:forEach>
+		
 		    </ul>
 		</c:if>
 	

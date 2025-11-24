@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -15,6 +17,7 @@ import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.visitJapan.dao.users.put.AddCityDAO;
@@ -73,9 +76,26 @@ public class HomeController extends HttpServlet {
 
 			Elements spotList = spotDoc.select("div.spot-name a:lt(10)"); // 상위 10개만
 			Elements restaurantList = tabelogDoc.select("a.list-rst__rst-name-target.cpy-rst-name:lt(10)");
-	
+			Elements restaurantImgs = tabelogDoc.select("img.js-thumbnail-img:lt(10)");
+			
+			List<String> spotImgList = spotDoc.select("div.image-frame img:lt(10)").eachAttr("src");
+			List<String> restaurantImgList = new ArrayList<>();
+			// 레스트랑마다 첫번째 이미지만 추출 (레스트랑 하나 당 3개의 이미지가 있음)
+			for (int i = 0; i < restaurantImgs.size(); i++) {
+			    // 3의 배수(0, 3, 6, ...)만 처리
+			    if (i % 3 != 0) 
+			    		continue;
+			    Element img = restaurantImgs.get(i);
+
+			    String url = img.attr("data-lazy"); // 이미지 URL은 data-lazy 속성에 있음
+
+			    if (url != null && !url.isEmpty()) {
+			    		restaurantImgList.add(url);
+			    }
+			}
+			
 	        // dto에 넣은 후 속성으로 보냄
-	        HomeResponseDTO homeResponse = new HomeResponseDTO(spotList, restaurantList);
+	        HomeResponseDTO homeResponse = new HomeResponseDTO(spotList, restaurantList, spotImgList, restaurantImgList);
 			request.setAttribute("homeResponse", homeResponse);
 			
 		} catch (Exception e) {
