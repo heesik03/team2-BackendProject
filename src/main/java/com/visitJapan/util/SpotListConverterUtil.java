@@ -17,6 +17,7 @@ public class SpotListConverterUtil {
 	        JSONObject dayObj = spotList.getJSONObject(i);
 
 	        String day = dayObj.getString("day");
+	        String city = dayObj.getString("city");
 	        JSONArray spotsArray = dayObj.getJSONArray("spots");
 
 	        List<String> spots = new ArrayList<>();
@@ -24,7 +25,7 @@ public class SpotListConverterUtil {
 	            spots.add(spotsArray.getString(j));
 	        }
 
-	        SpotListDTO dto = new SpotListDTO(day, spots);
+	        SpotListDTO dto = new SpotListDTO(day, city, spots);
 	        dayPlan.add(dto);
 	    }
 	    

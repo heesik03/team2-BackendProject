@@ -32,6 +32,8 @@ endDateInput.addEventListener("change", function () {
 	if (!startDateInput.value || !this.value) // start와 end가 입력이 안되었을땐 실행 안함
 		return;
 	
+	console.log(spotList);
+
 	const inputItinerary = document.getElementById("input-itinerary"); // 일정 추가 영역
 	const dayContainer = document.getElementById("day-container"); // 일정 출력 영역
 	
@@ -45,8 +47,11 @@ endDateInput.addEventListener("change", function () {
     const diffTime = endDate.getTime() - startDate.getTime();
     const dayCount = diffTime / (1000 * 60 * 60 * 24) + 1; // 시작일 포함
 
-    // 기존 div 초기화
+    // 기존 div, spotList, selectd-day 초기화
     dayContainer.innerHTML = "";
+	spotList = []; 
+	selectdDay.innerHTML = "";
+	selectdDay.add(new Option("일자 선택", "", true, true)); // placeholder 옵션
 	
     // dayCount 만큼 div 생성
 	for (let i = 1; i <= dayCount; i++) {
@@ -65,6 +70,7 @@ endDateInput.addEventListener("change", function () {
 		// spotList 일차 추가
 		spotList.push({
 		    day: `${i}일차`,
+			city: "",
 		    spots: []
 		});
 
@@ -88,12 +94,37 @@ document.getElementById("input-itinerary-button").addEventListener('click', func
 	const dayText = selectdDay.options[selectdDay.selectedIndex].text; // "1일차"
 	const dayValue = selectdDay.value; // 선택한 일자
 	const dayBox = document.getElementById(dayValue); // 선택한 일자의 div
-
-	// spots 배열에 관광지추가 
-	const spotData = `${spotValue} [${spotCity}]`; // 관광지 (도시) 방식으로 배열 저장 (ex 도쿄타워 (도쿄)
-	const existDay = spotList.find(item => item.day === dayText); // 특정 일자만
-	existDay.spots.push(spotData); 
 	
+	// spots 배열에 관광지추가 
+	const spotData = `${spotValue}, ${spotCity}`; // 관광지 (도시) 방식으로 배열 저장 (ex 도쿄타워, 도쿄)
+	const existDay = spotList.find(item => item.day === dayText); // 특정 일자만
+	
+	if (existDay.spots.length >= 25) {
+		alert("25개 이상 넣을 수 없습니다.");
+		return;
+	}
+	
+	// 중복 검사 후, 중복이면 중단하고 중복이 아니면 추가
+	if (existDay) {
+	    const isDuplicate = existDay.spots.some(spot => spot === spotData); // 중복 검사
+		
+		if (existDay.spots.length === 0) {
+		    existDay.city = spotCity; // 첫 장소 → 도시 저장
+		}
+
+	    if (isDuplicate) {
+	        alert("이미 해당 일정에 같은 관광지가 등록되어 있습니다.");
+	        return; // push 중단
+	    }
+		
+		if (existDay.city && existDay.city !== spotCity) {
+		    alert("해당 일자에는 같은 도시의 관광지만 등록할 수 있습니다.");
+		    return; // push 중단
+		}
+		
+	    existDay.spots.push(spotData); // 중복이 아니면 추가
+	}
+
 	const div = document.createElement("div");
 	const span = document.createElement("span");
 	const button = document.createElement("button");
@@ -104,7 +135,7 @@ document.getElementById("input-itinerary-button").addEventListener('click', func
 	span.textContent = spotValue;
 	
 	// 삭제 버튼 설정
-	button.class = "itinerary-item-delete"
+	button.classList.add("itinerary-item-delete");
 	button.type = "button";
 	button.textContent = 'X';
 	

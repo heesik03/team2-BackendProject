@@ -109,6 +109,6 @@
 		    });
 		});
 	</script>
-	<script src="${pageContext.request.contextPath}/resource/js/changeDate.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/utils/changeDate.js"></script>
 </body>
 </html>

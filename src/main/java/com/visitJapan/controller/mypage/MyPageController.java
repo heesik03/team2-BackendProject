@@ -35,8 +35,7 @@ public class MyPageController extends HttpServlet {
 	
 	
 	@Override
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
-	        throws ServletException, IOException {
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DeleteCityDAO deleteCityDAO = new DeleteCityDAO();
 	    request.setCharacterEncoding("UTF-8");
 	    

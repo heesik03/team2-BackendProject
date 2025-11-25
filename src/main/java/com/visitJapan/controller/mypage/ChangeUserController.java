@@ -16,7 +16,7 @@ import org.json.JSONObject;
 
 import com.visitJapan.dao.users.delete.DeleteUserDAO;
 import com.visitJapan.dao.users.post.ChangePasswordDAO;
-import com.visitJapan.dao.users.put.ChangeNameDAO;
+import com.visitJapan.dao.users.put.ChangeUserInfoDAO;
 import com.visitJapan.util.LogoutUtil;
 
 @WebServlet("/mypage/change.do")
@@ -53,17 +53,18 @@ public class ChangeUserController extends HttpServlet {
 
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ChangeNameDAO changeNameDAO = new ChangeNameDAO();
+		ChangeUserInfoDAO changeUserInfoDAO = new ChangeUserInfoDAO();
 		request.setCharacterEncoding("UTF-8");
 
 	    String body = request.getReader().lines().collect(Collectors.joining()); // js 요청 본문
 	    JSONObject json = new JSONObject(body); // json 읽기
 	    
 	    ObjectId userId = (ObjectId) request.getSession().getAttribute("id"); // 유저 아이디
-		String newName = json.getString("name");
+		boolean isName = json.getBoolean("isName"); // true면 닉네임, false면 선호 도시를 변경
+		String newData = json.getString("data"); // 바꿀 데이터
 		
-		boolean result = changeNameDAO.updateUserName(userId, newName);
-		
+		boolean result = changeUserInfoDAO.updateUserInfo(userId, isName, newData);
+				
         response.setContentType("application/json; charset=UTF-8");
         if (result) {
             response.setStatus(HttpServletResponse.SC_NO_CONTENT); // 204

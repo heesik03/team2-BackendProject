@@ -29,20 +29,22 @@
 	
 	<!-- itineraryForm.js 로드 전 미리 배열 생성 -->
 	<script>
-		const spotList = [];
+		let spotList = [];
 	</script>
 	<!-- js 파일 불러옴 -->
-	<script src="${pageContext.request.contextPath}/resource/js/itineraryForm.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/utils/itineraryForm.js"></script>
 	<script>
 		const submitButton = document.getElementById("submit-btn"); // 입력 button
 		const hiddenSpotList = document.getElementById("spot-list-hidden"); // spotList를 저장 할 input
 		
 		submitButton.addEventListener("click", function() {
 		     // spotList 비어있으면 전송 막기
-		     if (spotList.length === 0) {
-		         alert("일정이 비었습니다.");
-		         return; // 함수 종료
-		     }
+			const isAllEmpty = spotList.every(item => item.spots.length === 0);
+			
+			if (isAllEmpty) {
+			    alert("일정이 모두 비어 있습니다.");
+			    return; // 함수 종료
+			}
 
 		     hiddenSpotList.value = JSON.stringify(spotList);
 

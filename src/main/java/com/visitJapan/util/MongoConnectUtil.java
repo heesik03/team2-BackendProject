@@ -3,7 +3,6 @@ package com.visitJapan.util;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
-import com.visitJapan.config.DBConfigReader;
 
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistry;
@@ -20,7 +19,9 @@ public class MongoConnectUtil {
     private static MongoDatabase database = null;
 
     public static MongoDatabase getConnection() {
-    	DBConfigReader config = new DBConfigReader();
+    	
+    		DBConfigReader config = new DBConfigReader(); // dbconfig.properties 연결 class
+    		
         if (mongoClient == null) {
             try {
             	// POJO(Plain Old Java Object) 자동 매핑을 위한 CodecProvider 생성

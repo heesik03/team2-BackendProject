@@ -1,12 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" errorPage="/pages/errorPage.jsp" %>
+<%@ page import="org.json.JSONArray" %>
+<%@ page import="java.util.List" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="ko">
 <!-- head (페이지 설정) 영역 -->
-<c:set var="pageTitle" value="여행 일정 보기" />
-<%@ include file="/components/pageHead.jsp" %>
+<head>
+	<meta charset="UTF-8">
+    <title>여행 일정 보기</title>
+    
+    	<!-- 구글 맵 연결 -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=${APIKey}&libraries=places&loading=async"></script>
+    
+    	<!-- bootstrap 연결 -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> 
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	
+	<!-- css 폴더 연결 -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/index.css">
+	
+	<!-- 폰트 스타일 연결 등 -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link
+	    href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Playfair+Display:wght@400;800&display=swap"
+	    rel="stylesheet">
+	    
+	<!-- 구글 맵 스타일 (추후 삭제) -->
+    <style>
+        #map { width: 100%; height: 600px; }
+    </style>
+</head>
 
 <!-- 로그아웃 상태라면 홈 화면으로 이동 -->
 <c:if test="${empty sessionScope.id}">
@@ -18,7 +45,9 @@
 	<jsp:include page="/layout/header.jsp" />
 	
 	<main>
-		<article>
+		
+		<!-- 일정 출력 영역 -->
+		<section>
 			<c:choose>
 				<c:when test="${empty itineraryData}">
 	                	<!-- itineraryData 가 비어있으면 "없음" 표시 -->
@@ -32,21 +61,44 @@
 					
 					
 					<div id="day-container">
-					
 						<c:forEach var="spotList" items="${itineraryData.spotList}">
 							<h4>${spotList.day}</h4>
-							<!-- spotList 출력 (없으면 "없음) 으로 출력 -->
-							<c:choose>
-								<c:when test="${empty spotList.spots}">
-					                	<p>없음</p>
-				                </c:when>
-				                <c:otherwise>
-						            <c:forEach var="spot" items="${spotList.spots}">
-										<p>${spot}</p>
-									</c:forEach>
-				                </c:otherwise>
-							</c:choose>
 							
+							<c:set var="currentSpots" value="${spotList.spots}" scope="request" />
+						    <%
+						        // request 영역에 저장된 spotList.spots 가져옴
+						        Object currentSpotsObj = request.getAttribute("currentSpots");
+						        JSONArray currentSpotsJson = new JSONArray();
+						
+						        // Object가 List 타입인지 확인 후, JSONArray로 변환 (JS에 보내기 위해)
+						        if (currentSpotsObj != null && currentSpotsObj instanceof java.util.List) {
+						            currentSpotsJson = new JSONArray((java.util.List<?>) currentSpotsObj);
+						        }
+						    %>
+							
+							<c:if test="${not empty spotList.spots}">
+								<button 
+									class="create-map-btn"
+									type="button"
+								    data-spots='<%= currentSpotsJson.toString() %>'
+								    data-city="${spotList.city}">
+									지도 생성
+								</button>
+							</c:if>
+							
+							<ol type='A'> <!-- 대문자 알파벳 순서로 출력 -->
+								<!-- spotList 출력 (없으면 "없음) 으로 출력 -->
+								<c:choose>
+									<c:when test="${empty spotList.spots}">
+						                	<p>없음</p>
+					                </c:when>
+					                <c:otherwise>
+							            <c:forEach var="spot" items="${spotList.spots}">
+											<li>${spot}</li>
+										</c:forEach>
+					                </c:otherwise>
+								</c:choose>
+							</ol>
 						</c:forEach>
 						
 						<button type="button" class="delete-btn" data-id="${itineraryData.id}">
@@ -59,13 +111,22 @@
 					</div>
                 </c:otherwise>
 			</c:choose>
-		</article>
+		</section>
+		
+		<section id="mapSection" style="display: none;">
+		    <h3>일본 관광지 경로</h3>
+		    <!-- 구글 맵 출력 영역 -->
+		    <div id="map"></div>
+		</section>
+		
 	</main>
 	
 	<%@ include file="/layout/footer.jsp" %>
 	
 	<!-- js 파일 불러옴 -->
-	<script src="${pageContext.request.contextPath}/resource/js/changeDate.js"></script>
-	<script src="${pageContext.request.contextPath}/resource/js/deleteItinerary.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/utils/changeDate.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/utils/deleteItinerary.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/page/createGoogleMap.js"></script>
+
 </body>
 </html>

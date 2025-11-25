@@ -59,7 +59,7 @@
 			
 			
 			<nav>
-				<a href="${pageContext.request.contextPath}/pages/mypage/changeInfo.jsp">정보 수정</a>
+				<a href="${pageContext.request.contextPath}/pages/mypage/changeInfo.jsp?like-city=${userData.likeCity}">정보 수정</a>
 				<!-- bootstrap으로 여백 설정 -->
 				<br>
 				<br>
@@ -84,7 +84,7 @@
 	<%@ include file="/layout/footer.jsp" %>
 	
 	<!-- js 파일 불러옴 -->
-	<script src="${pageContext.request.contextPath}/resource/js/changeDate.js"></script>
-	<script src="${pageContext.request.contextPath}/resource/js/mypage.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/utils/changeDate.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/page/mypage.js"></script>
 </body>
 </html>

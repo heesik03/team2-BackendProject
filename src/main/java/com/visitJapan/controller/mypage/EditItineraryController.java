@@ -41,6 +41,7 @@ public class EditItineraryController extends HttpServlet {
 			for (SpotListDTO item : itineraryData.getSpotList()) {
 			    JSONObject obj = new JSONObject();
 			    obj.put("day", item.getDay());
+			    obj.put("city", item.getCity());
 
 			    // spots(List<String>) → JSONArray
 			    JSONArray spotsArr = new JSONArray();

@@ -36,7 +36,7 @@ function buildTag() {
 			const childSpan = document.createElement("span");
 			const childButton = document.createElement("button");
 			
-			const cleanedSpot = spot.replace(/\s*\[.*?\]/g, ''); // 지역 정보 ([도쿄])을 지움
+			const cleanedSpot = spot.replace(/,[^,]*$/, ''); // 지역 정보 (도쿄 등)을 지움 (마지막 콤마 이후 모든 내용 지움)
 			
 			// 태그 설정
 			childDiv.classList.add("itinerary-item");
@@ -55,7 +55,6 @@ function buildTag() {
 					const removeValue = parentDiv.id;  // 삭제 대상 문자열
 					existDay.spots = existDay.spots.filter(item => item !== removeValue); // 배열에서 삭제 
 					parentDiv.remove();
-					console.log(spotList);
 			    }
 			});
 			
@@ -68,6 +67,7 @@ function buildTag() {
 	}
 }
 
+// 페이지 로딩 후, 전에 작성했던 일정 내용을 태그에 넣음
 document.addEventListener("DOMContentLoaded", function() {
     buildTag();
 });

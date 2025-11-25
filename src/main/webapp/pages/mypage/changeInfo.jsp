@@ -29,6 +29,16 @@
 					닉네임 변경
 				</button>
 			</form>
+			
+			<br> <h4>선호 도시 변경</h4>
+			<form>
+				<!-- 도시 선택 -->
+				<%@ include file="/components/selectCity.jsp" %>
+				
+				<br> <button id="change-city-btn" type="button">
+					선호 도시 변경
+				</button>
+			</form>
 
 			<br> <h4>비밀번호 변경</h4>
 			<form action="${pageContext.request.contextPath}/mypage/change.do" method="post">
@@ -61,51 +71,11 @@
 		
 	<%@ include file="/layout/footer.jsp" %>
 	
-	<script src="${pageContext.request.contextPath}/resource/js/checkPassword.js"></script>
 	<script>
-		document.getElementById("change-pwd-btn").addEventListener("click", function (e) { 
-			
-		    if (!validatePassword()) {
-		        alert("비밀번호 조건을 만족해야 합니다.");
-		        e.preventDefault();
-		        return false;
-		    }
-			
-		    if (!validateConfirmPassword()) {
-		    		alert("비밀번호 확인이 일치해야 합니다.");
-		        e.preventDefault();
-		        return false;
-		    }
-			
-			
-		    if (!confirm("정말 비밀번호를 변경하시겠습니까? (변경 후 로그아웃 됨)")) {
-		        e.preventDefault(); // 취소 시 submit 중단
-		    }
-		    
-		});
-		
-		document.getElementById("change-name-btn").addEventListener("click", function () {
-		    if (!confirm("정말 닉네임을 변경 하시겠습니까?")) return;
-
-		    const name = document.getElementById("name-input").value; // 보낼 새로운 이름
-
-		    fetch(`${pageContext.request.contextPath}/mypage/change.do`, {
-		        method: "PUT",
-		        headers: { "Content-Type": "application/json" },
-		        body: JSON.stringify({ name })
-		    })
-		    .then(res => {
-		        if (res.status === 204) {
-		            alert("닉네임 변경 성공!");
-		            window.location.href = `${pageContext.request.contextPath}/mypage.do`;
-		        } else {
-		            alert("닉네임 변경 중 오류 발생");
-		            res.text().then(text => console.error("변경 실패:", text));
-		        }
-		    })
-		    .catch(err => console.error(err));
-		});
+		const context = "${pageContext.request.contextPath}"; // 현재 경로 js에 전달
 	</script>
+	<script src="${pageContext.request.contextPath}/resource/js/utils/checkPassword.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/page/changeInfo.js"></script>
 	
 </body>
 </html>

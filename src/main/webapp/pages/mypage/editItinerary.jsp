@@ -29,7 +29,6 @@
 	<script>
 		const contextPath = "${pageContext.request.contextPath}";
 		const itineraryId = '${itineraryData.id}';
-		console.log(itineraryId);
 		
 	    // itineraryData가 존재할 때만 넘김 
 	    <c:if test="${not empty spotListJson}">
@@ -40,11 +39,11 @@
 	        const initialSpotList = [];
 	    </c:if>
 	    
-	    const spotList = Array.isArray(initialSpotList) ? initialSpotList : [];
+	    let spotList = Array.isArray(initialSpotList) ? initialSpotList : [];
 	</script>
 	
 	<!-- js 파일 불러옴 -->
-	<script src="${pageContext.request.contextPath}/resource/js/itineraryForm.js"></script>
-	<script src="${pageContext.request.contextPath}/resource/js/editItinerary.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/utils/itineraryForm.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/page/editItinerary.js"></script>
 </body>
 </html>

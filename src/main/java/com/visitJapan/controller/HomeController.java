@@ -46,57 +46,59 @@ public class HomeController extends HttpServlet {
 		            yield null;
 		        }
 	        };
-			
-	        // 병렬 + 비동기 처리
-	        CompletableFuture<Document> spotFuture = CompletableFuture.supplyAsync(() -> {
-	            try {
-	                return Jsoup.connect(crawlingSpotURL)
-	                        .userAgent("Mozilla/5.0")
-	                        .timeout(8000) // 8초 지날 경우 에러
-	                        .get();
-	            } catch (IOException e) {
-	                throw new RuntimeException(e);
-	            }
-	        });
+	        
+	        if (crawlingTabeURL != null) {
+		        // 병렬 + 비동기 처리
+		        CompletableFuture<Document> spotFuture = CompletableFuture.supplyAsync(() -> {
+		            try {
+		                return Jsoup.connect(crawlingSpotURL)
+		                        .userAgent("Mozilla/5.0")
+		                        .timeout(8000) // 8초 지날 경우 에러
+		                        .get();
+		            } catch (IOException e) {
+		                throw new RuntimeException(e);
+		            }
+		        });
+		
+		        CompletableFuture<Document> tabelogFuture = CompletableFuture.supplyAsync(() -> {
+		            try {
+		                return Jsoup.connect(crawlingTabeURL)
+		                        .userAgent("Mozilla/5.0")
+		                        .timeout(8000)
+		                        .get();
+		            } catch (IOException e) {
+		                throw new RuntimeException(e);
+		            }
+		        });
+		
+		        // 두 Future 모두 완료될 때까지 대기
+		        Document spotDoc = spotFuture.get();
+		        Document tabelogDoc = tabelogFuture.get();
 	
-	        CompletableFuture<Document> tabelogFuture = CompletableFuture.supplyAsync(() -> {
-	            try {
-	                return Jsoup.connect(crawlingTabeURL)
-	                        .userAgent("Mozilla/5.0")
-	                        .timeout(8000)
-	                        .get();
-	            } catch (IOException e) {
-	                throw new RuntimeException(e);
-	            }
-	        });
+				Elements spotList = spotDoc.select("div.spot-name a:lt(10)"); // 상위 10개만
+				Elements restaurantList = tabelogDoc.select("a.list-rst__rst-name-target.cpy-rst-name:lt(10)");
+				Elements restaurantImgs = tabelogDoc.select("img.js-thumbnail-img:lt(10)");
+				
+				List<String> spotImgList = spotDoc.select("div.image-frame img:lt(10)").eachAttr("src");
+				List<String> restaurantImgList = new ArrayList<>();
+				// 레스트랑마다 첫번째 이미지만 추출 (레스트랑 하나 당 3개의 이미지가 있음)
+				for (int i = 0; i < restaurantImgs.size(); i++) {
+				    // 3의 배수(0, 3, 6, ...)만 처리
+				    if (i % 3 != 0) 
+				    		continue;
+				    Element img = restaurantImgs.get(i);
 	
-	        // 두 Future 모두 완료될 때까지 대기
-	        Document spotDoc = spotFuture.get();
-	        Document tabelogDoc = tabelogFuture.get();
-
-			Elements spotList = spotDoc.select("div.spot-name a:lt(10)"); // 상위 10개만
-			Elements restaurantList = tabelogDoc.select("a.list-rst__rst-name-target.cpy-rst-name:lt(10)");
-			Elements restaurantImgs = tabelogDoc.select("img.js-thumbnail-img:lt(10)");
-			
-			List<String> spotImgList = spotDoc.select("div.image-frame img:lt(10)").eachAttr("src");
-			List<String> restaurantImgList = new ArrayList<>();
-			// 레스트랑마다 첫번째 이미지만 추출 (레스트랑 하나 당 3개의 이미지가 있음)
-			for (int i = 0; i < restaurantImgs.size(); i++) {
-			    // 3의 배수(0, 3, 6, ...)만 처리
-			    if (i % 3 != 0) 
-			    		continue;
-			    Element img = restaurantImgs.get(i);
-
-			    String url = img.attr("data-lazy"); // 이미지 URL은 data-lazy 속성에 있음
-
-			    if (url != null && !url.isEmpty()) {
-			    		restaurantImgList.add(url);
-			    }
-			}
-			
-	        // dto에 넣은 후 속성으로 보냄
-	        HomeResponseDTO homeResponse = new HomeResponseDTO(spotList, restaurantList, spotImgList, restaurantImgList);
-			request.setAttribute("homeResponse", homeResponse);
+				    String url = img.attr("data-lazy"); // 이미지 URL은 data-lazy 속성에 있음
+	
+				    if (url != null && !url.isEmpty()) {
+				    		restaurantImgList.add(url);
+				    }
+				}
+				
+		        // dto에 넣은 후 속성으로 보냄
+		        HomeResponseDTO homeResponse = new HomeResponseDTO(spotList, restaurantList, spotImgList, restaurantImgList);
+				request.setAttribute("homeResponse", homeResponse);
+	        }
 			
 		} catch (Exception e) {
             e.printStackTrace();

@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import com.visitJapan.dao.itinerary.GetItineraryDAO;
 import com.visitJapan.dto.db.ItineraryDTO;
-
+import com.visitJapan.util.DBConfigReader;
 
 @WebServlet("/mypage/show-itinerary.do")
 public class ShowItineraryController extends HttpServlet {
@@ -19,6 +19,8 @@ public class ShowItineraryController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		GetItineraryDAO getItineraryDAO = new GetItineraryDAO();
+		DBConfigReader config = new DBConfigReader(); // dbconfig.properties 연결 class
+		
 		String itineraryId = request.getParameter("id"); // 일정의 id 파라메터 가져옴
 		
 		ItineraryDTO itineraryData = getItineraryDAO.findItineraryData(itineraryId);
@@ -27,8 +29,9 @@ public class ShowItineraryController extends HttpServlet {
 			request.setAttribute("itineraryData", itineraryData);
 		}
 		
+		request.setAttribute("APIKey", config.getGoogleKey()); // 구글 맵 API Key JSP로 전달
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/mypage/showItinerary.jsp");
 		dispatcher.forward(request, response); 	
 	}
-
 }

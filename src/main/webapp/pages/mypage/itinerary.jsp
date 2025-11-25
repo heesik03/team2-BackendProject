@@ -74,7 +74,7 @@
 
 	<%@ include file="/layout/footer.jsp" %>
 	
-	<script src="${pageContext.request.contextPath}/resource/js/deleteItinerary.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/utils/deleteItinerary.js"></script>
 	
 </body>
 </html>
