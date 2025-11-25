@@ -8,9 +8,13 @@
 
 <!DOCTYPE html>
 <html lang="ko">
-<!-- head (페이지 설정) 영역 -->
-<c:set var="pageTitle" value="지역 정보" />
-<%@ include file="/components/pageHead.jsp" %>
+
+<head>
+	<!-- head (페이지 설정) 영역 -->
+	<c:set var="pageTitle" value="지역 정보" />
+	<%@ include file="/components/pageHead.jsp" %>
+</head>
+
 <body>
 
 	<jsp:include page="/layout/header.jsp" />

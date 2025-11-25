@@ -4,93 +4,98 @@
 
 <!DOCTYPE html>
 <html lang="ko">
-<c:set var="pageTitle" value="회원가입" />
-<%@ include file="/components/pageHead.jsp" %>
+
+<head>
+	<!-- head (페이지 설정) 영역 -->
+	<c:set var="pageTitle" value="회원가입" />
+	<%@ include file="/components/pageHead.jsp" %>
+	
+	<style>
+	    /* ---------------------------------
+	     * 기본 스타일 및 폰트
+	     * --------------------------------- */
+	    body { 
+	        font-family: 'Playfair Display', 'Noto Serif KR', serif; 
+	        background-color: #FFFFFF; /* 흰색 배경 */
+	    }
+	
+	    /* 폼 컨테이너 및 카드 스타일 */
+	    .signup-container {
+	        max-width: 750px; /* 가로비 */
+	        margin: 50px auto;
+	        padding: 20px;
+	    }
+	
+	    .signup-card { 
+	        border: none;
+	        border-radius: 20px; 
+	        padding: 40px;
+	        background-color: white; 
+	        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); 
+	        border: 1px solid #cceeff; /* 테두리 */
+	    }
+	    
+	    /* 제목 스타일 */
+	    .signup-title {
+	        font-family: 'Playfair Display', serif;
+	        font-size: 45px; 
+	        font-weight: 800; 
+	        text-align: center;
+	        margin-bottom: 40px;
+	        color: #160E0E;
+	    }
+	    
+	    /* 폼 요소 스타일 */
+	    .form-label { 
+	        font-weight: 700; 
+	        margin-bottom: 8px; 
+	        color: #333;
+	    }
+	    .form-control, .form-select { 
+	        border-radius: 10px; 
+	        padding: 12px 15px; 
+	        border: 1px solid #aaddff; /* 연한 파란색 입력 필드 테두리 유지 */
+	        transition: border-color 0.3s, box-shadow 0.3s;
+	    }
+	    /* 입력 필드 포커스 시 강조 */
+	    .form-control:focus, .form-select:focus {
+	        border-color: #88ccff; /* 포커스 시 연한 파란색 유지 */
+	        box-shadow: 0 0 0 0.25rem rgba(136, 204, 255, 0.25); /* 포커스 시 그림자 유지 */
+	    }
+	    
+	    /* 버튼 스타일 */
+	    .btn-primary-custom {
+	        background-color: #4dc3ff; /* 버튼 파란색 */
+	        border-color: #4dc3ff; /* 버튼 파란색  */
+	        font-size: 1.2rem;
+	        font-weight: 700;
+	        padding: 12px 25px; 
+	        border-radius: 10px; 
+	        box-shadow: 0 4px 10px rgba(77, 195, 255, 0.4); /* 버튼 그림자 */
+	        transition: background-color 0.3s, border-color 0.3s, transform 0.2s;
+	    }
+	    .btn-primary-custom:hover {
+	        background-color: #26a9e0; 
+	        border-color: #26a9e0; 
+	        transform: translateY(-2px); 
+	        box-shadow: 0 6px 15px rgba(77, 195, 255, 0.6); 
+	    }
+	
+	    /* 푸터 스타일 (기존 유지) */
+	    footer { 
+	        background: #160E0E; 
+	        color: white; 
+	        padding: 32px 0; 
+	        margin-top: 50px; 
+	    }
+	    footer p, footer a { font-size: 16px; color: #ccc; text-decoration: none; line-height: 1.8; }
+	</style>
+	
+</head>
 
 <c:if test="${not empty sessionScope.id}">
     <c:redirect url="/index.jsp" />
 </c:if>
-
-<style>
-    /* ---------------------------------
-     * 기본 스타일 및 폰트
-     * --------------------------------- */
-    body { 
-        font-family: 'Playfair Display', 'Noto Serif KR', serif; 
-        background-color: #FFFFFF; /* 흰색 배경 */
-    }
-
-    /* 폼 컨테이너 및 카드 스타일 */
-    .signup-container {
-        max-width: 750px; /* 가로비 */
-        margin: 50px auto;
-        padding: 20px;
-    }
-
-    .signup-card { 
-        border: none;
-        border-radius: 20px; 
-        padding: 40px;
-        background-color: white; 
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); 
-        border: 1px solid #cceeff; /* 테두리 */
-    }
-    
-    /* 제목 스타일 */
-    .signup-title {
-        font-family: 'Playfair Display', serif;
-        font-size: 45px; 
-        font-weight: 800; 
-        text-align: center;
-        margin-bottom: 40px;
-        color: #160E0E;
-    }
-    
-    /* 폼 요소 스타일 */
-    .form-label { 
-        font-weight: 700; 
-        margin-bottom: 8px; 
-        color: #333;
-    }
-    .form-control, .form-select { 
-        border-radius: 10px; 
-        padding: 12px 15px; 
-        border: 1px solid #aaddff; /* 연한 파란색 입력 필드 테두리 유지 */
-        transition: border-color 0.3s, box-shadow 0.3s;
-    }
-    /* 입력 필드 포커스 시 강조 */
-    .form-control:focus, .form-select:focus {
-        border-color: #88ccff; /* 포커스 시 연한 파란색 유지 */
-        box-shadow: 0 0 0 0.25rem rgba(136, 204, 255, 0.25); /* 포커스 시 그림자 유지 */
-    }
-    
-    /* 버튼 스타일 */
-    .btn-primary-custom {
-        background-color: #4dc3ff; /* 버튼 파란색 */
-        border-color: #4dc3ff; /* 버튼 파란색  */
-        font-size: 1.2rem;
-        font-weight: 700;
-        padding: 12px 25px; 
-        border-radius: 10px; 
-        box-shadow: 0 4px 10px rgba(77, 195, 255, 0.4); /* 버튼 그림자 */
-        transition: background-color 0.3s, border-color 0.3s, transform 0.2s;
-    }
-    .btn-primary-custom:hover {
-        background-color: #26a9e0; 
-        border-color: #26a9e0; 
-        transform: translateY(-2px); 
-        box-shadow: 0 6px 15px rgba(77, 195, 255, 0.6); 
-    }
-
-    /* 푸터 스타일 (기존 유지) */
-    footer { 
-        background: #160E0E; 
-        color: white; 
-        padding: 32px 0; 
-        margin-top: 50px; 
-    }
-    footer p, footer a { font-size: 16px; color: #ccc; text-decoration: none; line-height: 1.8; }
-</style>
 
 <body>
 	<jsp:include page="/layout/header.jsp" />

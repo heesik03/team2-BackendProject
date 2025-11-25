@@ -28,7 +28,7 @@
 				                </a>
 				            </li>
 				            <li class="nav-item ms-lg-3"> <!-- log out 버튼 -->
-					         	<form action="logout.do" method="post">
+					         	<form action="${pageContext.request.contextPath}/logout.do" method="post">
 					                <button type="submit" class="btn btn-primary" 
 					                	style="font-size: 19px; background-color: #6E98E5; border: none;">
 					                	log out

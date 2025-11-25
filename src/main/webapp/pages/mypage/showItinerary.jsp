@@ -7,28 +7,15 @@
 
 <!DOCTYPE html>
 <html lang="ko">
-<!-- head (페이지 설정) 영역 -->
+
 <head>
-	<meta charset="UTF-8">
-    <title>여행 일정 보기</title>
-    
-    	<!-- 구글 맵 연결 -->
+	<!-- head (페이지 설정) 영역 -->
+	<c:set var="pageTitle" value="여행 일정 보기" />
+	<%@ include file="/components/pageHead.jsp" %>
+	
+	 <!-- 구글 맵 연결 -->
     <script src="https://maps.googleapis.com/maps/api/js?key=${APIKey}&libraries=places&loading=async"></script>
-    
-    	<!-- bootstrap 연결 -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> 
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	
-	<!-- css 폴더 연결 -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/index.css">
-	
-	<!-- 폰트 스타일 연결 등 -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link
-	    href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Playfair+Display:wght@400;800&display=swap"
-	    rel="stylesheet">
-	    
 	<!-- 구글 맵 스타일 (추후 삭제) -->
     <style>
         #map { width: 100%; height: 600px; }

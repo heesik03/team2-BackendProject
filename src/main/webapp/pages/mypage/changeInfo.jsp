@@ -4,9 +4,12 @@
 
 <!DOCTYPE html>
 <html lang="ko">
-<!-- head (페이지 설정) 영역 -->
-<c:set var="pageTitle" value="정보 변경" />
-<%@ include file="/components/pageHead.jsp" %>
+
+<head>
+	<!-- head (페이지 설정) 영역 -->
+	<c:set var="pageTitle" value="정보 변경" />
+	<%@ include file="/components/pageHead.jsp" %>
+</head>
 
 <!-- 로그아웃 상태라면 홈 화면으로 이동 -->
 <c:if test="${empty sessionScope.id}">

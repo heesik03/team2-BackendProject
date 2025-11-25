@@ -5,9 +5,12 @@
 
 <!DOCTYPE html>
 <html lang="ko">
-<!-- head (페이지 설정) 영역 -->
-<c:set var="pageTitle" value="visit japan (가칭)" />
-<%@ include file="/components/pageHead.jsp" %>
+
+<head>
+	<!-- head (페이지 설정) 영역 -->
+	<c:set var="pageTitle" value="visit japan (가칭)" />
+	<%@ include file="/components/pageHead.jsp" %>
+</head>
 
 <body>
 	
