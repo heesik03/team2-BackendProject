@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>    
-<%@ page import="com.visitJapan.dto.response.HomeResponseDTO" %>
 <%@ page import="org.jsoup.nodes.Element" %>
 <%@ page import="org.jsoup.select.Elements" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -25,6 +24,24 @@
 
 		<c:set var="region" value="${param.region}" />  <!-- 파라미터 region 가져옴  -->
 		<h3>${region} 관광지</h3>
+		
+		<c:if test="${not empty homeResponse.weatherData}">
+            <div style="
+                border: 1px solid #ddd;
+                padding: 20px;
+                border-radius: 12px;
+                margin: 20px 0;
+                background: #f9f9f9;
+                max-width: 400px;">
+                
+                <h3 style="margin-bottom: 10px;">오늘의 날씨</h3>
+
+                <p>🌤 하늘 상태: ${homeResponse.weatherData.skyStatus}</p>
+                <p>🔥 최고 기온: ${homeResponse.weatherData.highTemp}℃</p>
+                <p>❄ 최저 기온: ${homeResponse.weatherData.lowTemp}℃</p>
+                <p>🌧 강수 확률: ${homeResponse.weatherData.precipitation}</p>
+            </div>
+        </c:if>
 		
 		
 		<c:if test="${not empty homeResponse.spotList}">  <!-- spotList가 비어있지 않다면 -->
@@ -59,15 +76,11 @@
 		        </c:forEach>
 		    </ul>
 		</c:if>
-		
-		<c:if test="${empty homeResponse.spotList}"> <!-- spotList가 비어있다면 -->
-		    <p>크롤링 결과가 없습니다.</p>
-		</c:if>
 			
 		<h3>${region} 맛집</h3>
-		<c:if test="${not empty homeResponse.restaurantList}">
+		<c:if test="${not empty homeResponse.restaurantData.restaurantList}">
 		    <ul class="list-group">
-		        <c:forEach var="res" items="${homeResponse.restaurantList}" varStatus="st">
+		        <c:forEach var="res" items="${homeResponse.restaurantData.restaurantList}" varStatus="st">
 		            <li class="list-group-item">
 		                <!-- 식당 이름 -->
 		                <strong>${res.text()}</strong><br>
@@ -78,8 +91,8 @@
 		                </a><br>
 				
 		                <!-- 대응되는 이미지 -->
-		                <c:if test="${not empty homeResponse.restaurantImgList[st.index]}">
-		                    <img src="${homeResponse.restaurantImgList[st.index]}" 
+		                <c:if test="${not empty homeResponse.restaurantData.restaurantImgList[st.index]}">
+		                    <img src="${homeResponse.restaurantData.restaurantImgList[st.index]}" 
 		                         class="img-fluid rounded"
 		                         style="max-width: 300px;">
 		                </c:if>
@@ -90,12 +103,13 @@
 		
 		    </ul>
 		</c:if>
-	
-		<c:if test="${empty homeResponse.restaurantList}">
-		    <p>크롤링 결과가 없습니다.</p>
-		</c:if>
+
 	</main>
-	
+
+    <%@ include file="/layout/footer.jsp" %>
+    
+    	<script src="${pageContext.request.contextPath}/resource/js/utils/searchSuggest.js"></script>
+
 	<script>
 		document.querySelectorAll(".add-city-form").forEach(form => {
 		    form.addEventListener("submit", function(e) {
@@ -122,7 +136,6 @@
 		    });
 		});
 	</script>
-
-    <%@ include file="/layout/footer.jsp" %>
+    
 </body>
 </html>

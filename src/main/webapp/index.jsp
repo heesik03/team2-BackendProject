@@ -93,8 +93,11 @@
         </section>
         
 	</main>
-
+	
 	<!-- FOOTER : 페이지 하단 정보 영역  -->
 	<%@ include file="/layout/footer.jsp" %>
+	
+	<script src="${pageContext.request.contextPath}/resource/js/utils/searchSuggest.js"></script>
+	
 </body>
 </html>

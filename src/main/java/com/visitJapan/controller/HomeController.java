@@ -10,18 +10,18 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.visitJapan.dao.users.put.AddCityDAO;
-import com.visitJapan.dto.response.HomeResponseDTO;
+import com.visitJapan.dto.response.*;
+import com.visitJapan.util.CrawlingUtil;
+import com.visitJapan.util.FetchUtil;
 
 
 @WebServlet("/home.do")
@@ -31,10 +31,25 @@ public class HomeController extends HttpServlet {
     private final String tabelogLink = "https://tabelog.com/kr/";
 	private final String spotLink = "https://japantravel.navitime.com/ko/area/jp/search/spot/?word=";
 	
+    // ★ 지역별 날씨 주소 매핑 
+	private static final Map<String, String> AREA_URL = Map.of(
+		    "도쿄", "https://tenki.jp/forecast/3/16/4410/13101/",
+		    "오사카", "https://tenki.jp/forecast/6/30/6200/27100/",
+		    "교토", "https://tenki.jp/forecast/6/29/6110/26100/",
+		    "후쿠오카", "https://tenki.jp/forecast/9/43/8210/40130/"
+	);
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String region = request.getParameter("region"); // 검색한 지역 정보 가져옴
-			String crawlingSpotURL = spotLink + region;
+			String crawlingSpotURL = spotLink + region; // 관광지 링크
+			String crawlingYahooURL = AREA_URL.get(region); // yahoo japan 날씨 링크
+
+			// 결과값
+			Elements spotList = null;
+			List<String> spotImgList = null;
+			RestaurantDTO restaurantData = null;
+			WeatherDTO weatherData = null;
 			
 			// 타베로그 크롤링 링크
 	        String crawlingTabeURL = switch (region) {
@@ -47,58 +62,43 @@ public class HomeController extends HttpServlet {
 		        }
 	        };
 	        
-	        if (crawlingTabeURL != null) {
-		        // 병렬 + 비동기 처리
-		        CompletableFuture<Document> spotFuture = CompletableFuture.supplyAsync(() -> {
-		            try {
-		                return Jsoup.connect(crawlingSpotURL)
-		                        .userAgent("Mozilla/5.0")
-		                        .timeout(8000) // 8초 지날 경우 에러
-		                        .get();
-		            } catch (IOException e) {
-		                throw new RuntimeException(e);
-		            }
-		        });
-		
-		        CompletableFuture<Document> tabelogFuture = CompletableFuture.supplyAsync(() -> {
-		            try {
-		                return Jsoup.connect(crawlingTabeURL)
-		                        .userAgent("Mozilla/5.0")
-		                        .timeout(8000)
-		                        .get();
-		            } catch (IOException e) {
-		                throw new RuntimeException(e);
-		            }
-		        });
-		
-		        // 두 Future 모두 완료될 때까지 대기
-		        Document spotDoc = spotFuture.get();
-		        Document tabelogDoc = tabelogFuture.get();
-	
-				Elements spotList = spotDoc.select("div.spot-name a:lt(10)"); // 상위 10개만
-				Elements restaurantList = tabelogDoc.select("a.list-rst__rst-name-target.cpy-rst-name:lt(10)");
-				Elements restaurantImgs = tabelogDoc.select("img.js-thumbnail-img:lt(10)");
-				
-				List<String> spotImgList = spotDoc.select("div.image-frame img:lt(10)").eachAttr("src");
-				List<String> restaurantImgList = new ArrayList<>();
-				// 레스트랑마다 첫번째 이미지만 추출 (레스트랑 하나 당 3개의 이미지가 있음)
-				for (int i = 0; i < restaurantImgs.size(); i++) {
-				    // 3의 배수(0, 3, 6, ...)만 처리
-				    if (i % 3 != 0) 
-				    		continue;
-				    Element img = restaurantImgs.get(i);
-	
-				    String url = img.attr("data-lazy"); // 이미지 URL은 data-lazy 속성에 있음
-	
-				    if (url != null && !url.isEmpty()) {
-				    		restaurantImgList.add(url);
-				    }
-				}
-				
-		        // dto에 넣은 후 속성으로 보냄
-		        HomeResponseDTO homeResponse = new HomeResponseDTO(spotList, restaurantList, spotImgList, restaurantImgList);
-				request.setAttribute("homeResponse", homeResponse);
+	        List<String> crawlingUrls = new ArrayList<>();
+
+	        // 크롤링 URL들 List에 저장
+	        if (crawlingSpotURL != null) {
+	            crawlingUrls.add(crawlingSpotURL);
 	        }
+	        crawlingUrls.add(crawlingTabeURL);
+	        crawlingUrls.add(crawlingYahooURL);
+
+	        // 병렬 크롤링
+	        List<Document> documents = FetchUtil.fetchAll(crawlingUrls);
+
+	        // 문서 인덱스 매핑
+	        int idx = 0;
+	        Document spotDoc = null;
+	        if (crawlingSpotURL != null) {
+	            spotDoc = documents.get(idx++);
+	        }
+	        Document tabelogDoc = documents.get(idx++);
+	        Document skyDoc = documents.get(idx);
+
+	        // 관광지 데이터
+	        if (spotDoc != null) {
+	            spotList = spotDoc.select("div.spot-name a:lt(10)");
+	            spotImgList = spotDoc.select("div.image-frame img:lt(10)").eachAttr("src");
+	        }
+
+	        // 맛집
+	        restaurantData = CrawlingUtil.getRestaurant(tabelogDoc);
+
+	        // 날씨
+	        weatherData = CrawlingUtil.getWeather(skyDoc);
+
+			
+	        // dto에 넣은 후 속성으로 보냄
+	        HomeResponseDTO homeResponse = new HomeResponseDTO(spotList, spotImgList, restaurantData, weatherData);
+			request.setAttribute("homeResponse", homeResponse);
 			
 		} catch (Exception e) {
             e.printStackTrace();

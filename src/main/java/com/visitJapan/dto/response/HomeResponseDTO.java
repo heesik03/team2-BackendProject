@@ -6,17 +6,19 @@ import org.jsoup.select.Elements;
 
 public class HomeResponseDTO {
 	private Elements spotList;
-	private Elements restaurantList;
 	private List<String> spotImgList;
-	private List<String> restaurantImgList;
+	private RestaurantDTO restaurantData;
+	private WeatherDTO weatherData;
 	
-	public HomeResponseDTO(Elements spotList, Elements restaurantList, List<String> spotImgList,
-			List<String> restaurantImgList) {
+    public HomeResponseDTO() {}
+
+	public HomeResponseDTO(Elements spotList, List<String> spotImgList, RestaurantDTO restaurantData,
+			WeatherDTO weatherData) {
 		super();
 		this.spotList = spotList;
-		this.restaurantList = restaurantList;
 		this.spotImgList = spotImgList;
-		this.restaurantImgList = restaurantImgList;
+		this.restaurantData = restaurantData;
+		this.weatherData = weatherData;
 	}
 
 	public Elements getSpotList() {
@@ -27,14 +29,6 @@ public class HomeResponseDTO {
 		this.spotList = spotList;
 	}
 
-	public Elements getRestaurantList() {
-		return restaurantList;
-	}
-
-	public void setRestaurantList(Elements restaurantList) {
-		this.restaurantList = restaurantList;
-	}
-
 	public List<String> getSpotImgList() {
 		return spotImgList;
 	}
@@ -43,12 +37,21 @@ public class HomeResponseDTO {
 		this.spotImgList = spotImgList;
 	}
 
-	public List<String> getRestaurantImgList() {
-		return restaurantImgList;
+	public RestaurantDTO getRestaurantData() {
+		return restaurantData;
 	}
 
-	public void setRestaurantImgList(List<String> restaurantImgList) {
-		this.restaurantImgList = restaurantImgList;
+	public void setRestaurantData(RestaurantDTO restaurantData) {
+		this.restaurantData = restaurantData;
 	}
+
+	public WeatherDTO getWeatherData() {
+		return weatherData;
+	}
+
+	public void setWeatherData(WeatherDTO weatherData) {
+		this.weatherData = weatherData;
+	}
+
 	
 }
