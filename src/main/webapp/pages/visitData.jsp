@@ -61,7 +61,7 @@
 			                
 			                <!-- 스크랩 추가  -->
 			               <c:if test="${not empty sessionScope.id}">
-							    <button class="add-city-btn"
+							    <button class="add-scrap-btn"
 							    		data-spot="${spot.text()}"
 							    		data-region="${region}"
 							    		type="button">
@@ -102,6 +102,17 @@
 			                <a href="${res.absUrl('href')}" target="_blank" class="text-primary">
 			                    타베로그 주소
 			                </a><br>
+			                
+			              <!-- 스크랩 추가  -->
+			               <c:if test="${not empty sessionScope.id}">
+							    <button class="add-scrap-btn"
+							    		data-spot="${res.text()}"
+							    		data-region="${region}"
+							    		type="button">
+							        스크랩 추가
+							    </button>
+							    <br>
+							</c:if>
 					
 			                <!-- 대응되는 이미지 -->
 			                <c:if test="${not empty homeResponse.restaurantData.restaurantImgList[st.index]}">
@@ -127,7 +138,7 @@
     	<script src="${pageContext.request.contextPath}/resource/js/utils/searchSuggest.js"></script>
 
 	<script>
-		document.querySelectorAll(".add-city-btn").forEach(form => {
+		document.querySelectorAll(".add-scrap-btn").forEach(form => {
 		    form.addEventListener("click", function() {
 		
 		        const spot = this.dataset.spot;  // EL에서 넘긴 spot.text()
