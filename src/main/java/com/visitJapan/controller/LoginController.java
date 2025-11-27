@@ -23,7 +23,7 @@ public class LoginController extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         
-        ObjectId userId  = loginDAO.checkUser(email, password); // 아이디, 비밀번호 검증
+        ObjectId userId = loginDAO.checkUser(email, password); // 아이디, 비밀번호 검증
         
 		if (userId != null) {
 		    HttpSession session = request.getSession();

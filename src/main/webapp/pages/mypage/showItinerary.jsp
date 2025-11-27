@@ -102,6 +102,17 @@
 		
 		<section id="mapSection" style="display: none;">
 		    <h3>일본 관광지 경로</h3>
+		    
+		    <label for="choose-travel-mode" class="form-label">경로 이동수단 선택</label>
+			<select id="choose-travel-mode" class="form-select">
+			    <option value="" disabled selected>이동수단 선택</option>
+			    <option value="DRIVING">자동차</option>
+			    <option value="WALKING">도보</option>
+			    <option value="BICYCLING">자전거</option>
+			    <option value="TRANSIT">대중교통</option>
+			</select>
+			<br>
+		  
 		    <!-- 구글 맵 출력 영역 -->
 		    <div id="map"></div>
 		</section>

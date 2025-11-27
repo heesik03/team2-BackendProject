@@ -41,7 +41,6 @@
 	
 	<!-- 연관 검색어 박스 -->
 	<div id="suggestionBox" class="suggestion-box"></div>
-	
 
 	<!-- 뒤로가기 버그 방지 -->
 	<script>
