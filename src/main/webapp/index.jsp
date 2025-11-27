@@ -77,7 +77,7 @@
             	<!-- 배열은 순회하며 이미지 출력 -->
                 <c:forEach var="city" items="${cityArr}">
 			        <div class="col-12 col-md-6 col-lg-4">
-			            <a href="home.do?region=${city[0]}" style="text-decoration: none; color: inherit;">
+			            <a href="pages/loading.jsp?region=${city[0]}" style="text-decoration: none; color: inherit;">
 			                <div class="city-card">
 			                    <!-- 이미지 출력 -->
 			                     <img src="${pageScope[city[2]]}"

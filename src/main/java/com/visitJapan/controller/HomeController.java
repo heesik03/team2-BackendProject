@@ -43,7 +43,7 @@ public class HomeController extends HttpServlet {
 		try {
 			String region = request.getParameter("region"); // 검색한 지역 정보 가져옴
 			String crawlingSpotURL = spotLink + region; // 관광지 링크
-			String crawlingYahooURL = AREA_URL.get(region); // yahoo japan 날씨 링크
+			String crawlingYahooURL = null; // yahoo japan 날씨 링크
 
 			// 결과값
 			Elements spotList = null;
@@ -69,7 +69,10 @@ public class HomeController extends HttpServlet {
 	            crawlingUrls.add(crawlingSpotURL);
 	        }
 	        crawlingUrls.add(crawlingTabeURL);
-	        crawlingUrls.add(crawlingYahooURL);
+	        if (AREA_URL.get(region) != null) {
+        			crawlingYahooURL = AREA_URL.get(region);
+	        		crawlingUrls.add(crawlingYahooURL);
+	        }
 
 	        // 병렬 크롤링
 	        List<Document> documents = FetchUtil.fetchAll(crawlingUrls);

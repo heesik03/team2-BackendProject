@@ -49,9 +49,8 @@ if (searchInput) {
 
             // 클릭하면 해당 지역 검색으로 이동
             item.addEventListener("click", () => {
-                window.location.href = `home.do?region=${region}`;
+                window.location.href = `${context}/pages/loading.jsp?region=${region}`;
             });
-
             suggestionBox.appendChild(item);
         });
 

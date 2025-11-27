@@ -40,15 +40,15 @@
             <!-- 빠른링크 -->
             <nav class="col-12 col-md-3 mb-4">
                 <h3>빠른링크</h3>
-                <p><a href="#">about</a></p>
+                <p><a href="about.jsp" target="_blank">about</a></p>
                 <!-- 로그인 여부에 따른 조건 영역 -->
 			    <c:choose>	
 			        <c:when test="${not empty sessionScope.id}"> 
 			        	<!-- 유저가 로그인 상태라면 -->
 			            <p>
-			            <a href="${pageContext.request.contextPath}/mypage.do">
-			            		my page
-			            	</a>
+				            <a href="${pageContext.request.contextPath}/mypage.do">
+				            		my page
+				            	</a>
 			           	</p>
 			        </c:when>
 			
@@ -56,7 +56,7 @@
 			        	<!-- 유저가 로그아웃 상태라면 -->		
 			  			<p>
 				            	<a href="${pageContext.request.contextPath}/pages/signup.jsp">
-				            		sign up
+				            		sign up 
 				            	</a>
 			           	</p>	            
 			        </c:otherwise>
@@ -76,9 +76,9 @@
             <!-- 고객지원 -->
             <nav class="col-12 col-md-3 mb-4">
                 <h3>고객지원</h3>
-                <p><a href="#">자주 묻는 질문</a></p>
-                <p><a href="#">이용 안내</a></p>
-                <p><a href="#">문의하기</a></p>
+                <p><a href="https://www.japan.travel/ko/plan/faq/" target="_blank">자주 묻는 질문</a></p>
+                <p><a href="about.jsp" target="_blank">이용 안내</a></p>
+                <p><a href="https://mail.naver.com/" target="_blank">문의하기</a></p>
             </nav>
 
             <!-- 브랜드 정보 -->

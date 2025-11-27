@@ -6,7 +6,7 @@
 	<div class="row justify-content-center my-5">
 	    <div class="col-lg-8">
 	    
-	        <form action="${pageContext.request.contextPath}/home.do" method="get" class="position-relative">
+	        <form action="${pageContext.request.contextPath}/pages/loading.jsp" method="get" class="position-relative">
 	            <!-- 검색창 -->
 	            <input type="search" name="region"
 	                   id="searchInput"   
@@ -41,4 +41,16 @@
 	
 	<!-- 연관 검색어 박스 -->
 	<div id="suggestionBox" class="suggestion-box"></div>
+	
+
+	<!-- 뒤로가기 버그 방지 -->
+	<script>
+		const context = "${pageContext.request.contextPath}"
+		
+		document.querySelector("form").addEventListener("submit", function(){
+		    history.replaceState(null, null, location.href);
+		});
+	</script>
 </div>
+
+
