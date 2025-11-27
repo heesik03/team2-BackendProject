@@ -6,7 +6,7 @@
 	<div class="row justify-content-center my-5">
 	    <div class="col-lg-8">
 	    
-	        <form action="${pageContext.request.contextPath}/pages/loading.jsp" method="get" class="position-relative">
+	        <form action="${pageContext.request.contextPath}/home.do" method="get" class="position-relative">
 	            <!-- 검색창 -->
 	            <input type="search" name="region"
 	                   id="searchInput"   
@@ -29,10 +29,13 @@
 	            <ul id="suggestList"
 	                class="list-group position-absolute w-100 mt-2"
 	                style="display:none; z-index: 999;">
-	                <li class="list-group-item list-group-item-action" data-region="도쿄">도쿄</li>
-	                <li class="list-group-item list-group-item-action" data-region="오사카">오사카</li>
-	                <li class="list-group-item list-group-item-action" data-region="후쿠오카">후쿠오카</li>
-	                <li class="list-group-item list-group-item-action" data-region="교토">교토</li>
+	                
+	               	<c:forEach var="city" items="${regionList}">
+	               		<li class="list-group-item list-group-item-action" data-region="${city}">
+               				${city}
+	               		</li>
+				    </c:forEach> 
+				    
 	            </ul>
 	        </form>
 	        

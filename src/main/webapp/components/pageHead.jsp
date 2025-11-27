@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <meta charset="UTF-8">
 <title>${pageTitle}</title>
@@ -18,3 +18,17 @@
 <link
     href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Playfair+Display:wght@400;800&display=swap"
     rel="stylesheet">
+
+<% 
+	String[] regionList = {"도쿄", "오사카", "교토", "후쿠오카", "삿포로", "나고야", "히로시마"}; // 검색어 목록 선언
+	request.setAttribute("regionList", regionList);
+%>
+
+<script>
+	// 검색어 목록 js에 넣기
+    const regionList = [
+        <c:forEach var="city" items="${regionList}" varStatus="st">
+            "${city}"<c:if test="${!st.last}">,</c:if>
+        </c:forEach>
+    ];
+</script>

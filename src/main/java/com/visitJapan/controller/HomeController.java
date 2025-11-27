@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
@@ -36,7 +37,10 @@ public class HomeController extends HttpServlet {
 		    "도쿄", "https://tenki.jp/forecast/3/16/4410/13101/",
 		    "오사카", "https://tenki.jp/forecast/6/30/6200/27100/",
 		    "교토", "https://tenki.jp/forecast/6/29/6110/26100/",
-		    "후쿠오카", "https://tenki.jp/forecast/9/43/8210/40130/"
+		    "후쿠오카", "https://tenki.jp/forecast/9/43/8210/40130/",
+		    "삿포로", "https://tenki.jp/forecast/1/2/1400/1100/",
+		    "나고야", "https://tenki.jp/forecast/5/26/5110/23100/",
+		    "히로시마", "https://tenki.jp/forecast/7/37/6710/34100/"
 	);
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -57,6 +61,9 @@ public class HomeController extends HttpServlet {
 		    	case "오사카" -> tabelogLink + "osaka/";
 		    	case "교토" -> tabelogLink + "kyoto/";
 		    	case "후쿠오카" -> tabelogLink + "fukuoka/";
+		    	case "삿포로" -> tabelogLink + "hokkaido/A0101/";
+		    	case "나고야" -> tabelogLink + "aichi/A2301/";
+		    	case "히로시마" -> tabelogLink + "hiroshima/";
 		        default -> {
 		            yield null;
 		        }
@@ -66,7 +73,9 @@ public class HomeController extends HttpServlet {
 
 	        // 크롤링 URL들 List에 저장
 	        if (crawlingSpotURL != null) {
-	            crawlingUrls.add(crawlingSpotURL);
+	        		int randomPageIndex = new Random().nextInt(5)+1; // 1~5 페이지까지 랜덤 페이지 
+	        		
+	            crawlingUrls.add(crawlingSpotURL + "&page=" + randomPageIndex);
 	        }
 	        crawlingUrls.add(crawlingTabeURL);
 	        if (AREA_URL.get(region) != null) {

@@ -25,24 +25,27 @@
 		<!-- 여행 일정 입력 form -->
 		<jsp:include page="/components/itineraryForm.jsp" />
 		
+		<input type="hidden" id="edit-spot-list" value='${fn:escapeXml(spotListJson)}'>
 	</main>
 
 	<%@ include file="/layout/footer.jsp" %>
 	
 	<script>
+		let spotList = [];
+		const editSpotList = document.getElementById("edit-spot-list");
+		
+	    if (editSpotList) {
+	        try {
+	            spotList = JSON.parse(editSpotList.value);
+	        } catch(e) {
+	            console.error("JSON 파싱 실패", e);
+	            spotList = [];
+	        }
+	    }
+		
 		const contextPath = "${pageContext.request.contextPath}";
 		const itineraryId = '${itineraryData.id}';
 		
-	    // itineraryData가 존재할 때만 넘김 
-	    <c:if test="${not empty spotListJson}">
-		    const initialSpotList = JSON.parse('${spotListJson}');
-	    </c:if>
-
-	    <c:if test="${empty spotListJson}">
-	        const initialSpotList = [];
-	    </c:if>
-	    
-	    let spotList = Array.isArray(initialSpotList) ? initialSpotList : [];
 	</script>
 	
 	<!-- js 파일 불러옴 -->

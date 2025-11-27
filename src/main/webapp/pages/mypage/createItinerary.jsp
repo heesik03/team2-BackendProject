@@ -43,8 +43,21 @@
 		const hiddenSpotList = document.getElementById("spot-list-hidden"); // spotList를 저장 할 input
 		
 		submitButton.addEventListener("click", function() {
-		     // spotList 비어있으면 전송 막기
-			const isAllEmpty = spotList.every(item => item.spots.length === 0);
+		    const titleInput = document.getElementById("title-input").value.trim();
+		    const startDate = document.getElementById("start-date").value;
+		    const endDate = document.getElementById("end-date").value;
+		    
+			const isAllEmpty = spotList.every(item => item.spots.length === 0); // spotList 비어있으면 전송 막기
+		 	
+		    if (!titleInput) {
+		        alert("제목을 입력해주세요.");
+		        return;
+		    }
+
+		    if (!startDate || !endDate) {
+		        alert("시작일과 종료일을 입력해주세요.");
+		        return;
+		    }
 			
 			if (isAllEmpty) {
 			    alert("일정이 모두 비어 있습니다.");

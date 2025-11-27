@@ -32,8 +32,6 @@ endDateInput.addEventListener("change", function () {
 	if (!startDateInput.value || !this.value) // start와 end가 입력이 안되었을땐 실행 안함
 		return;
 	
-	console.log(spotList);
-
 	const inputItinerary = document.getElementById("input-itinerary"); // 일정 추가 영역
 	const dayContainer = document.getElementById("day-container"); // 일정 출력 영역
 	
@@ -134,7 +132,7 @@ document.getElementById("input-itinerary-button").addEventListener('click', func
 	div.id = spotData;
 	span.textContent = spotValue;
 	
-	// 삭제 버튼 설정
+	// 삭제 버튼 설정ㄴ
 	button.classList.add("itinerary-item-delete");
 	button.type = "button";
 	button.textContent = 'X';

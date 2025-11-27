@@ -82,9 +82,26 @@ submitButton.addEventListener("click", function() {
 
     hiddenSpotList.value = JSON.stringify(spotList);
 
-    const title = document.getElementById("title-input").value;
+    const title = document.getElementById("title-input").value.trim();
     const start = document.getElementById("start-date").value;
     const end = document.getElementById("end-date").value;
+	
+	const isAllEmpty = spotList.every(item => item.spots.length === 0); // spotList 비어있으면 전송 막기
+
+	if (!title) {
+	    alert("제목을 입력해주세요.");
+	    return;
+	}
+
+	if (!start || !end) {
+	    alert("시작일과 종료일을 입력해주세요.");
+	    return;
+	}
+
+	if (isAllEmpty) {
+	    alert("일정이 모두 비어 있습니다.");
+	    return; // 함수 종료
+	}
 
     const requestData = {
         title,
@@ -113,4 +130,3 @@ submitButton.addEventListener("click", function() {
     })
     .catch(err => console.error(err));
 });
-

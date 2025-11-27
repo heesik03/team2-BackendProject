@@ -6,18 +6,19 @@ let directionsRenderer;
 const travelModeElement = document.getElementById('choose-travel-mode');
 
 const cityCoordinates = {
-    "도쿄": { lat: 35.682839, lng: 139.759455 }, // 도쿄역 근처
-    "교토": { lat: 35.011636, lng: 135.768029 }, // 교토역 근처
-    "오사카": { lat: 34.693737, lng: 135.502167 }, // 오사카역 근처
-    "후쿠오카": { lat: 33.590183, lng: 130.401694 } // 하카타역 근처
+    "도쿄": { lat: 35.682839, lng: 139.759455 }, // 도쿄역
+    "교토": { lat: 35.011636, lng: 135.768029 }, // 교토역 
+    "오사카": { lat: 34.693737, lng: 135.502167 }, // 오사카
+    "후쿠오카": { lat: 33.590183, lng: 130.401694 }, // 하카타역 
+	"삿포로": { lat: 43.068661, lng: 141.350755 },   // 삿포로역 
+	"나고야": { lat: 35.170915, lng: 136.881537 },   // 나고야역
+	"히로시마": { lat: 34.397720, lng: 132.475025 }  // 히로시마역
 };
-
-// cityCoordinates[city]
 
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         center: cityCoordinates[centerCity], 
-        zoom: 6
+        zoom: 15
     });
 
     directionsService = new google.maps.DirectionsService();
@@ -90,9 +91,6 @@ function drawRoute(coords) {
         case 'BICYCLING':
             strokeColor = '#008B8B'; // 자전거: 진한 청록색
             break;
-        case 'TRANSIT':
-            strokeColor = '#FF8C00'; // 대중교통: 다크 오렌지
-            break;
         default:
             strokeColor = '#8B0000'; // 자동차, 기본값 : 진한 붉은색
 	 }
@@ -110,7 +108,7 @@ function drawRoute(coords) {
         origin: coords[0], // 첫 번째 좌표 (출발지)
         destination: coords[coords.length - 1], // 마지막 좌표 (목적지)
         waypoints: waypoints, // 중간 경유지들
-        travelMode: finalTravelMode // 자동차 이동 모드
+        travelMode: finalTravelMode 
     }, 
 		// 경로 검색 요청 후의 콜백 함수
 		(result, status) => {
@@ -120,7 +118,7 @@ function drawRoute(coords) {
 			// 경로 스타일 설정
 			directionsRenderer.setOptions({
 				polylineOptions: {
-					strokeColor, // 색상 (현재 진한 빨강색)
+					strokeColor,
 					strokeOpacity: 0.7, // 불투명도 (현재 70%)
 					strokeWeight: 6 // 두께 설정 (현재 6 픽셀)
 				}
@@ -143,6 +141,7 @@ document.querySelectorAll(".create-map-btn").forEach(btn => {
 		if (spotsStr && spotsStr.length !== 0)
 			touristSpots = JSON.parse(spotsStr) // 관광지 목록 json 파싱 후 삽입
 		
+		console.log(touristSpots)
 		centerCity = cityValue;
 		
 		initMap(); // 구글 지도 생성

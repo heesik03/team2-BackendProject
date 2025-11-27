@@ -6,6 +6,9 @@
 <!DOCTYPE html>
 <html lang="ko">
 
+<!-- 로딩 페이지는 최상단에 -->
+<jsp:include page="/components/loading.jsp" />
+
 <head>
 	<!-- head (페이지 설정) 영역 -->
 	<c:set var="pageTitle" value="visit japan (가칭)" />
@@ -77,7 +80,7 @@
             	<!-- 배열은 순회하며 이미지 출력 -->
                 <c:forEach var="city" items="${cityArr}">
 			        <div class="col-12 col-md-6 col-lg-4">
-			            <a href="pages/loading.jsp?region=${city[0]}" style="text-decoration: none; color: inherit;">
+			            <a href="home.do?region=${city[0]}" style="text-decoration: none; color: inherit;">
 			                <div class="city-card">
 			                    <!-- 이미지 출력 -->
 			                     <img src="${pageScope[city[2]]}"
@@ -96,8 +99,7 @@
 	
 	<!-- FOOTER : 페이지 하단 정보 영역  -->
 	<%@ include file="/layout/footer.jsp" %>
-	
+		
 	<script src="${pageContext.request.contextPath}/resource/js/utils/searchSuggest.js"></script>
-	
 </body>
 </html>

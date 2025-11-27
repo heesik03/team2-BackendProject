@@ -1,6 +1,3 @@
-// 사용할 지역 목록
-const regionList = ["도쿄", "오사카", "교토", "후쿠오카"];
-
 // 검색창 요소 찾기
 const searchInput = document.getElementById("searchInput");
 
@@ -49,7 +46,17 @@ if (searchInput) {
 
             // 클릭하면 해당 지역 검색으로 이동
             item.addEventListener("click", () => {
-                window.location.href = `${context}/pages/loading.jsp?region=${region}`;
+				const loader = document.getElementById("loading");
+
+				// 로딩 표시
+				if (loader) {
+				    loader.style.display = "flex";
+				    loader.style.opacity = "1";
+				}
+				setTimeout(() => {
+				    window.location.href = `home.do?region=${region}`;
+				}, 500); 
+				
             });
             suggestionBox.appendChild(item);
         });

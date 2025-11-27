@@ -3,8 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html lang="ko">
 
+<!-- 로딩 페이지는 최상단에 -->
+<jsp:include page="/components/loading.jsp" />
+
+<html lang="ko">
 <head>
 	<!-- head (페이지 설정) 영역 -->
 	<c:set var="pageTitle" value="여행 일정 목록" />

@@ -6,8 +6,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
-<html lang="ko">
+<!-- 로딩 페이지는 최상단에 -->
+<jsp:include page="/components/loading.jsp" />
 
+<html lang="ko">
 <head>
 	<!-- head (페이지 설정) 영역 -->
 	<c:set var="pageTitle" value="지역 정보" />

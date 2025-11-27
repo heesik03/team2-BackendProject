@@ -4,6 +4,7 @@
 <%@ page import="java.util.List" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -60,6 +61,7 @@
 						        // Object가 List 타입인지 확인 후, JSONArray로 변환 (JS에 보내기 위해)
 						        if (currentSpotsObj != null && currentSpotsObj instanceof java.util.List) {
 						            currentSpotsJson = new JSONArray((java.util.List<?>) currentSpotsObj);
+						            request.setAttribute("currentSpotsJson", currentSpotsJson.toString());
 						        }
 						    %>
 							
@@ -67,7 +69,7 @@
 								<button 
 									class="create-map-btn"
 									type="button"
-								    data-spots='<%= currentSpotsJson.toString() %>'
+								    data-spots='${fn:escapeXml(currentSpotsJson)}'
 								    data-city="${spotList.city}">
 									지도 생성
 								</button>
@@ -109,7 +111,6 @@
 			    <option value="DRIVING">자동차</option>
 			    <option value="WALKING">도보</option>
 			    <option value="BICYCLING">자전거</option>
-			    <option value="TRANSIT">대중교통</option>
 			</select>
 			<br>
 		  
