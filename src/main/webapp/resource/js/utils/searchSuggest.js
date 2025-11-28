@@ -55,7 +55,7 @@ if (searchInput) {
 				}
 				setTimeout(() => {
 				    window.location.href = `home.do?region=${region}`;
-				}, 500); 
+				}, 200); 
 				
             });
             suggestionBox.appendChild(item);

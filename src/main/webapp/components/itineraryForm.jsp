@@ -40,7 +40,7 @@
 		<h4>일정 만들기</h4>
 		
 		<!-- 관광지 선택 -->
-		<select id="selectd-spot"> 
+		<select id="selected-spot"> 
 		    <option value="" disabled selected>관광지 선택</option>
 		    
 	    		<c:forEach var="city" items="${cityList}">
@@ -64,7 +64,7 @@
 		</select>
 					
 		<!-- 일자 선택 (js로 옵션 채워짐) -->
-		<select id="selectd-day">
+		<select id="selected-day">
 			<option value="" disabled selected>일자 선택</option>
 		</select>
 		

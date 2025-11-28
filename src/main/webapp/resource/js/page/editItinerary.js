@@ -4,7 +4,7 @@ const hiddenSpotList = document.getElementById("spot-list-hidden"); // spotList�
 function buildTag() {
 	const dayContainer = document.getElementById("day-container"); // 일정 출력 영역
 	const startDate = new Date(startDateInput.value);
-	const selectdDay = document.getElementById("selectd-day"); // 일정의 일자 select
+	const selectedDay = document.getElementById("selected-day"); // 일정의 일자 select
 	
 	// 기존 div 초기화
 	dayContainer.innerHTML = "";
@@ -21,8 +21,8 @@ function buildTag() {
 		const formattedDate = dayDate.toISOString().split("T")[0];
 		div.id = formattedDate; 
 		
-		// selectd-day의 option 동적으로 추가
-		selectdDay.add(new Option(dayValue, formattedDate));
+		// selected-day의 option 동적으로 추가
+		selectedDay.add(new Option(dayValue, formattedDate));
 		
 		// day-box 안의 태그 생성
 		const h4 = document.createElement("h4");
@@ -39,14 +39,15 @@ function buildTag() {
 			const cleanedSpot = spot.replace(/,[^,]*$/, ''); // 지역 정보 (도쿄 등)을 지움 (마지막 콤마 이후 모든 내용 지움)
 			
 			// 태그 설정
-			childDiv.classList.add("itinerary-item");
-			childDiv.id = cleanedSpot;
+			childDiv.className = "itinerary-item";
+			childDiv.id = spot;
 			childSpan.textContent = cleanedSpot;
 			
 			// 삭제 버튼 설정
-			childButton.class = "itinerary-item-delete"
+			childButton.className = "itinerary-item-delete"
 			childButton.type = "button";
 			childButton.textContent = 'X';
+			
 			
 			// 클릭된 버튼의 상위 div(itinerary-item)만 삭제
 			childButton.addEventListener('click', function (e) {

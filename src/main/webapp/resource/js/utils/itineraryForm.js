@@ -1,6 +1,6 @@
 const startDateInput = document.getElementById("start-date"); // 일정 시작 날짜 입력창
 const endDateInput = document.getElementById("end-date"); // 일정 완료 날짜 입력창
-const selectdDay = document.getElementById("selectd-day"); // 일정의 일자 select
+const selectedDay = document.getElementById("selected-day"); // 일정의 일자 select
 
 const today = new Date().toISOString().split("T")[0]; // 오늘 날짜(최소값)
 startDateInput.setAttribute("min", today); // 최소 날짜 설정
@@ -45,11 +45,11 @@ endDateInput.addEventListener("change", function () {
     const diffTime = endDate.getTime() - startDate.getTime();
     const dayCount = diffTime / (1000 * 60 * 60 * 24) + 1; // 시작일 포함
 
-    // 기존 div, spotList, selectd-day 초기화
+    // 기존 div, spotList, selected-day 초기화
     dayContainer.innerHTML = "";
 	spotList = []; 
-	selectdDay.innerHTML = "";
-	selectdDay.add(new Option("일자 선택", "", true, true)); // placeholder 옵션
+	selectedDay.innerHTML = "";
+	selectedDay.add(new Option("일자 선택", "", true, true)); // placeholder 옵션
 	
     // dayCount 만큼 div 생성
 	for (let i = 1; i <= dayCount; i++) {
@@ -62,8 +62,8 @@ endDateInput.addEventListener("change", function () {
 	    const formattedDate = dayDate.toISOString().split("T")[0];
 		div.id = formattedDate; 
 		
-		// selectd-day의 option 동적으로 추가
-		selectdDay.add(new Option(`${i}일차`, formattedDate));
+		// selected-day의 option 동적으로 추가
+		selectedDay.add(new Option(`${i}일차`, formattedDate));
 		
 		// spotList 일차 추가
 		spotList.push({
@@ -85,12 +85,12 @@ endDateInput.addEventListener("change", function () {
  
 // 일정 추가 시 배열에 추가 + day-box div에 추가
 document.getElementById("input-itinerary-button").addEventListener('click', function() {
-	const spotValue = document.getElementById("selectd-spot").value; // 선택한 관광지
-	const spotOption = document.querySelector('#selectd-spot option:checked'); // 선택한 관광지의 optgroup
+	const spotValue = document.getElementById("selected-spot").value; // 선택한 관광지
+	const spotOption = document.querySelector('#selected-spot option:checked'); // 선택한 관광지의 optgroup
 	const spotCity = spotOption.parentElement.label; // optgroup의 label (도쿄, 후쿠오카 등)
 	
-	const dayText = selectdDay.options[selectdDay.selectedIndex].text; // "1일차"
-	const dayValue = selectdDay.value; // 선택한 일자
+	const dayText = selectedDay.options[selectedDay.selectedIndex].text; // "1일차"
+	const dayValue = selectedDay.value; // 선택한 일자
 	const dayBox = document.getElementById(dayValue); // 선택한 일자의 div
 	
 	// spots 배열에 관광지추가 
@@ -132,7 +132,7 @@ document.getElementById("input-itinerary-button").addEventListener('click', func
 	div.id = spotData;
 	span.textContent = spotValue;
 	
-	// 삭제 버튼 설정ㄴ
+	// 삭제 버튼 설정
 	button.classList.add("itinerary-item-delete");
 	button.type = "button";
 	button.textContent = 'X';

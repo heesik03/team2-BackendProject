@@ -43,18 +43,18 @@
 		const hiddenSpotList = document.getElementById("spot-list-hidden"); // spotList를 저장 할 input
 		
 		submitButton.addEventListener("click", function() {
-		    const titleInput = document.getElementById("title-input").value.trim();
-		    const startDate = document.getElementById("start-date").value;
-		    const endDate = document.getElementById("end-date").value;
+		     const title = document.getElementById("title-input").value.trim();
+		     const start = document.getElementById("start-date").value;
+		     const end = document.getElementById("end-date").value;
 		    
 			const isAllEmpty = spotList.every(item => item.spots.length === 0); // spotList 비어있으면 전송 막기
 		 	
-		    if (!titleInput) {
-		        alert("제목을 입력해주세요.");
-		        return;
-		    }
+			if (!title) {
+			    alert("제목을 입력해주세요.");
+			    return;
+			}
 
-		    if (!startDate || !endDate) {
+		    if (!start || !end) {
 		        alert("시작일과 종료일을 입력해주세요.");
 		        return;
 		    }
@@ -66,15 +66,11 @@
 
 		     hiddenSpotList.value = JSON.stringify(spotList);
 
-		     const title = document.getElementById("title-input").value;
-		     const start = document.getElementById("start-date").value;
-		     const end = document.getElementById("end-date").value;
-
 		     const requestData = {
-		         title: title,
-		         start: start,
-		         end: end,
-		         spotList: spotList
+		         title,
+		         start,
+		         end,
+		         spotList
 		     };
 
 		     // AJAX(JSON) 전송

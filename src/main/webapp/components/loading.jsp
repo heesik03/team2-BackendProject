@@ -84,13 +84,13 @@
 	        loader.style.display = "none";
 	        loader.style.opacity = "0";
 	    } else {
-	    		// 페이드 아웃 (로딩 페이지가 0.5초에 거쳐 천천히 사라짐)
-	        loader.style.transition = "opacity 0.5s ease";
+	    		// 페이드 아웃 (로딩 페이지가 0.2초에 거쳐 천천히 사라짐)
+	        loader.style.transition = "opacity 0.2s ease";
 	        loader.style.opacity = "0";   
 	
 	        setTimeout(function () {
 	            loader.style.display = "none";
-	        }, 500);
+	        }, 200);
 	    }
 	});
 	
