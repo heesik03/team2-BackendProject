@@ -54,31 +54,32 @@ public class AdminController extends HttpServlet {
 		response.setContentType("application/json; charset=UTF-8");
 	    
 	    String body = request.getReader().lines().collect(Collectors.joining()); // js 요청 본문
-	    JSONObject json = new JSONObject(body); // json 읽기
+	    JSONObject requestBody = new JSONObject(body); // json 읽기
 	    
-	    String userId = json.getString("userId");
+	    String userId = requestBody.getString("userId");
 	    ObjectId id = new ObjectId(userId);
 	    ObjectId myId = (ObjectId) request.getSession().getAttribute("id"); // 현재 로그인 중인 유저의 id
+	    
+	    JSONObject responseBody = new JSONObject();
 	    
 	    if (id != myId) { // 자기 자신이 아니라면
 		    boolean result = deleteUserDAO.removeUser(id);
 		    
 		    if (result) {
         			System.out.println(id + " 회원 탈퇴 완료");
-		    		response.setStatus(HttpServletResponse.SC_NO_CONTENT); // 204
+		    		response.setStatus(HttpServletResponse.SC_NO_CONTENT); // 204, 성공하면 응답 body 없음
 		    } else {
+		    		responseBody.put("status", "error"); // 응답 본문
+		    		responseBody.put("message", "유저 삭제 실패");  
 		        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // 500
-		        response.getWriter().write(
-		            "{\"status\":\"error\", \"message\":\"유저 삭제 실패\"}"
-		        );
+		        response.getWriter().write(responseBody.toString());
 		    }
 		 
 	    } else {
-	        response.setStatus(HttpServletResponse.SC_FORBIDDEN); // 403
-	        response.setContentType("application/json; charset=UTF-8");
-	        response.getWriter().write(
-	            "{\"status\":\"forbidden\", \"message\":\"본인은 삭제할 수 없습니다.\"}"
-	        );
+	    		responseBody.put("status", "forbidden"); // 응답 본문
+	    		responseBody.put("message", "본인은 삭제할 수 없습니다");  
+		    response.setStatus(HttpServletResponse.SC_FORBIDDEN); // 403
+	        response.getWriter().write(responseBody.toString());
 	    }
 	}
 

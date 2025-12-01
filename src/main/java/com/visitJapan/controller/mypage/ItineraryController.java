@@ -50,9 +50,10 @@ public class ItineraryController extends HttpServlet {
 	    		response.setStatus(HttpServletResponse.SC_NO_CONTENT); // 204
 	    } else {
 	        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // 500
-	        response.getWriter().write(
-	            "{\"status\":\"error\", \"message\":\"일정 삭제 실패\"}"
-	        );
+        		JSONObject responseBody = new JSONObject();
+        		responseBody.put("status", "error");
+        		responseBody.put("message", "일정 삭제 실패");
+        		response.getWriter().write(responseBody.toString());
 	    }
 	}
 

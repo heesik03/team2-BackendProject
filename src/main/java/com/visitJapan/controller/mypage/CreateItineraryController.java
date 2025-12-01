@@ -39,26 +39,27 @@ public class CreateItineraryController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 
 	    String body = request.getReader().lines().collect(Collectors.joining()); // js 요청 본문
-	    JSONObject json = new JSONObject(body); // json 읽기
+	    JSONObject requestBody = new JSONObject(body); // json 읽기
 	    
 	    ObjectId userId = (ObjectId) request.getSession().getAttribute("id");
-		String title = json.getString("title");
-	    String startDate = json.getString("start");
-	    String endDate = json.getString("end");
-	    JSONArray spotList = json.getJSONArray("spotList");
+		String title = requestBody.getString("title");
+	    String startDate = requestBody.getString("start");
+	    String endDate = requestBody.getString("end");
+	    JSONArray spotList = requestBody.getJSONArray("spotList");
 	    
 	    boolean result = createItineraryDAO.appendSpotList(userId, title, startDate, endDate, spotList);
-	    String responseBody = "{\"result\": \"" + (result ? "success" : "fail") + "\"}";
 	    
+	    JSONObject responseBody = new JSONObject();
+		responseBody.put("result", (result ? "success" : "fail")); // 응답 본문
+		
         response.setContentType("application/json; charset=UTF-8");
         if (result) {
             response.setStatus(HttpServletResponse.SC_CREATED); // 201
-            response.getWriter().write(responseBody);
         } else {
             // 실패 (500)
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // 실패 (500)
-            response.getWriter().write(responseBody);
         }
+        response.getWriter().write(responseBody.toString());
 	}
 
 }

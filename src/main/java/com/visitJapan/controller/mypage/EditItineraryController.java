@@ -83,17 +83,16 @@ public class EditItineraryController extends HttpServlet {
 	    boolean result = updateItineraryDAO.putItinerary(title, startDate, endDate, spotList, itineraryId);
 		
 	    response.setContentType("application/json; charset=UTF-8");
-	    String responseBody = "{\"result\": \"" + (result ? "success" : "fail") + "\"}";
 	    
-        response.setContentType("application/json; charset=UTF-8");
+	    JSONObject responseBody = new JSONObject();
+		responseBody.put("result", (result ? "success" : "fail")); // 응답 본문
         if (result) {
             response.setStatus(HttpServletResponse.SC_OK); // 200
-            response.getWriter().write(responseBody);
         } else {
             // 실패 (500)
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // 실패 (500)
-            response.getWriter().write(responseBody);
         }
+        response.getWriter().write(responseBody.toString());
 	}
 
 }

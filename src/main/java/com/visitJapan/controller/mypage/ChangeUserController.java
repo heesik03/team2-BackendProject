@@ -57,15 +57,14 @@ public class ChangeUserController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 
 	    String body = request.getReader().lines().collect(Collectors.joining()); // js 요청 본문
-	    JSONObject json = new JSONObject(body); // json 읽기
+	    JSONObject requestBody = new JSONObject(body); // json 읽기
 	    
 	    ObjectId userId = (ObjectId) request.getSession().getAttribute("id"); // 유저 아이디
-		boolean isName = json.getBoolean("isName"); // true면 닉네임, false면 선호 도시를 변경
-		String newData = json.getString("data"); // 바꿀 데이터
+		boolean isName = requestBody.getBoolean("isName"); // true면 닉네임, false면 선호 도시를 변경
+		String newData = requestBody.getString("data"); // 바꿀 데이터
 		
 		boolean result = changeUserInfoDAO.updateUserInfo(userId, isName, newData);
 				
-        response.setContentType("application/json; charset=UTF-8");
         if (result) {
             response.setStatus(HttpServletResponse.SC_NO_CONTENT); // 204
         } else {
@@ -82,7 +81,6 @@ public class ChangeUserController extends HttpServlet {
 		
 		boolean result = deleteUserDAO.removeUser(userId);
 		
-        response.setContentType("application/json; charset=UTF-8");
         if (result) {
         		System.out.println(userId + " 회원 탈퇴 완료");
         		HttpSession session = request.getSession(false);

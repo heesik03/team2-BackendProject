@@ -12,6 +12,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 import com.visitJapan.dao.users.get.EmailCheckDAO;
 import com.visitJapan.dao.users.post.SignUpDAO;
 import com.visitJapan.dto.db.UsersDTO;
@@ -30,17 +32,18 @@ public class SignUpController extends HttpServlet {
 
         EmailCheckDAO dao = new EmailCheckDAO();
         boolean exists = dao.emailExists(email);
+        
+	    JSONObject resultJson = new JSONObject();
 
         // JSON 결과 만들기
-        String resultJson;
         if (exists) {
-            resultJson = "{\"result\":\"exists\"}";
+        		resultJson.put("result", "exists"); // 응답 본문
         } else {
-            resultJson = "{\"result\":\"ok\"}";
+        		resultJson.put("result", "ok");
         }
 
         response.setContentType("application/json; charset=UTF-8");
-        response.getWriter().write(resultJson);
+        response.getWriter().write(resultJson.toString());
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  {

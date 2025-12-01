@@ -100,10 +100,8 @@ public class HomeController extends HttpServlet {
 	            spotList = spotDoc.select("div.spot-name a:lt(10)");
 	            spotImgList = spotDoc.select("div.image-frame img:lt(10)").eachAttr("src");
 	        }
-
 	        // 맛집
 	        restaurantData = CrawlingUtil.getRestaurant(tabelogDoc);
-
 	        // 날씨
 	        weatherData = CrawlingUtil.getWeather(skyDoc);
 
@@ -126,26 +124,27 @@ public class HomeController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 	    String body = request.getReader().lines().collect(Collectors.joining()); // js 요청 본문
-	    JSONObject json = new JSONObject(body); // json 읽기
+	    JSONObject requestBody = new JSONObject(body); // json 읽기
 	    
 	    ObjectId userId = (ObjectId) request.getSession().getAttribute("id");
-	    String spot = json.getString("spot");
-	    String city = json.getString("city");
+	    String spot = requestBody.getString("spot");
+	    String city = requestBody.getString("city");
 	    
 	    boolean result = addCityDAO.appendCityToUser(spot, city, userId);
 	    
+	    JSONObject responseBody = new JSONObject();
 	    response.setContentType("application/json; charset=UTF-8");
+	    
 	    if (result) {
+	    		responseBody.put("status", "ok"); // 응답 본문
+	    		responseBody.put("spot", spot);  
 	        response.setStatus(HttpServletResponse.SC_OK); // 200
-	        response.getWriter().write(
-	            "{\"status\":\"ok\", \"spot\":\"" + spot + "\"}"
-	        );
 	    } else {
+	    		responseBody.put("status", "error");
+	    		responseBody.put("message", "도시 또는 관광지 추가 실패");
 	        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // 500
-	        response.getWriter().write(
-	            "{\"status\":\"error\", \"message\":\"도시 또는 관광지 추가 실패\"}"
-	        );
 	    }
+	    response.getWriter().write(responseBody.toString());
 	}
 
 }
