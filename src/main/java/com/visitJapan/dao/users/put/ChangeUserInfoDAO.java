@@ -12,7 +12,7 @@ import com.visitJapan.util.MongoConnectUtil;
 
 public class ChangeUserInfoDAO {
 		
-	public boolean updateUserInfo(ObjectId id, boolean isName, String newData) {
+	public boolean updateInfo(ObjectId id, boolean isName, String newData) {
 		boolean result = false;
         try {
             if (id != null && newData != null) {

@@ -25,7 +25,7 @@ public class CreateItineraryController extends HttpServlet {
 		GetUserDAO getUserDAO = new GetUserDAO();
 		ObjectId userId = (ObjectId) request.getSession().getAttribute("id"); // 유저 아이디
 		
-		UsersDTO userData = getUserDAO.findUserData(userId);
+		UsersDTO userData = getUserDAO.findUser(userId);
 		// 선호 관광지만 보내기
 		if (userData != null)
 			request.setAttribute("cityList", userData.getCityList());
@@ -47,7 +47,7 @@ public class CreateItineraryController extends HttpServlet {
 	    String endDate = requestBody.getString("end");
 	    JSONArray spotList = requestBody.getJSONArray("spotList");
 	    
-	    boolean result = createItineraryDAO.appendSpotList(userId, title, startDate, endDate, spotList);
+	    boolean result = createItineraryDAO.append(userId, title, startDate, endDate, spotList);
 	    
 	    JSONObject responseBody = new JSONObject();
 		responseBody.put("result", (result ? "success" : "fail")); // 응답 본문

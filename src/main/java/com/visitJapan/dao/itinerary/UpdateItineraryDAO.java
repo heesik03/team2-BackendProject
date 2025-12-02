@@ -14,7 +14,7 @@ import com.visitJapan.util.MongoConnectUtil;
 import com.visitJapan.util.SpotListConverterUtil;
 
 public class UpdateItineraryDAO {
-	public boolean putItinerary(String title, String startDate, String endDate, JSONArray spotList, ObjectId itineraryId) {
+	public boolean putData(String title, String startDate, String endDate, JSONArray spotList, ObjectId itineraryId) {
 		boolean result = false;
         try {
             if (title != null && startDate != null && endDate != null && spotList != null && itineraryId != null) {

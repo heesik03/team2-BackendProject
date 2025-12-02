@@ -10,7 +10,7 @@ import com.mongodb.client.result.DeleteResult;
 import com.visitJapan.util.MongoConnectUtil;
 
 public class DeleteItineraryDAO {
-	public boolean removeItinerary(String itineraryId) {
+	public boolean remove(String itineraryId) {
         boolean result = false;
         try {
             if (itineraryId != null) {

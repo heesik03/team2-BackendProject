@@ -42,7 +42,7 @@ public class AdminController extends HttpServlet {
 		AdminGrantDAO adminGrantDAO = new AdminGrantDAO();
 		String userId = request.getParameter("userId");
 
-		adminGrantDAO.changeRole(userId); // 일반 사용자에게 관리자 권한 부여
+		adminGrantDAO.promoteRole(userId); // 일반 사용자에게 관리자 권한 부여
 		
 	    response.sendRedirect(request.getContextPath() + "/admin.do");
 	}

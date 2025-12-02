@@ -7,10 +7,17 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.visitJapan.dto.response.RestaurantDTO;
-import com.visitJapan.dto.response.WeatherDTO;
+import com.visitJapan.dto.response.*;
 
 public class CrawlingUtil {
+	
+	public static SpotDTO getSpot(Document doc) {
+		Elements spotList = doc.select("div.spot-name a:lt(10)");
+		List<String> spotImgList = doc.select("div.image-frame img:lt(10)").eachAttr("src");
+		
+		SpotDTO spotDto = new SpotDTO(spotList, spotImgList);
+		return spotDto;
+	}
 	
 	public static RestaurantDTO getRestaurant(Document doc) {
 		Elements restaurantList = doc.select("a.list-rst__rst-name-target.cpy-rst-name:lt(10)");

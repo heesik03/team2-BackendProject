@@ -11,7 +11,7 @@ import com.visitJapan.util.MongoConnectUtil;
 
 public class GetUserDAO {
 	
-	public UsersDTO findUserData(ObjectId id) {
+	public UsersDTO findUser(ObjectId id) {
 		UsersDTO findUser = null;
 		try {
 			if (id != null) {

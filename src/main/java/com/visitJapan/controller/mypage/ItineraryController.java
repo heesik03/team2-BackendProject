@@ -25,7 +25,7 @@ public class ItineraryController extends HttpServlet {
 		GetItineraryListDAO getUserItineraryDAO = new GetItineraryListDAO();
 		ObjectId userId = (ObjectId) request.getSession().getAttribute("id"); // 유저 아이디
 		
-		List<ItineraryDTO> itineraryList  = getUserItineraryDAO.findItineraryData(userId);
+		List<ItineraryDTO> itineraryList  = getUserItineraryDAO.findList(userId);
 		if (itineraryList != null) {
 			request.setAttribute("itineraryList", itineraryList);
 		}
@@ -43,7 +43,7 @@ public class ItineraryController extends HttpServlet {
 	    JSONObject json = new JSONObject(body); // json 읽기
 
 	    String itineraryId = json.getString("itineraryId");
-	    boolean result = deleteItinerary.removeItinerary(itineraryId);
+	    boolean result = deleteItinerary.remove(itineraryId);
 	    
 	    response.setContentType("application/json; charset=UTF-8");
 	    if (result) {

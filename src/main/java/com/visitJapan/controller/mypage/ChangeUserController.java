@@ -63,7 +63,7 @@ public class ChangeUserController extends HttpServlet {
 		boolean isName = requestBody.getBoolean("isName"); // true면 닉네임, false면 선호 도시를 변경
 		String newData = requestBody.getString("data"); // 바꿀 데이터
 		
-		boolean result = changeUserInfoDAO.updateUserInfo(userId, isName, newData);
+		boolean result = changeUserInfoDAO.updateInfo(userId, isName, newData);
 				
         if (result) {
             response.setStatus(HttpServletResponse.SC_NO_CONTENT); // 204

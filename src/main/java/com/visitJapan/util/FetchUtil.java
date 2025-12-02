@@ -16,7 +16,7 @@ public class FetchUtil {
 	private static final int THREAD_COUNT = 3; // 링크 배열 길이
 	
 	// 크롤링 호출 메서드
-	private static Document fetchDocument(String url) {
+	public static Document fetchDocument(String url) {
 	    try {
 	        return Jsoup.connect(url)
 	                .userAgent("Mozilla/5.0")

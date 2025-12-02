@@ -11,7 +11,7 @@ import com.visitJapan.util.MongoConnectUtil;
 
 public class AdminGrantDAO {
 	
-	public void changeRole(String userId) {
+	public void promoteRole(String userId) {
 		try {
 			if (userId != null) {
                 MongoDatabase database = MongoConnectUtil.getConnection();

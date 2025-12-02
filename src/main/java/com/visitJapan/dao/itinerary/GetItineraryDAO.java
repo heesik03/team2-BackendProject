@@ -10,7 +10,7 @@ import com.visitJapan.util.MongoConnectUtil;
 
 public class GetItineraryDAO {
 	
-	public ItineraryDTO findItineraryData(String itineraryId) {
+	public ItineraryDTO findData(String itineraryId) {
 		ItineraryDTO findItinerary = null;
 		try {
 			if (itineraryId != null) {

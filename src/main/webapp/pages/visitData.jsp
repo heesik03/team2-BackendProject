@@ -14,6 +14,9 @@
 	<!-- head (페이지 설정) 영역 -->
 	<c:set var="pageTitle" value="지역 정보" />
 	<%@ include file="/components/pageHead.jsp" %>
+	<script>
+    		const userId = "${sessionScope.id}";
+	</script>
 </head>
 
 <body>
@@ -51,39 +54,44 @@
 	    		</c:otherwise>
 	    	</c:choose>
         		
-		
+		<!-- 클릭 시 관광지 정보가 랜덤으로 변경됨 -->
+		<button 
+			type="button" 
+			id="change-spot-list" 
+			data-index="${pageIndex}"
+			data-region="${region}" >
+			관광지 변경 🔄
+		</button> <br>
 		<c:choose>
-			<c:when test="${not empty homeResponse.spotList}">  <!-- spotList가 비어있지 않다면 -->
-			    <ul>
-			        <c:forEach var="spot" items="${homeResponse.spotList}" varStatus="sp">
-			            <li>
-			                ${spot.text()} <br>
-			                <a href="${spot.attr('href')}" target="_blank">관광지 상세 주소</a>
-			                <br>
-			                
-			                <!-- 스크랩 추가  -->
-			               <c:if test="${not empty sessionScope.id}">
-							    <button class="add-scrap-btn"
-							    		data-spot="${spot.text()}"
-							    		data-region="${region}"
-							    		type="button">
-							        스크랩 추가
-							    </button>
-							    <br>
-							</c:if>
-							
-							 <!-- 대응되는 이미지 -->
-			                <c:if test="${not empty homeResponse.spotImgList[sp.index]}">
-			                    <img src="${homeResponse.spotImgList[sp.index]}" 
-			                         class="img-fluid rounded"
-			                         style="max-width: 300px;">
-			                </c:if>
-							
-							<hr>
-						
-			            </li>
-			        </c:forEach>
-			    </ul>
+			<c:when test="${not empty homeResponse.spotData}">  <!-- spotData가 비어있지 않다면 -->
+				<ul id="spot-list">
+				    <c:forEach var="spot" items="${homeResponse.spotData.spotList}" varStatus="sp">
+				        <li>
+				            ${spot.text()} <br>
+				            <a href="${spot.attr('href')}" target="_blank">관광지 상세 주소</a>
+				            <br>
+				
+				            <c:if test="${not empty sessionScope.id}">
+				                <button class="add-scrap-btn"
+				                        data-spot="${spot.text()}"
+				                        data-region="${region}"
+				                        type="button">
+				                    스크랩 추가
+				                </button>
+				                <br>
+				            </c:if>
+				
+				            <c:if test="${not empty homeResponse.spotData.spotImgList[sp.index]}">
+				                <img src="${homeResponse.spotData.spotImgList[sp.index]}"
+				                     class="img-fluid rounded"
+				                     style="max-width: 300px;">
+				            </c:if>
+				
+				            <hr>
+				        </li>
+				    </c:forEach>
+				</ul>
+
 			</c:when>
 			
 			<c:otherwise>
@@ -138,32 +146,7 @@
     <%@ include file="/layout/footer.jsp" %>
     
     	<script src="${pageContext.request.contextPath}/resource/js/utils/searchSuggest.js"></script>
-
-	<script>
-		document.querySelectorAll(".add-scrap-btn").forEach(form => {
-		    form.addEventListener("click", function() {
-		
-		        const spot = this.dataset.spot;  // EL에서 넘긴 spot.text()
-		        const city = this.dataset.region;      // EL에서 넘긴 region
-		
-		        fetch("home.do", {
-		            method: "PUT",
-		            headers: {
-		                "Content-Type": "application/json"
-		            },
-		            body: JSON.stringify({
-		                spot: spot,
-		                city: city
-		            })
-		        })
-		        .then(res => res.json())
-		        .then(data => {
-		            alert("스크랩 추가 성공!");
-		        })
-		        .catch(err => console.error(err));
-		    });
-		});
-	</script>
+	<script src="${pageContext.request.contextPath}/resource/js/page/visitData.js"></script>
     
 </body>
 </html>

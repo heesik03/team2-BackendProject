@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 import com.visitJapan.dao.users.put.AddCityDAO;
 import com.visitJapan.dto.response.*;
@@ -48,10 +47,10 @@ public class HomeController extends HttpServlet {
 			String region = request.getParameter("region"); // 검색한 지역 정보 가져옴
 			String crawlingSpotURL = spotLink + region; // 관광지 링크
 			String crawlingYahooURL = null; // yahoo japan 날씨 링크
+			int randomPageIndex = new Random().nextInt(5)+1; // 1~5 페이지까지 랜덤 페이지 
 
-			// 결과값
-			Elements spotList = null;
-			List<String> spotImgList = null;
+			// DTO에 넣을 결과값들
+			SpotDTO spotData = null;
 			RestaurantDTO restaurantData = null;
 			WeatherDTO weatherData = null;
 			
@@ -72,9 +71,7 @@ public class HomeController extends HttpServlet {
 	        List<String> crawlingUrls = new ArrayList<>();
 
 	        // 크롤링 URL들 List에 저장
-	        if (crawlingSpotURL != null) {
-	        		int randomPageIndex = new Random().nextInt(5)+1; // 1~5 페이지까지 랜덤 페이지 
-	        		
+	        if (crawlingSpotURL != null) {	        		
 	            crawlingUrls.add(crawlingSpotURL + "&page=" + randomPageIndex);
 	        }
 	        crawlingUrls.add(crawlingTabeURL);
@@ -95,21 +92,15 @@ public class HomeController extends HttpServlet {
 	        Document tabelogDoc = documents.get(idx++);
 	        Document skyDoc = documents.get(idx);
 
-	        // 관광지 데이터
-	        if (spotDoc != null) {
-	            spotList = spotDoc.select("div.spot-name a:lt(10)");
-	            spotImgList = spotDoc.select("div.image-frame img:lt(10)").eachAttr("src");
-	        }
-	        // 맛집
-	        restaurantData = CrawlingUtil.getRestaurant(tabelogDoc);
-	        // 날씨
-	        weatherData = CrawlingUtil.getWeather(skyDoc);
-
+	        // 가져온 크롤링 페이지에서 원하는 정보 DTO에 담아서 가져옴
+	        spotData = CrawlingUtil.getSpot(spotDoc); // 관광지 데이터
+	        restaurantData = CrawlingUtil.getRestaurant(tabelogDoc); // 맛집
+	        weatherData = CrawlingUtil.getWeather(skyDoc); // 날씨
 			
 	        // dto에 넣은 후 속성으로 보냄
-	        HomeResponseDTO homeResponse = new HomeResponseDTO(spotList, spotImgList, restaurantData, weatherData);
+	        HomeResponseDTO homeResponse = new HomeResponseDTO(spotData, restaurantData, weatherData);
 			request.setAttribute("homeResponse", homeResponse);
-			
+			request.setAttribute("pageIndex" , randomPageIndex);			
 		} catch (Exception e) {
             e.printStackTrace();
         }
@@ -119,7 +110,7 @@ public class HomeController extends HttpServlet {
 	}
 	
 	@Override
-	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		AddCityDAO addCityDAO = new AddCityDAO();
 		request.setCharacterEncoding("UTF-8");
 		
@@ -146,5 +137,41 @@ public class HomeController extends HttpServlet {
 	    }
 	    response.getWriter().write(responseBody.toString());
 	}
+	
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		request.setCharacterEncoding("UTF-8");
+	    response.setContentType("application/json; charset=UTF-8");
+		Random random = new Random();
+		SpotDTO spotData = null;
 
+	    String body = request.getReader().lines().collect(Collectors.joining()); // js 요청 본문
+	    JSONObject requestBody = new JSONObject(body); // json 읽기
+	    
+	    String pageIndex = requestBody.getString("pageIndex"); // 현재 관광지 검색 페이지
+	    String region = requestBody.getString("region"); // 현재 도시
+	    
+	    int currentPage = Integer.parseInt(pageIndex); // 현재 관광지 검색 페이지 형변환
+	    int newPageIndex = 0; // 새로운 페이지
+	    while (true) {
+	    		newPageIndex = random.nextInt(5) + 1; 
+	    		if (newPageIndex != currentPage) { // 현재 페이지 index와 다른 랜덤값이 나오면 탈출
+	    			break; 
+	    		}
+	    }
+	    
+		String crawlingSpotURL = spotLink + region; // 관광지 링크
+	    Document spotDoc = FetchUtil.fetchDocument(crawlingSpotURL + "&page=" + newPageIndex);
+	    spotData = CrawlingUtil.getSpot(spotDoc); // 관광지 데이터
+	    
+	    // JS에서 쓰기 위해 새로운 정보 JSON으로 보냄
+	    JSONObject result = new JSONObject();
+	    result.put("newPageIndex", newPageIndex); 
+	    result.put("spots", spotData.getSpotList() // 관광지 목록 
+	            .stream().map(s -> s.text()).collect(Collectors.toList()));
+	    result.put("imgList", spotData.getSpotImgList()); // 이미지 목록
+
+	    response.setStatus(HttpServletResponse.SC_OK);
+	    response.getWriter().write(result.toString());
+
+	}
 }

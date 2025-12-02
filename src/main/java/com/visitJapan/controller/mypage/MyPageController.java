@@ -25,7 +25,7 @@ public class MyPageController extends HttpServlet {
 		GetUserDAO getUserDAO = new GetUserDAO();
 		ObjectId userId = (ObjectId) request.getSession().getAttribute("id"); // 유저 아이디
 		
-		UsersDTO userData = getUserDAO.findUserData(userId);
+		UsersDTO userData = getUserDAO.findUser(userId);
 		if (userData != null)
 			request.setAttribute("userData", userData);
 		

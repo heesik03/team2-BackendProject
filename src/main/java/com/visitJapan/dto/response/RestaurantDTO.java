@@ -8,16 +8,14 @@ public class RestaurantDTO {
 	private Elements restaurantList;
 	private List<String> restaurantImgList;
 	
+	public RestaurantDTO() {}
 
 	public RestaurantDTO(Elements restaurantList, List<String> restaurantImgList) {
 		super();
 		this.restaurantList = restaurantList;
 		this.restaurantImgList = restaurantImgList;
 	}
-
 	
-	public RestaurantDTO() {}
-
 	public Elements getRestaurantList() {
 		return restaurantList;
 	}

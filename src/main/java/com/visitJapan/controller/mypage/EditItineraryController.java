@@ -31,8 +31,8 @@ public class EditItineraryController extends HttpServlet {
 		ObjectId userId = (ObjectId) request.getSession().getAttribute("id"); // 유저 아이디
 		String itineraryId = request.getParameter("id"); // 일정의 id 파라메터
 		
-		UsersDTO userData = getUserDAO.findUserData(userId);
-		ItineraryDTO itineraryData = getItineraryDAO.findItineraryData(itineraryId);
+		UsersDTO userData = getUserDAO.findUser(userId);
+		ItineraryDTO itineraryData = getItineraryDAO.findData(itineraryId);
 		
 		if (userData != null && itineraryData != null) {
 			
@@ -80,7 +80,7 @@ public class EditItineraryController extends HttpServlet {
 	    JSONArray spotList = json.getJSONArray("spotList");
 	    ObjectId itineraryId = new ObjectId(json.getString("itineraryId"));
 	    
-	    boolean result = updateItineraryDAO.putItinerary(title, startDate, endDate, spotList, itineraryId);
+	    boolean result = updateItineraryDAO.putData(title, startDate, endDate, spotList, itineraryId);
 		
 	    response.setContentType("application/json; charset=UTF-8");
 	    

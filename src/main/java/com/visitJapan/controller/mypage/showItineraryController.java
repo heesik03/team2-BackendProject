@@ -23,7 +23,7 @@ public class ShowItineraryController extends HttpServlet {
 		
 		String itineraryId = request.getParameter("id"); // 일정의 id 파라메터 가져옴
 		
-		ItineraryDTO itineraryData = getItineraryDAO.findItineraryData(itineraryId);
+		ItineraryDTO itineraryData = getItineraryDAO.findData(itineraryId);
 		if (itineraryData != null) {
 			itineraryData.setUserId(null); // userId는 필요 없음으로 null
 			request.setAttribute("itineraryData", itineraryData);
