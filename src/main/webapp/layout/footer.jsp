@@ -40,7 +40,10 @@
             <!-- 빠른링크 -->
             <nav class="col-12 col-md-3 mb-4">
                 <h3>빠른링크</h3>
-                <p><a href="about.jsp" target="_blank">about</a></p>
+                <p>
+                		<a href="${pageContext.request.contextPath}/pages/about.jsp" target="_blank">about</a>
+                	</p>
+                	
                 <!-- 로그인 여부에 따른 조건 영역 -->
 			    <c:choose>	
 			        <c:when test="${not empty sessionScope.id}"> 

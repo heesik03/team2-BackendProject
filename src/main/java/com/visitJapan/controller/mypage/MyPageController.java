@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import com.visitJapan.dao.users.delete.DeleteCityDAO;
 import com.visitJapan.dao.users.get.GetUserDAO;
 import com.visitJapan.dto.db.UsersDTO;
+import com.visitJapan.util.DBConfigReader;
 
 @WebServlet("/mypage.do")
 public class MyPageController extends HttpServlet {
@@ -23,12 +24,15 @@ public class MyPageController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GetUserDAO getUserDAO = new GetUserDAO();
+		DBConfigReader config = new DBConfigReader(); // dbconfig.properties 연결 class
+
 		ObjectId userId = (ObjectId) request.getSession().getAttribute("id"); // 유저 아이디
 		
 		UsersDTO userData = getUserDAO.findUser(userId);
 		if (userData != null)
 			request.setAttribute("userData", userData);
-		
+		request.setAttribute("APIKey", config.getGoogleKey()); // 구글 맵 API Key JSP로 전달
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("pages/mypage/mypage.jsp");
 		dispatcher.forward(request, response); 	
 	}

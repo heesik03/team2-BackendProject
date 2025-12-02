@@ -1,3 +1,5 @@
+const chooseCity = document.getElementById("choose-city");
+
 // 마이페이지 선호 관광지 삭제
 document.querySelectorAll(".delete-city-form").forEach(form => {
     form.addEventListener("submit", function(e) {
@@ -28,7 +30,61 @@ document.querySelectorAll(".delete-city-form").forEach(form => {
     });
 });
 
+// 구글 맵 생성
+document.querySelector('.search-from').addEventListener("submit", function(e) {
+	e.preventDefault();
+	
+	const cityValue = chooseCity.value; // 기준 도시
+	const searchKeyword = document.getElementById("searchInput").value;// 검색한 관광지
+	
+	if (!cityValue) {
+		alert("기존 도시를 선택하세요.");
+		return;
+	}
+	
+	if (!searchKeyword) {
+		alert("검색어를 입력하세요.");
+		return;
+	}
 
+	document.getElementById('mapDiv').style.display = 'block';
+
+	const keyword = `${searchKeyword}, ${cityValue}`
+	if (keyword.length !== 0)
+		touristSpots = [keyword.trim()] // 관광지 목록에 검색한 관광지 넣음
+
+	centerCity = cityValue;
+
+	initMap(); // 구글 지도 생성
+});
+
+// 구글 맵 검색 후, 장소 스크랩 추가
+document.querySelector(".add-scrap-btn").addEventListener("click", function() {	
+	if (!place) {
+		alert("검색이 안됨");
+		return;
+	}
+	
+	const spot = place;
+	const city = chooseCity.value;
+
+	fetch(`${contextPath}/home.do`, {
+	    method: "POST",
+	    headers: {
+	        "Content-Type": "application/json"
+	    },
+	    body: JSON.stringify({ spot, city })
+	})
+	.then(res => res.json())
+	.then(() => {
+	    alert("스크랩 추가 성공!");
+		location.reload();
+	})
+	.catch(err => console.error(err));
+});
+
+
+// 회원탈퇴
 document.getElementById("delete-account-btn").addEventListener("click", function() {
 	
 	const contextPath = document.body.dataset.contextPath; // JSP에서 바디에 contextPath 전달

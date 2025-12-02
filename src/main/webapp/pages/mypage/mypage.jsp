@@ -12,6 +12,14 @@
 	<!-- head (페이지 설정) 영역 -->
 	<c:set var="pageTitle" value="마이페이지" />
 	<%@ include file="/components/pageHead.jsp" %>
+	
+	<!-- 구글 맵 연결 -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=${APIKey}&libraries=places&loading=async"></script>
+
+	<!-- 구글 맵 스타일 (추후 삭제) -->
+    <style>
+        #map { width: 100%; height: 600px; }
+    </style>
 </head>
 
 <!-- 로그아웃 상태라면 홈 화면으로 이동 -->
@@ -64,6 +72,48 @@
 			    </c:forEach>
 			</section>
 			
+			<h3>관광지 검색</h3>	
+			<section class="row justify-content-center my-5">
+				<div class="col-lg-8">
+				   <%@ include file="/components/selectCity.jsp" %> <br>
+				
+			        <form class="search-from position-relative">
+			            <!-- 검색창 -->
+			            <input type="search"
+			                   id="searchInput"   
+			                   class="form-control form-control-lg"
+			                   placeholder="관광지 검색"
+			                   style="border-radius: 9999px; padding-right: 60px;" 
+			                   autocomplete="off"
+			                   required>
+			
+			            <!-- 검색 버튼  -->
+			            <button type="submit"
+			            			id="search-btn"
+			                    class="btn position-absolute top-50 end-0 translate-middle-y me-3 p-0"
+			                    style="border: none; background: transparent;">
+					        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+							  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+							</svg>
+			            </button>
+		
+			        </form>
+			        <br>
+		    		</div>
+		    		
+		    		<div id="mapDiv" style="display: none;">
+			    		<div id="map"></div>
+
+					<br>
+	  				<button class="add-scrap-btn"
+				    		type="button">
+				        스크랩 추가
+				    </button>
+				    	<br>	    
+		    		</div>
+
+			</section>
+			
 			
 			<nav>
 				<a href="${pageContext.request.contextPath}/pages/mypage/changeInfo.jsp?like-city=${userData.likeCity}">정보 수정</a>
@@ -92,6 +142,10 @@
 	
 	<!-- js 파일 불러옴 -->
 	<script src="${pageContext.request.contextPath}/resource/js/utils/changeDate.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/utils/createGoogleMap.js"></script>
+	<script>
+		const contextPath = "${pageContext.request.contextPath}"
+	</script>
 	<script src="${pageContext.request.contextPath}/resource/js/page/mypage.js"></script>
 </body>
 </html>

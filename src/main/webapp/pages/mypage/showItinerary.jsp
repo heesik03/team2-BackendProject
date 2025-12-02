@@ -125,7 +125,31 @@
 	<!-- js 파일 불러옴 -->
 	<script src="${pageContext.request.contextPath}/resource/js/utils/changeDate.js"></script>
 	<script src="${pageContext.request.contextPath}/resource/js/utils/deleteItinerary.js"></script>
-	<script src="${pageContext.request.contextPath}/resource/js/page/createGoogleMap.js"></script>
+	<script src="${pageContext.request.contextPath}/resource/js/utils/createGoogleMap.js"></script>
+	<script>
+		document.querySelectorAll(".create-map-btn").forEach(btn => {
+			btn.addEventListener("click", function() {
+				const spotsStr = this.dataset.spots;
+				const cityValue = this.dataset.city; // 기준 도시
+				
+				document.getElementById('mapSection').style.display = 'block';
+				
+				if (spotsStr && spotsStr.length !== 0)
+					touristSpots = JSON.parse(spotsStr) // 관광지 목록 json 파싱 후 삽입
+				
+				centerCity = cityValue;
+				
+				initMap(); // 구글 지도 생성
+			})
+		});
+	
+		travelModeElement.addEventListener('change', function() {
+		    // select가 선택되었고, 여행지가 2개 이상이면, 선택한 이동수단으로 지도를 다시 그림
+		    if (touristSpots.length >= 2) {
+		        getCoordinatesAndRoute(touristSpots);
+		    }
+		});
+	</script>
 
 </body>
 </html>

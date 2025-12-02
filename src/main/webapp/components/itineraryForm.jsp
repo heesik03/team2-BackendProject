@@ -74,6 +74,24 @@
 	<div id="day-container">
 	</div>
 	
+	<br>
+	<h4>메모 작성</h4>
+	<section>
+		<form>
+			<label for="memo-area">메시지</label>
+			<textarea 
+				id="memo-area"
+				maxlength="1000"
+				placeholder="메모 입력 (최대 1000자)"></textarea>
+			
+			<br>
+			<button type="button" id="memo-btn">입력</button>
+		</form>
+		
+		<ul id="memo"></ul>
+	</section>
+	
+	
 	<!-- 일정 목록을 채워 넣을 input창 (안보임) -->
 	<input type="hidden" id="spot-list-hidden" name="spotList">
 	

@@ -1,6 +1,7 @@
 let centerCity = "도쿄"; // 위도, 경도의 기준이 되는 도시
 let touristSpots = [];
 let map; // 구글 맵
+let place; // 마이페이지 스크랩 추가에서 쓰이는 장소 이름 저장용 변수
 let directionsService;
 let directionsRenderer;
 const travelModeElement = document.getElementById('choose-travel-mode');
@@ -56,7 +57,8 @@ function getCoordinatesAndRoute(spots) {
 	    service.textSearch({query: spot}, (results, status) => {
 	        if (status === google.maps.places.PlacesServiceStatus.OK && results[0]) {
 	            const location = results[0].geometry.location;
-	            
+				place = results[0].name; // 검색한 장소 저장
+				
 				// 마커 생성
 	            new google.maps.Marker({
 	                map, 
@@ -130,27 +132,3 @@ function drawRoute(coords) {
         }
     });
 }
-
-document.querySelectorAll(".create-map-btn").forEach(btn => {
-	btn.addEventListener("click", function() {
-		const spotsStr = this.dataset.spots;
-		const cityValue = this.dataset.city; // 기준 도시
-		
-		document.getElementById('mapSection').style.display = 'block';
-		
-		if (spotsStr && spotsStr.length !== 0)
-			touristSpots = JSON.parse(spotsStr) // 관광지 목록 json 파싱 후 삽입
-		
-		console.log(touristSpots)
-		centerCity = cityValue;
-		
-		initMap(); // 구글 지도 생성
-	})
-});
-
-travelModeElement.addEventListener('change', function() {
-    // select가 선택되었고, 여행지가 2개 이상이면, 선택한 이동수단으로 지도를 다시 그림
-    if (touristSpots.length >= 2) {
-        getCoordinatesAndRoute(touristSpots);
-    }
-});

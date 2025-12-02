@@ -150,5 +150,40 @@ document.getElementById("input-itinerary-button").addEventListener('click', func
 	div.appendChild(span);
 	div.appendChild(button);
 	dayBox.appendChild(div);
- });
+});
  
+ 
+// 메모 입력
+document.getElementById("memo-btn").addEventListener("click", function () {
+ 	const memoTextArea = document.getElementById("memo-area"); 
+	const memoUl =  document.getElementById("memo"); 
+	
+	if (!memoTextArea || memoTextArea.value.trim() === "") {
+	      alert("메모를 입력하시오");
+	      return;
+	}
+ 	
+	const childLi = document.createElement("li");
+	const childButton = document.createElement("button");
+
+	childLi.className = "memo-item";
+	childLi.textContent = memoTextArea.value;
+	
+	childButton.className = "memo-item-delete"
+	childButton.type = "button";
+	childButton.textContent = 'X';
+
+	// 클릭된 버튼의 상위 li(memo-item)만 삭제
+	childButton.addEventListener('click', function (e) {
+	    const parentLi = e.target.closest('.memo-item'); // 부모 div
+	    if (parentLi) {
+			parentLi.remove();
+	    }
+	});
+	
+	childLi.appendChild(childButton);
+	memoUl.appendChild(childLi);
+	
+	memoTextArea.value = ""; // textarea 비움
+});
+  

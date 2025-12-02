@@ -11,9 +11,6 @@
 	<%@ include file="/components/pageHead.jsp" %>
 	
 	<style>
-	    /* ---------------------------------
-	     * 기본 스타일 및 폰트
-	     * --------------------------------- */
 	    body { 
 	        font-family: 'Playfair Display', 'Noto Serif KR', serif; 
 	        background-color: #FFFFFF; /* 흰색 배경 */
