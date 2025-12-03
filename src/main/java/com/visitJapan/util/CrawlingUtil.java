@@ -63,13 +63,58 @@ public class CrawlingUtil {
             String rain = (rainEl != null) ? rainEl.text() : "정보 없음";
 
             // DTO에 담기
-            WeatherDTO weatherDto = new WeatherDTO(sky, highTemp, lowTemp, rain);
+            WeatherDTO weatherDto = new WeatherDTO(toKorean(sky), highTemp, lowTemp, rain);
 
             return weatherDto;
 
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    
+    public static String toKorean(String jp) {
+        switch (jp.trim()) {
+            case "晴":       // はれ
+            case "晴れ":
+                return "맑음";
+
+            case "曇":       // くもり
+            case "曇り":
+                return "흐림";
+
+            case "雨":       // あめ
+                return "비";
+
+            case "雪":       // ゆき
+                return "눈";
+
+            case "雷":       // かみなり
+            case "雷雨":
+                return "뇌우";
+
+            case "暴風":
+            case "強風":
+                return "강풍";
+
+            case "霧":
+                return "안개";
+
+            case "みぞれ":
+                return "진눈깨비";
+
+            case "快晴":
+                return "쾌청";
+
+            case "所により雨":
+            case "一時雨":
+                return "한때 비";
+
+            case "所により雪":
+            case "一時雪":
+                return "한때 눈";
+            default:
+                return jp;
         }
     }
 }
