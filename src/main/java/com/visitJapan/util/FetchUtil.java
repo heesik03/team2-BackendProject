@@ -1,74 +1,53 @@
 package com.visitJapan.util;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.time.Duration;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 public class FetchUtil {
+	
+	// 크롤링 호출 메서드
+	public static Document fetchDocument(String url) {
+	    try {
+	        return Jsoup.connect(url)
+	                .userAgent("Mozilla/5.0")
+	                .timeout(5000)
+	                .get();
+	    } catch (IOException e) {
+	        throw new RuntimeException(e);
+	    }
+	}
 
-    private static final HttpClient httpClient = HttpClient.newBuilder()
-            .followRedirects(HttpClient.Redirect.NORMAL)
-            .connectTimeout(Duration.ofSeconds(3))
-            .version(HttpClient.Version.HTTP_2)
-            .build();
-    
-    // 비동기 크롤링 호출
-    private static CompletableFuture<Document> fetchAsync(String url) {
+	// 크롤링 병렬 호출
+	public static List<Document> fetchAll(List<String> urlList) {
         long start = System.currentTimeMillis();
+		// 병렬 처리를 위한 고정 크기의 스레드풀 생성
+	    ExecutorService executor = Executors.newFixedThreadPool(3);
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("User-Agent", 
-                        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
-                .timeout(Duration.ofSeconds(3))
-                .GET()
-                .build();
+	    try {
+		    	List<CompletableFuture<Document>> futures = urlList.stream()
+		    		    .map((String url) -> {
+		    		    		// 각 스레드에서 크롤링 호출
+		    		        return CompletableFuture.supplyAsync(() -> fetchDocument(url), executor);
+		    		    })
+		    		    .collect(Collectors.toList()); // 스트림 -> 리스트 변환
 
-        return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString(java.nio.charset.StandardCharsets.UTF_8))
-                .thenApply(response -> {
-                    if (response.statusCode() >= 300) {
-                        throw new RuntimeException("HTTP Error: " + response.statusCode());
-                    }
-                    String html = response.body(); 
+		    	// 모든 Future의 결과를 취합하여 반환
+	        return futures.stream()
+	                .map(CompletableFuture::join)  
+	                .collect(Collectors.toList());
 
-                    long end = System.currentTimeMillis();
-                    System.out.println(url + " -> " + (end - start) + "ms"); 
-
-                    return Jsoup.parse(html, url); 
-                })
-                .exceptionally(ex -> {
-                    System.err.println("Error fetching " + url + ": " + ex.getMessage());
-                    throw new RuntimeException(ex); 
-                });
-    }
-
-
-    // 하나만 호출
-    public static Document fetchDocument(String url) {
-        return fetchAsync(url).join();
-    }
-
-
-    // 여러개 병렬 호출
-    public static List<Document> fetchAll(List<String> urlList) {
-        List<CompletableFuture<Document>> futures = urlList.stream()
-                .map(FetchUtil::fetchAsync) 
-                .collect(Collectors.toList());
-
-        CompletableFuture<Void> allOf = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
-
-        return allOf.thenApply(v -> futures.stream()
-                .map(CompletableFuture::join) 
-                .collect(Collectors.toList()))
-                .join(); 
-    }
+	    } finally {
+	        executor.shutdown(); // 스레드 풀 종료
+	        long end = System.currentTimeMillis();
+	        System.out.println("크롤링 소요 시간: " + (end - start) + "ms");
+	    }
+	}
     
 }
