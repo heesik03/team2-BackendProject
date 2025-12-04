@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>임시 오류 페이지</title>
+<title>오류 페이지</title>
 </head>
 <body>
 	<h1> 오류 발생 </h1>

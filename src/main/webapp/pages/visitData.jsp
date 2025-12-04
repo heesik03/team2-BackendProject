@@ -21,8 +21,8 @@
 
 <body>
 
-	<jsp:include page="/layout/header.jsp" />
-	
+	<%@ include file="/layout/header.jsp"  %>
+		
 	<main>
 		<!-- 도시 검색 입력창 -->		
 		<%@ include file="/components/searchForm.jsp" %>

@@ -28,7 +28,7 @@
 </c:if>
 <body data-context-path="${pageContext.request.contextPath}">
 
-	<jsp:include page="/layout/header.jsp" />
+	<%@ include file="/layout/header.jsp"  %>
 	
 		<main>
 			<!-- 유저 정보 -->

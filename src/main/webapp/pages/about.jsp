@@ -1,118 +1,112 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
     
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Visit Japan - About</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;800&family=Noto+Sans+KR:wght@400;800&family=Noto+Serif+KR:wght@400;800&family=Playfair+Display:wght@400;800&display=swap"
-    rel="stylesheet">
-
-<style>
-    /* 기본 폰트 설정 */
-    body {
-        font-family: 'Playfair Display', 'Noto Serif KR', serif;
-    }
-
-    /* Inter 폰트 사용 영역 (한글은 Noto Sans KR로 대체) */
-    .font-inter {
-        font-family: 'Inter', 'Noto Sans KR', sans-serif;
-    }
-
-    /* ▼ 히어로(메인 배너) 섹션 스타일 */
-    .hero-about {
-        position: relative;
-        height: 90vh; /* 화면 높이의 90% */
-        min-height: 800px;
-        background: url('${pageContext.request.contextPath}/resource/images/about/about-1.jpg') no-repeat center center; 
-        background-size: cover;
-        color: white;
-    }
-    .hero-overlay-about {
-        position: absolute; top: 0; left: 0;
-        width: 100%; height: 100%;
-        background-color: rgba(0, 0, 0, 0.2); /* 배경 오버레이는 80% 투명 */
-        display: flex;
-        justify-content: center;
-        align-items: center; 
-        text-align: center;
-    }
-    
-    
-    .hero-overlay-about h1 {
-        font-size: 150px;
-        font-weight: 800;
-        font-family: 'Inter', 'Noto Sans KR', sans-serif;
-    
-        color: white;
-        
-        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    }
-    /* ▲ 히어로 섹션 끝 */
-
-
-    /* ▼ 인용구 섹션 */
-    .quote-section {
-        border-top: 3px solid black;
-        border-bottom: 3px solid black;
-    }
-    .quote-section h2 {
-        font-size: 100px;
-        font-weight: 800;
-    }
-    /* ▲ 인용구 섹션 끝 */
-
-
-    /* ▼ 기능 소개 섹션 */
-    .feature-section .feature-title {
-        font-size: 100px;
-        font-weight: 800;
-    }
-    .feature-section .feature-subtitle {
-        font-size: 60px;
-        font-weight: 400;
-    }
-    .feature-section .feature-box {
-        background: #FBFBFB;
-        border: 1px solid #6E98E5;
-        padding: 2rem;
-        font-size: 30px;
-        font-weight: 400;
-    }
-    .feature-section img {
-        border: 3px solid #6E98E5;
-        width: 100%;
-        height: auto;
-    }
-    /* ▲ 기능 소개 섹션 끝 */
-    
-
-    /* 푸터 스타일 */
-    footer {
-        background: #160E0E; color: white; padding: 64px 0; 
-    }
-    footer h3 {
-        font-size: 24px; font-weight: 800; margin-bottom: 24px; 
-    }
-    footer p, footer a {
-        font-size: 20px; color: #ccc; text-decoration: none; line-height: 1.8;
-    }
-    footer a:hover { color: white; text-decoration: underline; }
-    .footer-info { font-size: 14px; line-height: 1.6; }
-</style>
+	<!-- head (페이지 설정) 영역 -->
+	<c:set var="pageTitle" value="About" />
+	<%@ include file="/components/pageHead.jsp" %>
+	<style>
+	    /* 기본 폰트 설정 */
+	    body {
+	        font-family: 'Playfair Display', 'Noto Serif KR', serif;
+	    }
+	
+	    /* Inter 폰트 사용 영역 (한글은 Noto Sans KR로 대체) */
+	    .font-inter {
+	        font-family: 'Inter', 'Noto Sans KR', sans-serif;
+	    }
+	
+	    /* ▼ 히어로(메인 배너) 섹션 스타일 */
+	    .hero-about {
+	        position: relative;
+	        height: 90vh; /* 화면 높이의 90% */
+	        min-height: 800px;
+	        background: url('${pageContext.request.contextPath}/resource/images/about/about-1.jpg') no-repeat center center; 
+	        background-size: cover;
+	        color: white;
+	    }
+	    .hero-overlay-about {
+	        position: absolute; top: 0; left: 0;
+	        width: 100%; height: 100%;
+	        background-color: rgba(0, 0, 0, 0.2); /* 배경 오버레이는 80% 투명 */
+	        display: flex;
+	        justify-content: center;
+	        align-items: center; 
+	        text-align: center;
+	    }
+	    
+	    
+	    .hero-overlay-about h1 {
+	        font-size: 150px;
+	        font-weight: 800;
+	        font-family: 'Inter', 'Noto Sans KR', sans-serif;
+	    
+	        color: white;
+	        
+	        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	    }
+	    /* ▲ 히어로 섹션 끝 */
+	
+	
+	    /* ▼ 인용구 섹션 */
+	    .quote-section {
+	        border-top: 3px solid black;
+	        border-bottom: 3px solid black;
+	    }
+	    .quote-section h2 {
+	        font-size: 100px;
+	        font-weight: 800;
+	    }
+	    /* ▲ 인용구 섹션 끝 */
+	
+	
+	    /* ▼ 기능 소개 섹션 */
+	    .feature-section .feature-title {
+	        font-size: 100px;
+	        font-weight: 800;
+	    }
+	    .feature-section .feature-subtitle {
+	        font-size: 60px;
+	        font-weight: 400;
+	    }
+	    .feature-section .feature-box {
+	        background: #FBFBFB;
+	        border: 1px solid #6E98E5;
+	        padding: 2rem;
+	        font-size: 30px;
+	        font-weight: 400;
+	    }
+	    .feature-section img {
+	        border: 3px solid #6E98E5;
+	        width: 100%;
+	        height: auto;
+	    }
+	    /* ▲ 기능 소개 섹션 끝 */
+	    
+	
+	    /* 푸터 스타일 */
+	    footer {
+	        background: #160E0E; color: white; padding: 64px 0; 
+	    }
+	    footer h3 {
+	        font-size: 24px; font-weight: 800; margin-bottom: 24px; 
+	    }
+	    footer p, footer a {
+	        font-size: 20px; color: #ccc; text-decoration: none; line-height: 1.8;
+	    }
+	    footer a:hover { color: white; text-decoration: underline; }
+	    .footer-info { font-size: 14px; line-height: 1.6; }
+	</style>
 </head>
 
 <body>  
 
  <!-- HEADER (상단 네비게이션) -->
-	<jsp:include page="/layout/header.jsp" />
+	<%@ include file="/layout/header.jsp"  %>
     
     <main>      
 

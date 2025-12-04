@@ -72,8 +72,9 @@
  
 <script>	
 	// 브라우저가 페이지를 표시할 때, 로딩페이지 숨김
+	const loader = document.getElementById("loading");
+
 	window.addEventListener("pageshow", function (event) {
-	    const loader = document.getElementById("loading");
 	
 	    if (!loader) return;
 	
@@ -94,9 +95,7 @@
 	    }
 	});
 	
-	document.addEventListener("DOMContentLoaded", function () {
-	    const loader = document.getElementById("loading");
-	
+	document.addEventListener("DOMContentLoaded", function () {	
 	    // a 태그 클릭 시 로딩 표시
 	    document.querySelectorAll("a").forEach(a => {
 	        a.addEventListener("click", function (event) {

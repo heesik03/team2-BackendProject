@@ -20,7 +20,7 @@
 	
 <body>
 	
-	<jsp:include page="/layout/header.jsp" />
+	<%@ include file="/layout/header.jsp"  %>
 	
 	<main>
 		<h3>여행 일정 생성</h3>

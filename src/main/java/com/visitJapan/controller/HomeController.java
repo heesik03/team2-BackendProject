@@ -96,6 +96,7 @@ public class HomeController extends HttpServlet {
 	        spotData = CrawlingUtil.getSpot(spotDoc); // 관광지 데이터
 	        restaurantData = CrawlingUtil.getRestaurant(tabelogDoc); // 맛집
 	        weatherData = CrawlingUtil.getWeather(skyDoc); // 날씨
+	        
 			
 	        // dto에 넣은 후 속성으로 보냄
 	        HomeResponseDTO homeResponse = new HomeResponseDTO(spotData, restaurantData, weatherData);

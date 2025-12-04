@@ -17,7 +17,7 @@
     <c:redirect url="/index.jsp" />
 </c:if>
 <body>
-	<jsp:include page="/layout/header.jsp" />
+	<%@ include file="/layout/header.jsp"  %>
 	
 	<main>
 		<h3>여행 일정 수정</h3>

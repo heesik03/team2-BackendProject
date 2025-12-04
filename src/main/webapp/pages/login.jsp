@@ -82,7 +82,7 @@
 
 <body>
 	
-	<jsp:include page="/layout/header.jsp" />
+	<%@ include file="/layout/header.jsp"  %>
 	
     <main class="container py-3"> 
         <div class="row justify-content-center">

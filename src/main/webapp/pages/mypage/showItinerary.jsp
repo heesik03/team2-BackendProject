@@ -30,7 +30,7 @@
 
 <!-- js 삭제 요청을 위한 속성 삽입 -->
 <body data-context-path="${pageContext.request.contextPath}" data-refresh="true">
-	<jsp:include page="/layout/header.jsp" />
+	<%@ include file="/layout/header.jsp"  %>
 	
 	<main>
 		

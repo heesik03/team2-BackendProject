@@ -17,7 +17,7 @@
 </c:if>
 
 <body>
-	<jsp:include page="/layout/header.jsp" />
+	<%@ include file="/layout/header.jsp"  %>
 		
 		<main>
 			<h3>관리자 페이지</h3>

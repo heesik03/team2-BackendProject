@@ -95,7 +95,7 @@
 </c:if>
 
 <body>
-	<jsp:include page="/layout/header.jsp" />
+	<%@ include file="/layout/header.jsp"  %>
 	
     <main class="signup-container">
         <h2 class="signup-title">Visit Japan 회원가입</h2>

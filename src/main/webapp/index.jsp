@@ -40,7 +40,7 @@
 	<!--city-group : 도시 선택 이미지 사진 + 글자-->
 	
 	<!-- HEADER (상단 네비게이션) -->
-	<jsp:include page="/layout/header.jsp" />
+	<%@ include file="/layout/header.jsp"  %>
 	
 	<main>
         <!-- ■ Top-Banner : 메인 배너 이미지 + 문구 -->
