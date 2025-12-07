@@ -12,7 +12,7 @@ function buildTag() {
 	let i = 1;
 	for (const dayData of spotList) {
 		const div = document.createElement("div");
-		div.className = "day-box";
+		div.className = "day-box my-3";
 		
 		// i일차 날짜 계산
 		const dayValue = dayData.day; // i일차
@@ -26,7 +26,7 @@ function buildTag() {
 		
 		// day-box 안의 태그 생성
 		const h4 = document.createElement("h4");
-		h4.textContent = `${dayValue} 일정 (${formattedDate})`;
+		h4.textContent = `🕒 ${dayValue} 일정 (${formattedDate})`;
 		div.appendChild(h4);
 
 		for (const spot of dayData.spots) {

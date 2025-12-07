@@ -2,7 +2,6 @@
 function sendPutRequest(requestBody) {
 	if (!confirm("정말 변경 하시겠습니까?"))
 		return;
-	console.log(requestBody);
 	
 	fetch(`${context}/mypage/change.do`, {
 	    method: "PUT",

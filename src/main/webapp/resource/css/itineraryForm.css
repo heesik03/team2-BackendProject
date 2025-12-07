@@ -1,0 +1,152 @@
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f8f9fa; /* 연한 회색 배경 */
+    color: #333;
+}
+
+.main-container { /*  메인 콘텐츠 감싸는 영역   */
+    max-width: 900px; /* 전체 컨테이너 최대 너비 */
+    margin: 0 auto; /* 중앙 정렬 */
+}
+
+/* 폼 카드 스타일, 폼 전체 감싸는 카드 디자인 설정  */
+.form-card {
+    background-color: white;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05); /* 부드러운 그림자 */
+    overflow: hidden;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+/* 제목영역 구분   */
+.form-header {
+    background-color: white;
+    padding: 3rem 2rem 1.5rem;
+    border-bottom: 1px solid #f1f3f5;
+    text-align: center;
+}
+/* 제목 텍스트   */
+.form-title {
+    font-weight: 800; /* 매우 굵은 글꼴 */
+    font-size: 2rem;
+    color: #212529;
+    margin-bottom: 0.5rem;
+}
+/* 제목 아래 보조설명 텍스트   */
+.form-subtitle {
+    color: #6c757d;
+    font-size: 1rem;
+}
+/* 수직정렬, 좌우 패딩 부여   */
+.form-body {
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 폼 콘텐츠 중앙 정렬 */
+}
+/* 모든 입력 요소의 크기지정  */
+.form-content-wrapper {
+    width: 100%;
+    max-width: 700px; /* 입력 폼 최대 너비 제한 */
+}
+
+/* include 된 내부 input 요소들 스타일 (꽉 차게) */
+.form-content-wrapper input,
+.form-content-wrapper select,
+.form-content-wrapper textarea {
+    width: 100%;
+    padding: 14px 16px;
+    margin-bottom: 24px;
+    border-radius: 12px;
+    border: 1px solid #dee2e6;
+    background-color: #fcfcfc;
+}
+
+/* 제출 버튼 스타일 (그라데이션 & 애니메이션) */
+.btn-submit-custom {
+    display: block;
+    width: 100%;
+    max-width: 350px;
+    margin: 40px auto 0; /* 중앙 정렬 */
+    padding: 15px;
+    
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    
+    /* 버튼 배경 그라데이션 */
+    background: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%); 
+    box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+    transition: all 0.3s ease; /* 호버 시 애니메이션 효과 */
+}
+/* 마우스 호버시 버튼 반응형 디자인 요소 추가   */
+.btn-submit-custom:hover {
+    transform: translateY(-3px); /* 버튼 살짝 위로 이동 */
+    box-shadow: 0 8px 20px rgba(13, 110, 253, 0.4); /* 그림자 확대 */
+    background: linear-gradient(135deg, #0b5ed7 0%, #0aa2c0 100%); /* 배경색 미세 조정 */
+          color: white;
+      }
+      
+    .btn-action {
+    padding: 5px 12px; 
+    font-size: 13px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+
+/* 버튼 공통 스타일 */
+.btn-edit {
+    border: 1px solid #6c757d;
+    color: #6c757d;
+    background: white;
+    margin-right: 5px;
+   	margin-bottom : 5px;
+}
+
+/* 일정 추가 */
+.btn-add {
+    border: 1px solid #0d6efd;
+    color: #0d6efd;
+    background: white;
+}
+.btn-add:hover {
+    background: #0d6efd;
+    color: white;
+}
+
+/* 일정 제출 버튼 */
+.btn-primary-custom {
+    background-color: #4dc3ff; 
+    border-color: #4dc3ff; 
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 12px 25px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(77, 195, 255, 0.4); 
+    transition: background-color 0.3s, border-color 0.3s, transform 0.2s;
+}
+/* 버튼 호버 시 스타일 */
+.btn-primary-custom:hover {
+    background-color: #26a9e0; 
+    border-color: #26a9e0; 
+    transform: translateY(-2px); /* 살짝 위로 이동 */
+    box-shadow: 0 6px 15px rgba(77, 195, 255, 0.6); 
+}
+
+/* 일정 삭제 버튼 */
+.itinerary-item-delete, .memo-item-delete {
+    border: 1px solid #dc3545;
+    color: #dc3545;
+    background: white;
+    margin-left : 5px;
+}
+.itinerary-item-delete, .memo-item-delete:hover { background: #dc3545; color: white; }
+
+

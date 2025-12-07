@@ -13,6 +13,6 @@ public class LogoutUtil {
         if (session != null && session.getAttribute("id") != null) {
             session.invalidate(); // 세션 무효화
         }
-		response.sendRedirect(request.getContextPath() + "/index.jsp");
+        response.sendRedirect("/VisitJapan/index.jsp");
 	} 
 }

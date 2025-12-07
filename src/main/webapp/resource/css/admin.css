@@ -1,0 +1,127 @@
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f4f7f6; /* 부드러운 배경색 */
+    color: #333;
+}
+
+main {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+main h3 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db; /* 강조선 */
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+h4 {
+    font-size: 20px;
+    font-weight: 500;
+    color: #34495e;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+/* 테이블 스타일 */
+table {
+    width: 100%;
+    border-collapse: separate; /* border-radius 적용을 위해 */
+    border-spacing: 0;
+    margin-top: 20px;
+    font-size: 15px;
+    table-layout: fixed;
+}
+
+thead th {
+    background-color: #3498db;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* 모서리 둥글게 처리 */
+thead tr:first-child th:first-child {
+    border-top-left-radius: 8px;
+}
+thead tr:first-child th:last-child {
+    border-top-right-radius: 8px;
+}
+
+tbody td {
+    background-color: white;
+    padding: 12px 15px;
+    border-bottom: 1px solid #ecf0f1;
+    color: #555;
+    vertical-align: middle;
+    word-break: break-all;
+}
+
+tbody tr:hover td {
+    background-color: #f9f9f9;
+}
+
+/* 권한/삭제 버튼 스타일 */
+.grant-btn, .delete-user-btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.2s;
+    font-weight: 500;
+    white-space: nowrap; /* 버튼 내용 줄바꿈 방지 */
+}
+
+/* 권한 부여 버튼 */
+.grant-form {
+    display: inline-block;
+    margin-left: 10px;
+}
+.grant-btn {
+    background-color: #2ecc71; /* 에메랄드 */
+    color: white;
+}
+.grant-btn:hover {
+    background-color: #27ae60;
+}
+
+/* 삭제 버튼 (X) */
+.delete-user-btn {
+    background-color: #e74c3c; /* 알리자린 */
+    color: white;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    line-height: 1;
+    font-weight: 700;
+}
+.delete-user-btn:hover {
+    background-color: #c0392b;
+}
+
+/* 관리자 권한 강조 */
+.admin-badge {
+    color: #e67e22; /* 당근색 */
+    font-weight: 700;
+}
+
+/* 일반 사용자 텍스트 (폼과 분리) */
+.user-status {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+/* 마지막 td (삭제 버튼) 정렬 */
+tbody tr td:last-child {
+    text-align: center;
+}

@@ -67,8 +67,10 @@
 		<select id="selected-day">
 			<option value="" disabled selected>일자 선택</option>
 		</select>
-		
-		<button type="button" id="input-itinerary-button">추가</button>
+
+		<button type="button" id="input-itinerary-button" class="btn-action btn-add">
+			일정 추가
+		</button>
 	</div>
 	
 	<div id="day-container">
@@ -84,8 +86,9 @@
 				maxlength="1000"
 				placeholder="메모 입력 (최대 1000자)"></textarea>
 			
-			<br>
-			<button type="button" id="memo-btn">입력</button>
+			<button type="button" id="memo-btn" class="btn-action btn-edit">
+				<i class="bi bi-pencil"></i> 메모 입력
+			</button>
 		</form>
 		
 		<ul id="memo"></ul>
@@ -95,7 +98,7 @@
 	<!-- 일정 목록을 채워 넣을 input창 (안보임) -->
 	<input type="hidden" id="spot-list-hidden" name="spotList">
 	
-	<button type="button" id="submit-btn">
+	<button type="button" id="submit-btn" class="btn btn-primary-custom w-100">
 		제출
 	</button>
 		

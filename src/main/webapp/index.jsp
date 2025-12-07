@@ -6,87 +6,76 @@
 <!DOCTYPE html>
 <html lang="ko">
 
-<!-- 로딩 페이지는 최상단에 -->
 <jsp:include page="/components/loading.jsp" />
 
 <head>
-	<!-- head (페이지 설정) 영역 -->
-	<c:set var="pageTitle" value="visit japan (가칭)" />
+	<c:set var="pageTitle" value="visit japan" />
 	<%@ include file="/components/pageHead.jsp" %>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/index.css">
 </head>
 
 <body>
 	
-	<!-- 이미지 경로 선언 -->
 	<c:url value="/resource/images/city/tokyo.jpg" var="tokyoImg"/>
 	<c:url value="/resource/images/city/osaka.jpg" var="osakaImg"/>
 	<c:url value="/resource/images/city/kyoto.jpg" var="kyotoImg"/>
 	<c:url value="/resource/images/city/fukuoka.jpg" var="fukuokaImg"/>
+	<c:url value="/resource/images/city/sapporo.jpg" var="sapporoImg"/>
+	<c:url value="/resource/images/city/nagoya.jpg" var="nagoyaImg"/>
 	
-	<!-- 도시 목록 배열로 선언 -->
 	<%
 		String[][] cityArr = {
 			    {"도쿄", "tokyo", "tokyoImg"},
 			    {"교토", "kyoto", "kyotoImg"},
 			    {"오사카", "osaka", "osakaImg"},
-			    {"후쿠오카", "fukuoka", "fukuokaImg"}
+			    {"후쿠오카", "fukuoka", "fukuokaImg"},
+			    {"삿포로", "sapporo", "sapporoImg"},
+			    {"나고야", "nagoya", "nagoyaImg"}
 		};
 		request.setAttribute("cityArr", cityArr);
 	%>
 		
-	<!--Flip : 반응형 적용시 접혀지는 header 부분 관리-->
-	<!--Top-Banner : 메인 배너 이미지 + 문구 -->
-	<!--city-choice : 도시 선택 이미지 부분-->
-	<!--city-group : 도시 선택 이미지 사진 + 글자-->
-	
-	<!-- HEADER (상단 네비게이션) -->
-	<%@ include file="/layout/header.jsp"  %>
+	<jsp:include page="/layout/header.jsp" />
 	
 	<main>
-        <!-- ■ Top-Banner : 메인 배너 이미지 + 문구 -->
         <section id="Top-Banner" style="position: relative;">
             
-            <img src="${tokyoImg}" alt="메인 배너"
+            <%-- 도쿄 이미지를 메인 배너로 사용 --%>
+            <img src="${osakaImg}" alt="메인 배너"
                  style="width: 100%; height: auto; opacity: 0.75;" />
             
-            <!-- 홈화면 텍스트 -->
-            <h1 style="width: 854px; left: 56px; top: 389px; position: absolute;
-                       color: white; font-size: 120px; font-weight: 400; margin: 0;">
+            <h1 class="main-title">
                 Trip to japan
             </h1>
 
-            <!-- 홈화면 배너 설명 텍스트 -->
-            <p style="left: 56px; top: 560px; position: absolute; color: white;
-                      font-size: 40px; font-weight: 400; margin: 0;">
+            <p class="main-subtitle">
                 고즈넉한 사찰부터 화려한 도시까지<br/>
                 당신의 일본여행을 계획하세요
             </p>
         </section>
         
-       <!-- 도시 선택 이미지 카드 목록 -->
-        <section id="city-choice" class="container my-5 py-5">
+       <section id="city-choice" class="container my-5 py-5">
             
-            <!-- 도시 선택 이미지 설명글 -->
             <div class="text-center mb-4">
                 <h2 style="font-size: 80px; font-weight: 400;">Choose your trip</h2>
                 <p style="font-size: 56px; font-weight: 400; color: #333;">당신의 여행지를 골라보세요.</p>
             </div>
 
-            <!-- 도시 검색 입력창 -->
             <%@ include file="/components/searchForm.jsp" %>
 
-            <!-- to,ky,oa,fu 이미지 부분 감싸기-->
             <div id="city-group" class="row mt-5 justify-content-center">
-            	<!-- 배열은 순회하며 이미지 출력 -->
+            	
+            	<%-- request scope에 저장된 cityArr 배열을 순회하며 이미지 출력 --%>
                 <c:forEach var="city" items="${cityArr}">
-			        <div class="col-12 col-md-6 col-lg-4">
+			        <div class="col-12 col-md-6 col-lg-4"> <%-- 반응형 그리드 설정 --%>
 			            <a href="home.do?region=${city[0]}" style="text-decoration: none; color: inherit;">
 			                <div class="city-card">
-			                    <!-- 이미지 출력 -->
-			                     <img src="${pageScope[city[2]]}"
+			                    <%-- 이미지 출력 --%>
+			                    <img src="${pageScope[city[2]]}"
 			                         alt="${city[0]}" 
 			                         class="img-fluid">
 			
+			                    <%-- 도시 이름 (영문 약자) --%>
 			                    <h3>${city[1]}</h3>
 			                </div>
 			            </a>
@@ -97,9 +86,9 @@
         
 	</main>
 	
-	<!-- FOOTER : 페이지 하단 정보 영역  -->
 	<%@ include file="/layout/footer.jsp" %>
 		
+	<%-- 검색어 자동완성 기능을 위한 JavaScript 파일 로드 --%>
 	<script src="${pageContext.request.contextPath}/resource/js/utils/searchSuggest.js"></script>
 </body>
 </html>

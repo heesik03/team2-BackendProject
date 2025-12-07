@@ -1,21 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
-    
+  
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-	<!-- head (페이지 설정) 영역 -->
-	<c:set var="pageTitle" value="About" />
+	<c:set var="pageTitle" value="Visit Japan - About" />
 	<%@ include file="/components/pageHead.jsp" %>
 	<style>
-	    /* 기본 폰트 설정 */
+	    /* 기본 폰트 설정: Playfair Display 또는 Noto Serif KR 사용 */
 	    body {
 	        font-family: 'Playfair Display', 'Noto Serif KR', serif;
 	    }
 	
-	    /* Inter 폰트 사용 영역 (한글은 Noto Sans KR로 대체) */
+	    /* Inter 폰트 사용 영역 (영문용, 한글은 Noto Sans KR로 대체) */
 	    .font-inter {
 	        font-family: 'Inter', 'Noto Sans KR', sans-serif;
 	    }
@@ -25,6 +23,7 @@
 	        position: relative;
 	        height: 90vh; /* 화면 높이의 90% */
 	        min-height: 800px;
+	        /* 배경 이미지 설정: JSP의 contextPath를 사용하여 동적으로 경로 지정 */
 	        background: url('${pageContext.request.contextPath}/resource/images/about/about-1.jpg') no-repeat center center; 
 	        background-size: cover;
 	        color: white;
@@ -32,7 +31,7 @@
 	    .hero-overlay-about {
 	        position: absolute; top: 0; left: 0;
 	        width: 100%; height: 100%;
-	        background-color: rgba(0, 0, 0, 0.2); /* 배경 오버레이는 80% 투명 */
+	        background-color: rgba(0, 0, 0, 0.2); /* 배경 이미지 위에 덮는 어두운 오버레이 */
 	        display: flex;
 	        justify-content: center;
 	        align-items: center; 
@@ -47,7 +46,7 @@
 	    
 	        color: white;
 	        
-	        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); /* 텍스트 그림자 */
 	    }
 	    /* ▲ 히어로 섹션 끝 */
 	
@@ -75,7 +74,7 @@
 	    }
 	    .feature-section .feature-box {
 	        background: #FBFBFB;
-	        border: 1px solid #6E98E5;
+	        border: 1px solid #6E98E5; /* 박스 테두리 강조 */
 	        padding: 2rem;
 	        font-size: 30px;
 	        font-weight: 400;
@@ -105,27 +104,30 @@
 
 <body>  
 
- <!-- HEADER (상단 네비게이션) -->
-	<%@ include file="/layout/header.jsp"  %>
+ <jsp:include page="/layout/header.jsp" />
     
     <main>      
 
+        <%-- 4.1. 히어로(메인 배너) 섹션 --%>
         <section class="hero-about">
             <div class="hero-overlay-about">
                 <h1 class="font-inter">Welcome to the Japan</h1>
             </div>
         </section>
         
+        <%-- 4.2. 인용구 섹션 --%>
         <section class="container-fluid quote-section my-5 py-5">
             <div class="container text-center">
                 <h2 class="font-inter">“Simple is the Best”</h2>
             </div>
         </section>
 
+        <%-- 4.3. 기능 소개 타이틀 섹션 --%>
         <section class="container feature-section my-5 py-5">
             <h2 class="feature-title font-inter">즐거운 여행, <br/>하지만 귀찮지 않으세요?</h2>
         </section>
 
+        <%-- 4.4. 기능 소개 1 (맛집/관광지 정보 찾기) --%>
         <section class="container feature-section my-5 py-5">
             <div class="row align-items-center g-5">
                 <div class="col-lg-6">
@@ -142,11 +144,13 @@
                     </div>
                     </div>
                 <div class="col-lg-6">
+                   <%-- 이미지 경로도 contextPath 사용 --%>
                    <img src="${pageContext.request.contextPath}/resource/images/about/about-2.jpg" alt="맛집, 관광지 정보" class="img-fluid">
                 </div>
             </div>
         </section>
 
+        <%-- 4.5. 기능 소개 2 (여행 플래너/지도 기능) --%>
         <section class="container feature-section my-5 py-5">
             <div class="row align-items-center g-5">
                 <div class="col-lg-6 order-lg-1">
@@ -163,8 +167,9 @@
         </section>
     
     </main>
-    <!-- FOOTER : 페이지 하단 정보 영역  -->
-	<%@ include file="/layout/footer.jsp" %>
+
+    <%@ include file="/layout/footer.jsp" %>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

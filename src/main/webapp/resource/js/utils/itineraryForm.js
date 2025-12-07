@@ -54,7 +54,7 @@ endDateInput.addEventListener("change", function () {
     // dayCount 만큼 div 생성
 	for (let i = 1; i <= dayCount; i++) {
 		const div = document.createElement("div");
-	    div.className = "day-box";
+	    div.className = "day-box my-3";
 		
 	    // i일차 날짜 계산
 	    const dayDate = new Date(startDate);
@@ -74,7 +74,7 @@ endDateInput.addEventListener("change", function () {
 
 	     // day-box 안의 태그 생성
 	    const h4 = document.createElement("h4");
-	    h4.textContent = `${i}일차 일정 (${formattedDate})`;
+	    h4.textContent = `🕒 ${i}일차 일정 (${formattedDate})`;
 	    div.appendChild(h4);
 		 
 	    // 부모에 삽입
