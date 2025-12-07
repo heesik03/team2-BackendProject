@@ -134,3 +134,25 @@ h3.section-header::before {
     color: white !important;
     border-color: #dc3545 !important;
 }
+
+/* 관광지 새로고침 버튼 */
+#change-spot-list {
+    margin-bottom: 20px;              
+    padding: 0.6rem 1.2rem;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(13, 110, 253, 0.2);
+    transition: all 0.2s;
+    border: 1px solid #0d6efd;
+    color: #0d6efd;
+    background: white;
+}
+
+#change-spot-list:hover {
+	background: #0d6efd;
+    color: white;
+    transform: translateY(-2px);
+}

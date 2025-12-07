@@ -42,10 +42,7 @@
 <head>
 	<c:set var="pageTitle" value="지역 정보" />
 	<%@ include file="/components/pageHead.jsp" %>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="${root}/resource/css/visitdata.css">
+    <link rel="stylesheet" href="${root}/resource/css/visitData.css">
     
 	<script>
     	const userId = "${sessionScope.id}";
@@ -102,6 +99,14 @@
 	    	</c:choose>
         		
         <h3 class="section-header">${rawRegion} 관광지</h3>
+        
+       <button 
+			type="button" 
+			id="change-spot-list" 
+			data-index="${pageIndex}"
+			data-region="${region}" >
+			관광지 변경 🔄
+		</button> 
 
 		<c:choose>
 			<c:when test="${not empty homeResponse.spotData}">
@@ -205,6 +210,9 @@
 	</main>
 
     <%@ include file="/layout/footer.jsp" %>
+    <script>
+    	const root = "${pageContext.request.contextPath}";
+    </script>
     
     <script src="${pageContext.request.contextPath}/resource/js/utils/searchSuggest.js"></script>
     <script src="${pageContext.request.contextPath}/resource/js/page/visitData.js"></script>

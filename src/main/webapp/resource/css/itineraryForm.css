@@ -141,12 +141,18 @@ body {
 }
 
 /* 일정 삭제 버튼 */
-.itinerary-item-delete, .memo-item-delete {
+.itinerary-item-delete,
+.memo-item-delete {
     border: 1px solid #dc3545;
     color: #dc3545;
     background: white;
-    margin-left : 5px;
+    margin-left: 5px;
 }
-.itinerary-item-delete, .memo-item-delete:hover { background: #dc3545; color: white; }
+
+.itinerary-item-delete:hover,
+.memo-item-delete:hover {
+    background: #dc3545;
+    color: white;
+}
 
 

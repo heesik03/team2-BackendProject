@@ -28,8 +28,9 @@ import com.visitJapan.util.FetchUtil;
 public class HomeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-    private final String tabelogLink = "https://tabelog.com/kr/";
-	private final String spotLink = "https://japantravel.navitime.com/ko/area/jp/search/spot/?word=";
+    private final String TABELOG_LINK = "https://tabelog.com/kr/";
+	private final String SPOT_LINK = "https://japantravel.navitime.com/ko/area/jp/search/spot/?word=";
+	private final int PAGE_INDEX = 1; // 페이지 번호
 	
     // ★ 지역별 날씨 주소 매핑 
 	private static final Map<String, String> AREA_URL = Map.of(
@@ -41,13 +42,12 @@ public class HomeController extends HttpServlet {
 		    "나고야", "https://tenki.jp/forecast/5/26/5110/23100/",
 		    "히로시마", "https://tenki.jp/forecast/7/37/6710/34100/"
 	);
-	
+		
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String region = request.getParameter("region"); // 검색한 지역 정보 가져옴
-			String crawlingSpotURL = spotLink + region; // 관광지 링크
+			String crawlingSpotURL = SPOT_LINK + region; // 관광지 링크
 			String crawlingYahooURL = null; // yahoo japan 날씨 링크
-			int randomPageIndex = new Random().nextInt(5)+1; // 1~5 페이지까지 랜덤 페이지 
 
 			// DTO에 넣을 결과값들
 			SpotDTO spotData = null;
@@ -56,13 +56,13 @@ public class HomeController extends HttpServlet {
 			
 			// 타베로그 크롤링 링크
 	        String crawlingTabeURL = switch (region) {
-		    	case "도쿄" -> tabelogLink + "tokyo/";
-		    	case "오사카" -> tabelogLink + "osaka/";
-		    	case "교토" -> tabelogLink + "kyoto/";
-		    	case "후쿠오카" -> tabelogLink + "fukuoka/";
-		    	case "삿포로" -> tabelogLink + "hokkaido/A0101/";
-		    	case "나고야" -> tabelogLink + "aichi/A2301/";
-		    	case "히로시마" -> tabelogLink + "hiroshima/";
+		    	case "도쿄" -> TABELOG_LINK + "tokyo/";
+		    	case "오사카" -> TABELOG_LINK + "osaka/";
+		    	case "교토" -> TABELOG_LINK + "kyoto/";
+		    	case "후쿠오카" -> TABELOG_LINK + "fukuoka/";
+		    	case "삿포로" -> TABELOG_LINK + "hokkaido/A0101/";
+		    	case "나고야" -> TABELOG_LINK + "aichi/A2301/";
+		    	case "히로시마" -> TABELOG_LINK + "hiroshima/";
 		        default -> {
 		            yield null;
 		        }
@@ -72,7 +72,7 @@ public class HomeController extends HttpServlet {
 
 	        // 크롤링 URL들 List에 저장
 	        if (crawlingSpotURL != null) {	        		
-	            crawlingUrls.add(crawlingSpotURL + "&page=" + randomPageIndex);
+	            crawlingUrls.add(crawlingSpotURL + "&page=" + PAGE_INDEX);
 	        }
 	        crawlingUrls.add(crawlingTabeURL);
 	        if (AREA_URL.get(region) != null) {
@@ -101,7 +101,7 @@ public class HomeController extends HttpServlet {
 	        // dto에 넣은 후 속성으로 보냄
 	        HomeResponseDTO homeResponse = new HomeResponseDTO(spotData, restaurantData, weatherData);
 			request.setAttribute("homeResponse", homeResponse);
-			request.setAttribute("pageIndex" , randomPageIndex);			
+			request.setAttribute("pageIndex" , PAGE_INDEX);			
 		} catch (Exception e) {
             e.printStackTrace();
         }
@@ -160,7 +160,7 @@ public class HomeController extends HttpServlet {
 	    		}
 	    }
 	    
-		String crawlingSpotURL = spotLink + region; // 관광지 링크
+		String crawlingSpotURL = SPOT_LINK + region; // 관광지 링크
 	    Document spotDoc = FetchUtil.fetchDocument(crawlingSpotURL + "&page=" + newPageIndex);
 	    spotData = CrawlingUtil.getSpot(spotDoc); // 관광지 데이터
 	    

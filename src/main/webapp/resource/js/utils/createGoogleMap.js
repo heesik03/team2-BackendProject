@@ -91,7 +91,7 @@ function drawRoute(coords) {
             strokeColor = '#006400'; // 도보: 진한 녹색
             break;
         case 'BICYCLING':
-            strokeColor = '#008B8B'; // 자전거: 진한 청록색
+			strokeColor = '#8B00FF';  // 자전거 : 보라색
             break;
         default:
             strokeColor = '#8B0000'; // 자동차, 기본값 : 진한 붉은색

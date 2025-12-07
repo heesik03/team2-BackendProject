@@ -6,7 +6,7 @@
 <html lang="ko">
 
 <head>
-	<c:set var="pageTitle" value="정보 변경" />
+	<c:set var="pageTitle" value="Visit Japan - 정보 변경" />
 	<%@ include file="/components/pageHead.jsp" %>
 
     <%-- CSS 스타일 --%>

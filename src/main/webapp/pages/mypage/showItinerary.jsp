@@ -10,7 +10,7 @@
 <html lang="ko">
 
 <head>
-    <c:set var="pageTitle" value="여행 일정 보기" />
+    <c:set var="pageTitle" value="Visit Japan - 여행 일정 보기" />
     <%@ include file="/components/pageHead.jsp" %>
     
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/itinerary.css"> 
@@ -102,7 +102,7 @@
                                     </div>
                                     
                                     <div class="spot-list">
-                                        <ol class="m-0 ps-3"> 
+                                        <ol class="m-0 ps-3" type='A'> 
                                             <%-- 여행지 목록 (순서 있는 목록) --%>
                                             <c:choose>
                                                 <c:when test="${empty spotList.spots}">

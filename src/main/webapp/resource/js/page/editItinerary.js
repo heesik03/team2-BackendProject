@@ -39,7 +39,7 @@ function buildTag() {
 			const cleanedSpot = spot.replace(/,[^,]*$/, ''); // 지역 정보 (도쿄 등)을 지움 (마지막 콤마 이후 모든 내용 지움)
 			
 			// 태그 설정
-			childDiv.className = "itinerary-item";
+			childDiv.className = "itinerary-item my-1";
 			childDiv.id = spot;
 			childSpan.textContent = cleanedSpot;
 			
@@ -62,9 +62,9 @@ function buildTag() {
 			childDiv.appendChild(childSpan);
 			childDiv.appendChild(childButton);
 			div.appendChild(childDiv);
-			i++;
 		}
 		dayContainer.appendChild(div);
+		i++;
 	}
 }
 

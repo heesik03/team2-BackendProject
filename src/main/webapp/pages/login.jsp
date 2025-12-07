@@ -8,7 +8,7 @@
 
 <html lang="ko">
 <head>
-	<c:set var="pageTitle" value="로그인" />
+	<c:set var="pageTitle" value="Visit Japan - Log in" />
 	<%@ include file="/components/pageHead.jsp" %>
 
 	<style>

@@ -7,7 +7,7 @@
 <html lang="ko">
 
 <head>
-	<c:set var="pageTitle" value="회원가입" />
+	<c:set var="pageTitle" value="Visit Japan - Sign Up" />
 	<%@ include file="/components/pageHead.jsp" %>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/signup.css">
 	<style>

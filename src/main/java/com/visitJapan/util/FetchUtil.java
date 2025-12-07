@@ -1,6 +1,10 @@
 package com.visitJapan.util;
 
-import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -12,15 +16,26 @@ import org.jsoup.nodes.Document;
 
 public class FetchUtil {
 	
-	// 크롤링 호출 메서드
+	// HttpClient 선언
+	private static final HttpClient http = HttpClient.newBuilder()
+	        .connectTimeout(Duration.ofSeconds(5))   
+	        .version(HttpClient.Version.HTTP_2)
+	        .build();
+
 	public static Document fetchDocument(String url) {
+	    HttpRequest req = HttpRequest.newBuilder()
+	            .uri(URI.create(url))
+	            .timeout(Duration.ofSeconds(5)) // 5초 (5000ms)
+	            .GET()
+	            .build();
+
 	    try {
-	        return Jsoup.connect(url)
-	                .userAgent("Mozilla/5.0")
-	                .timeout(5000)
-	                .get();
-	    } catch (IOException e) {
-	        throw new RuntimeException(e);
+	        HttpResponse<String> res = http.send(req, HttpResponse.BodyHandlers.ofString());
+	        return Jsoup.parse(res.body());
+
+	    } catch (Exception e) {
+	        System.err.println("Fetch failed: " + url + " → " + e.getMessage());
+	        return null; 
 	    }
 	}
 

@@ -128,7 +128,7 @@ document.getElementById("input-itinerary-button").addEventListener('click', func
 	const button = document.createElement("button");
 
 	// 태그 설정
-	div.classList.add("itinerary-item");
+	div.className = "itinerary-item my-1";
 	div.id = spotData;
 	span.textContent = spotValue;
 	

@@ -124,7 +124,7 @@
 
         <%-- 3. 관광지 검색 & 스크랩 섹션 --%>
         <div class="section-card">
-            <h3 class="section-title">관광지 검색 & 스크랩</h3>
+            <h3 class="section-title">관광지 검색, 스크랩</h3>
             <div class="row justify-content-center mb-4">
                 <div class="col-lg-8">
                     <div class="mb-3">

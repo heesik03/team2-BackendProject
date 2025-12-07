@@ -15,36 +15,60 @@ changSpotList.addEventListener("click", function () {
     })
     .then(res => res.json())
     .then(data => {
-		const spotList = document.getElementById("spot-list"); // 기존 관광지 ul
-		let spotHtml = ""; // 새로 랜더링 할 HTML
+		const spotList = document.getElementById("spot-list"); // 기존 관광지 출력 영역
+		let spotHtml = ""; // 새로 렌더링할 HTML
 
-        changSpotList.dataset.index = data.newPageIndex; 	// pageIndex 업데이트
-        data.spots.forEach((spotText, idx) => {
-			// 새로 크롤링한 데이터로 HTML 만듦
-            const img = data.imgList[idx] ? 
-                `<img src="${data.imgList[idx]}" class="img-fluid rounded" style="max-width:300px;">` : "";
-				
-            spotHtml += `
-                <li class="li-style">
-                    ${spotText}<br>
-                    <a href="#" target="_blank">관광지 상세 주소</a>
-                    <br>
+		changSpotList.dataset.index = data.newPageIndex; // pageIndex 업데이트
 
-                    ${userId ? `
-                        <button class="add-scrap-btn"
-                            data-spot="${spotText}"
-                            data-region="${region}"
-                            type="button">
-                            스크랩 추가
-                        </button><br>
-                    ` : ""}
+		data.spots.forEach((spotText, idx) => {
+			const spotImg = (data.imgList && data.imgList[idx]) 
+			    ? data.imgList[idx]
+			    : `${root}/resource/images/no_image.png`;
 
-                    ${img}
-                    <hr>
-                </li>
-            `;
-        });
-        spotList.innerHTML = spotHtml; // 새로 만든 HTML 적용
+			const detailUrl = (data.hrefList && data.hrefList[idx])
+			    ? data.hrefList[idx]
+			    : "#";
+
+
+			spotHtml += `
+			    <div class="col-md-4 col-sm-6">
+			        <div class="spot-card">
+			            <div style="position: relative; overflow: hidden;">
+			                <img src="${spotImg}" 
+			                     class="spot-img"
+			                     alt="관광지"
+			                     onerror="this.onerror=null; this.src='${root}/resource/images/no_image.png';">
+			            </div>
+
+			            <div class="spot-body">
+			                <h5 class="fw-bold mb-1 text-truncate">${spotText}</h5>
+			                <small class="text-muted d-block mb-3">관광 명소</small>
+
+			                <a href="${detailUrl}" target="_blank" 
+			                   class="text-decoration-none fw-bold mb-3 d-block"
+			                   style="color: #4D88F6; font-size: 0.9rem;">
+			                    상세 정보 보러가기 
+			                    <i class="bi bi-chevron-right" style="font-size: 0.8rem;"></i>
+			                </a>
+
+			                ${userId ? `
+			                    <button class="add-scrap-btn"
+			                        data-spot="${spotText}"
+			                        data-region="${region}" 
+			                        type="button">
+			                        <i class="bi bi-heart"></i> 스크랩 추가
+			                    </button>
+			                ` : ""}
+			            </div>
+			        </div>
+			    </div>
+			`;
+
+		});
+
+		// 새로 만든 HTML 적용
+		spotList.innerHTML = spotHtml;
+
     })
     .catch(err => { 
 		alert("관광지 업데이트 실패");
@@ -72,8 +96,5 @@ document.addEventListener("click", function(e) {
         body: JSON.stringify({ spot, city })
     })
     .then(res => res.json())
-    .then(() => {
-        alert("스크랩 추가 성공!");
-    })
     .catch(err => console.error(err));
 });

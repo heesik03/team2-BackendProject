@@ -6,7 +6,7 @@
 <html lang="ko">
 
 <head>
-    <c:set var="pageTitle" value="여행 일정 생성" />
+    <c:set var="pageTitle" value="Visit Japan - 여행 일정 생성" />
     <%@ include file="/components/pageHead.jsp" %>
 	
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/itineraryForm.css">

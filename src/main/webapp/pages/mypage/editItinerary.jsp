@@ -7,7 +7,7 @@
 <html lang="ko">
 
 <head>
-	<c:set var="pageTitle" value="여행 일정 수정" />
+	<c:set var="pageTitle" value="Visit Japan - 여행 일정 수정" />
 	<%@ include file="/components/pageHead.jsp" %>
 
     <%-- css 시작  --%>

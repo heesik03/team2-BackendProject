@@ -28,49 +28,50 @@
             </button> 
             
             <%-- 네비게이션 메뉴 영역 (모바일에서 축소, 데스크탑에서 확장) --%>
-            <div class="collapse navbar-collapse" id="navbarNav" style="font-size: 24px;">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/pages/about.jsp">about</a>
-                    </li>
-                    
-                    <%-- JSTL c:choose를 사용하여 로그인 상태에 따라 메뉴를 조건부 렌더링 --%>
-                    <c:choose>  
-                        <c:when test="${not empty sessionScope.id}"> 
-                            <%-- 1. 유저가 로그인 상태일 때 (세션 ID 존재) --%>
-                            <li class="nav-item">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/mypage.do">
-                                    my page
-                                </a>
-                            </li>
-							<li class="nav-item ms-lg-3"> 
-							    <form action="${pageContext.request.contextPath}/logout.do" method="post">
-							        <button type="submit" class="btn btn-primary"
-							            style="font-size: 19px; background-color: #6E98E5; border: none;">
-							            log out
-							        </button>
-							    </form>
-							</li>
-                        </c:when>
-                
-                        <c:otherwise>   
-                            <%-- 2. 유저가 로그아웃 상태일 때 (세션 ID 없음) --%>
-                            <li class="nav-item">   
-                                <a class="nav-link" href="${pageContext.request.contextPath}/pages/signup.jsp">
-                                    sign up
-                                </a>
-                            </li>
-                            <li class="nav-item ms-lg-3"> 
-                                <%-- 로그인 페이지 링크 버튼 --%>
-                                <a class="btn btn-primary" href="${pageContext.request.contextPath}/pages/login.jsp" role="button"
-                                   style="font-size: 19px; background-color: #6E98E5; border: none;">
-                                    log in
-                                </a>
-                            </li>
-                        </c:otherwise>
-                    </c:choose>
-                </ul>
-            </div>
+			<div class="collapse navbar-collapse" id="navbarNav" style="font-size: 24px;">
+			    <ul class="navbar-nav ms-auto align-items-center">
+			
+			        <li class="nav-item me-3">
+			            <a class="nav-link" href="${pageContext.request.contextPath}/pages/about.jsp">about</a>
+			        </li>
+			
+			        <c:choose>
+			            <c:when test="${not empty sessionScope.id}">
+			                <!-- 로그인 상태 -->
+			                <li class="nav-item me-3">
+			                    <a class="nav-link" href="${pageContext.request.contextPath}/mypage.do">my page</a>
+			                </li>
+			
+			                <li class="nav-item">
+			                    <form action="${pageContext.request.contextPath}/logout.do" method="post" class="d-flex">
+			                        <button type="submit" class="btn btn-primary px-3"
+			                            style="font-size: 19px; background-color: #6E98E5; border: none;">
+			                            log out
+			                        </button>
+			                    </form>
+			                </li>
+			            </c:when>
+			
+			            <c:otherwise>
+			                <!-- 로그아웃 상태 -->
+			                <li class="nav-item me-3">
+			                    <a class="nav-link" href="${pageContext.request.contextPath}/pages/signup.jsp">sign up</a>
+			                </li>
+			
+			                <li class="nav-item">
+			                    <a class="btn btn-primary px-3"
+			                       href="${pageContext.request.contextPath}/pages/login.jsp"
+			                       style="font-size: 19px; background-color: #6E98E5; border: none;">
+			                        log in
+			                    </a>
+			                </li>
+			            </c:otherwise>
+			        </c:choose>
+			
+			    </ul>
+			</div>
+
         </div>
     </nav>
+    
 </header>
