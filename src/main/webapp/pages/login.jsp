@@ -81,7 +81,7 @@
 <body>
 	
 	<%-- 레이아웃 헤더(상단 네비게이션) 포함 --%>
-	<jsp:include page="/layout/header.jsp" />
+	<%@ include file="/layout/header.jsp" %>
 	
     <main class="container py-3"> 
         <div class="row justify-content-center">

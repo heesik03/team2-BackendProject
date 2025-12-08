@@ -10,8 +10,9 @@
         type="text"
         name="title"
         id="title-input"
-        placeholder="일정 제목 입력"
+        placeholder="일정 제목 입력 (최대 50자)"
         value="${not empty itineraryData ? itineraryData.title : ''}"
+        maxlength="50"
         required
     ><br>
 

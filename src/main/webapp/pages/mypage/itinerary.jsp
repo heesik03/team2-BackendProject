@@ -19,7 +19,8 @@
 </c:if>
 
 <body data-context-path="${pageContext.request.contextPath}" data-refresh="false">
-	<jsp:include page="/layout/header.jsp" />
+
+	<%@ include file="/layout/header.jsp" %>
 		
 	<main class="container py-5 main-container">
 		<section class="page-header">

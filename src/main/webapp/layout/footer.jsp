@@ -65,7 +65,9 @@
 			        </c:otherwise>
 			    </c:choose>
 			    
-                <p><a href="#">community</a></p>
+                <p>
+                		<a href="${pageContext.request.contextPath}/community.do">community</a>
+                	</p>
             </nav>
 
             <!-- 예약 -->

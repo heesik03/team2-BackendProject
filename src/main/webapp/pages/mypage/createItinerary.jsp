@@ -19,7 +19,7 @@
 <body>
 	
 	<%-- 공통 헤더 (네비게이션 바 등) 포함 --%>
-	<jsp:include page="/layout/header.jsp" />
+	<%@ include file="/layout/header.jsp" %>
 	
 	<main class="py-5">
         <div class="container main-container">

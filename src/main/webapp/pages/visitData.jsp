@@ -42,15 +42,15 @@
 <head>
 	<c:set var="pageTitle" value="지역 정보" />
 	<%@ include file="/components/pageHead.jsp" %>
-    <link rel="stylesheet" href="${root}/resource/css/visitData.css">
+	<link rel="stylesheet" href="${root}/resource/css/visitData.css">
     
 	<script>
-    	const userId = "${sessionScope.id}";
+    		const userId = "${sessionScope.id}";
 	</script>
 </head>
 
 <body>
-	<jsp:include page="/layout/header.jsp" />
+	<%@ include file="/layout/header.jsp" %>
 	
     <div class="hero-section" style="background-image: url('${bannerUrl}');">
         <div class="hero-overlay">
@@ -208,8 +208,9 @@
 	    		</c:otherwise>
 	    	</c:choose>
 	</main>
-
-    <%@ include file="/layout/footer.jsp" %>
+	
+	<%@ include file="/layout/footer.jsp" %>
+	
     <script>
     	const root = "${pageContext.request.contextPath}";
     </script>

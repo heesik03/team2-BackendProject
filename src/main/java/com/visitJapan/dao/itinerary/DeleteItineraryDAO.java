@@ -15,11 +15,22 @@ public class DeleteItineraryDAO {
         try {
             if (itineraryId != null) {
                 MongoDatabase database = MongoConnectUtil.getConnection();
-                MongoCollection<Document> collection = database.getCollection("itinerary");
+                MongoCollection<Document> itineraryCollection = database.getCollection("itinerary");
+                MongoCollection<Document> communityCollection = database.getCollection("community");
+
                 ObjectId objectId = new ObjectId(itineraryId); // ObjectId 타입으로 변환
-               
-                DeleteResult deleteResult = collection.deleteOne(Filters.eq("_id", objectId)); // id로 찾아서 삭제
-                result = deleteResult.getDeletedCount() > 0;
+
+                // 일정 삭제
+                DeleteResult itineraryResult = itineraryCollection.deleteOne(
+                    Filters.eq("_id", objectId)
+                );
+
+                // 공유된 일정 게시글 삭제
+                communityCollection.deleteMany(
+                    Filters.eq("itineraryId", objectId)
+                );
+                
+                result = itineraryResult.getDeletedCount() > 0;
             }
         } catch (Exception e) {
             e.printStackTrace();

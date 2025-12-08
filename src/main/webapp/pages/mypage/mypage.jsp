@@ -31,7 +31,7 @@
 <body data-context-path="${pageContext.request.contextPath}">
 
     <%-- header.jsp import --%>
-    <jsp:include page="/layout/header.jsp" />
+	<%@ include file="/layout/header.jsp" %>
     
     <main class="container py-5">
         

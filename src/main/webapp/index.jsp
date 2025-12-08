@@ -9,7 +9,7 @@
 <jsp:include page="/components/loading.jsp" />
 
 <head>
-	<c:set var="pageTitle" value="visit japan" />
+	<c:set var="pageTitle" value="Visit Japan" />
 	<%@ include file="/components/pageHead.jsp" %>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/index.css">
 </head>
@@ -35,7 +35,7 @@
 		request.setAttribute("cityArr", cityArr);
 	%>
 		
-	<jsp:include page="/layout/header.jsp" />
+	<%@ include file="/layout/header.jsp" %>
 	
 	<main>
         <section id="Top-Banner" style="position: relative;">

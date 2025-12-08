@@ -10,17 +10,16 @@ import com.visitJapan.util.MongoConnectUtil;
 
 public class GetItineraryDAO {
 	
-	public ItineraryDTO findData(String itineraryId) {
+	public ItineraryDTO findData(ObjectId itineraryId) {
 		ItineraryDTO findItinerary = null;
 		try {
 			if (itineraryId != null) {
                 MongoDatabase database = MongoConnectUtil.getConnection();
                 MongoCollection<ItineraryDTO> collection = database.getCollection("itinerary", ItineraryDTO.class);
-				ObjectId objectId = new ObjectId(itineraryId);
 				
 				// 일정 id로 검색
 				ItineraryDTO itinerary = collection
-				        .find(Filters.eq("_id", objectId))
+				        .find(Filters.eq("_id", itineraryId))
 				        .first(); 
 				
 				if (itinerary != null) {

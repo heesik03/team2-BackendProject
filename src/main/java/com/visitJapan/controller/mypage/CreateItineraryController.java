@@ -47,7 +47,7 @@ public class CreateItineraryController extends HttpServlet {
 	    String endDate = requestBody.getString("end");
 	    JSONArray spotList = requestBody.getJSONArray("spotList");
 	    
-	    boolean result = createItineraryDAO.append(userId, title, startDate, endDate, spotList);
+	    boolean result = createItineraryDAO.insert(userId, title, startDate, endDate, spotList);
 	    
 	    JSONObject responseBody = new JSONObject();
 		responseBody.put("result", (result ? "success" : "fail")); // 응답 본문

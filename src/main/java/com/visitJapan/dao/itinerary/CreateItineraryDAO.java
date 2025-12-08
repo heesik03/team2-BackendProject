@@ -17,7 +17,7 @@ import com.visitJapan.util.SpotListConverterUtil;
 
 public class CreateItineraryDAO {
 	
-	public boolean append(ObjectId userId, String title, String startDate, String endDate, JSONArray spotList) {
+	public boolean insert(ObjectId userId, String title, String startDate, String endDate, JSONArray spotList) {
 		boolean result = false;
         try {
             if (title != null && startDate != null && endDate != null && spotList != null) {

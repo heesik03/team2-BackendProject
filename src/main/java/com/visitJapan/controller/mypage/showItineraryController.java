@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import org.bson.types.ObjectId;
+
 import com.visitJapan.dao.itinerary.GetItineraryDAO;
 import com.visitJapan.dto.db.ItineraryDTO;
 import com.visitJapan.util.DBConfigReader;
@@ -22,8 +24,9 @@ public class ShowItineraryController extends HttpServlet {
 		DBConfigReader config = new DBConfigReader(); // dbconfig.properties 연결 class
 		
 		String itineraryId = request.getParameter("id"); // 일정의 id 파라메터 가져옴
+		ObjectId id = new ObjectId(itineraryId);
 		
-		ItineraryDTO itineraryData = getItineraryDAO.findData(itineraryId);
+		ItineraryDTO itineraryData = getItineraryDAO.findData(id);
 		if (itineraryData != null) {
 			itineraryData.setUserId(null); // userId는 필요 없음으로 null
 			request.setAttribute("itineraryData", itineraryData);

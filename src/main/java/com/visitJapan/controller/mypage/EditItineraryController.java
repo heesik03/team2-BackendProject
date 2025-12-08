@@ -30,9 +30,11 @@ public class EditItineraryController extends HttpServlet {
 		
 		ObjectId userId = (ObjectId) request.getSession().getAttribute("id"); // 유저 아이디
 		String itineraryId = request.getParameter("id"); // 일정의 id 파라메터
+		ObjectId id = new ObjectId(itineraryId); // ObjectId로 변환
 		
 		UsersDTO userData = getUserDAO.findUser(userId);
-		ItineraryDTO itineraryData = getItineraryDAO.findData(itineraryId);
+		
+		ItineraryDTO itineraryData = getItineraryDAO.findData(id);
 		
 		if (userData != null && itineraryData != null) {
 			

@@ -17,7 +17,7 @@
 </c:if>
 
 <body>
-	<jsp:include page="/layout/header.jsp" />
+	<%@ include file="/layout/header.jsp" %>
 		
 		<main>
 			<%-- 페이지 주요 제목 --%>

@@ -36,6 +36,7 @@
 	<%-- 레이아웃 헤더(상단 네비게이션) 포함 --%>
 	<jsp:include page="/layout/header.jsp" />
 	
+	
     <main class="signup-container">
         <h2 class="signup-title">Visit Japan 회원가입</h2>
         

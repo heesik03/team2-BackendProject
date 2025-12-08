@@ -76,7 +76,8 @@
 </c:if>
 
 <body>
-	<jsp:include page="/layout/header.jsp" />
+
+	<%@ include file="/layout/header.jsp" %>
 	
     <main class="container py-5">
         <div class="settings-container">

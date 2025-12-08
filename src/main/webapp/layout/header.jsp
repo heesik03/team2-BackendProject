@@ -34,6 +34,10 @@
 			        <li class="nav-item me-3">
 			            <a class="nav-link" href="${pageContext.request.contextPath}/pages/about.jsp">about</a>
 			        </li>
+			        
+		        		<li class="nav-item me-3">
+		            		<a class="nav-link" href="${pageContext.request.contextPath}/community.do">community</a>			        		
+		        		</li>
 			
 			        <c:choose>
 			            <c:when test="${not empty sessionScope.id}">
@@ -51,7 +55,7 @@
 			                    </form>
 			                </li>
 			            </c:when>
-			
+			           
 			            <c:otherwise>
 			                <!-- 로그아웃 상태 -->
 			                <li class="nav-item me-3">
