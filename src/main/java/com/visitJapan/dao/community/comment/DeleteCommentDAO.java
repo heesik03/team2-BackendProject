@@ -1,4 +1,4 @@
-package com.visitJapan.dao.community;
+package com.visitJapan.dao.community.comment;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;

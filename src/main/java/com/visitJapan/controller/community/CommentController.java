@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
 
-import com.visitJapan.dao.community.CreateCommentDAO;
-import com.visitJapan.dao.community.DeleteCommentDAO;
+import com.visitJapan.dao.community.comment.CreateCommentDAO;
+import com.visitJapan.dao.community.comment.DeleteCommentDAO;
 import com.visitJapan.dao.users.get.GetUserDAO;
 import com.visitJapan.dto.db.CommentDTO;
 import com.visitJapan.dto.db.UsersDTO;

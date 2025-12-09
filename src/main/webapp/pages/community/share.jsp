@@ -11,6 +11,7 @@
 <head>
 	<c:set var="pageTitle" value="Visit Japan - 일정 공유" />
 	<%@ include file="/components/pageHead.jsp" %>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/itineraryForm.css">
 </head>
 
 <body>
@@ -28,37 +29,8 @@
                     <p class="form-subtitle">나의 여행 계획을 공유해 보세요!</p>
                 </div>
                 
-                <div class="form-body">
-                    <div class="form-content-wrapper">
-                    		<form action="${pageContext.request.contextPath}/community.do" method="post">
-                    		
-						    <label for="title-input">제목: </label>
-						    <input
-						        type="text"
-						        name="title"
-						        id="title-input"
-						        placeholder="제목 입력 (최대 50자)"
-						        maxlength="50"
-						        required
-						    ><br>
-						    
-							<label for="content-area">내용 : </label>
-						    <textarea
-						        name="content"
-						        id="content-area"
-						        placeholder="내용 입력 (최대 1000자)"
-						        maxlength="1000"
-						        required
-						    ></textarea>
-						    <br>
-						    
-						    <button type="submit">제출</button>
-						    
-						    <input type="hidden" name="id" value="${param.id}">
-	
-                    		</form>
-                    </div>
-                </div>
+				<jsp:include page="/components/communityForm.jsp" />
+				
             </div>
         </div>
         

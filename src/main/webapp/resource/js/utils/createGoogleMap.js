@@ -41,7 +41,7 @@ function getCoordinatesAndRoute(spots) {
 	            if (status === google.maps.places.PlacesServiceStatus.OK && results[0]) { // 검색 성공 시
 	                coordinates[index] = results[0].geometry.location;
 	            } else {
-					alert("구글 맵 장소 검색 실패");
+					alert(`${spot} 검색 실패`);
 	                console.error("장소 검색 실패:", spot, status);
 	                coordinates[index] = null;
 	            }
@@ -69,7 +69,7 @@ function getCoordinatesAndRoute(spots) {
 	            map.setCenter(location);
 	            map.setZoom(15); 
 	        } else {
-				alert("구글 맵 장소 검색 실패");
+				alert(`${spot} 검색 실패`);
 	            console.error("장소 검색 실패:", spot, status);
 	        }
 	    });

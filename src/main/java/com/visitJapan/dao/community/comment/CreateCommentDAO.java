@@ -1,4 +1,4 @@
-package com.visitJapan.dao.community;
+package com.visitJapan.dao.community.comment;
 
 import static com.mongodb.client.model.Filters.eq;
 

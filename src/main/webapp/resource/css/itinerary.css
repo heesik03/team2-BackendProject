@@ -193,6 +193,22 @@ body {
 }
 .btn-edit:hover { background: #6c757d; color: white; }
 
+
+/* 상세 보기: 공유 버튼 */
+.btn-share {
+    border: 1px solid #f8c291;
+    color: #f8c291;
+    background: white;
+    margin-right: 5px;
+}
+
+.btn-share:hover { 
+    background: #e67e22; 
+    color: white; 
+}
+
+
+
 /* 지도 영역 (모달 내부 스타일) */
 #map { 
     width: 100%; 

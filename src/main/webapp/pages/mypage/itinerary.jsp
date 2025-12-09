@@ -12,6 +12,21 @@
 	<%@ include file="/components/pageHead.jsp" %>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/itinerary.css">
+    <style>
+	body {
+	    display: flex;
+	    flex-direction: column;
+	    min-height: 100vh; /* 화면 전체 높이 */
+	}
+	
+	.main-container {
+	    flex: 1 0 auto; /* 남은 공간 차지 */
+	}
+	
+	footer {
+	    flex-shrink: 0; /* footer는 줄어들지 않도록 */
+	}
+	</style>
 </head>
 
 <c:if test="${empty sessionScope.id}">

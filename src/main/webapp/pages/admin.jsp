@@ -6,7 +6,7 @@
 <html lang="ko">
 
 <head>
-	<c:set var="pageTitle" value="관리자 페이지" />
+	<c:set var="pageTitle" value="Visit Japan - Admin Page" />
 	<%@ include file="/components/pageHead.jsp" %>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/admin.css">
 </head>
@@ -32,7 +32,7 @@
 						<th>닉네임</th>
 						<th>권한</th>
 						<th>가입일</th>
-						<th>액션</th> <%-- 권한 부여 및 삭제 버튼 위치 --%>
+						<th></th> <%-- 권한 부여 및 삭제 버튼 위치 --%>
 					</tr>
 				</thead>
 				<tbody>
@@ -44,27 +44,30 @@
                         		<td>${user.userName}</td> 
                         		
                         		<%-- 권한 표시 및 버튼 로직 --%>
-                        		<td>
-                                    <c:choose>
-                                        <c:when test="${user.admin}">
-                                            <%-- 관리자인 경우: 관리자 배지 표시 --%>
-                                            <span class="admin-badge">관리자</span>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <%-- 일반 사용자인 경우: 일반 사용자 표시와 권한 부여 버튼 제공 --%>
-                                            <span class="user-status">일반 사용자</span>
-                                            
-                                            <%-- 권한 부여 폼: POST 요청으로 서버에 권한 부여 요청 --%>
-                                            <form action="${pageContext.request.contextPath}/admin.do" method="post" class="grant-form">
-                                                <input type="hidden" name="userId" value="${user.id}">
-                                                
-                                                <button type="button" class="grant-btn">
-                                                    권한 부여
-                                                </button>
-                                            </form>
-                                        </c:otherwise>
-                                    </c:choose>
-                        		</td>
+							<td>
+							    <div class="row">
+							        <c:choose>
+							            <c:when test="${user.admin}">
+							                <!-- 관리자 -->
+							                <span class="admin-badge col-12 mb-1">관리자</span>
+							            </c:when>
+							            <c:otherwise>
+							                <!--일반 사용자 -->
+							                <span class="user-status col-12 mb-1">일반 사용자</span>
+							
+							                <form action="${pageContext.request.contextPath}/admin.do" 
+							                      method="post" class="grant-form col-12 m-0">
+							                    <input type="hidden" name="userId" value="${user.id}">
+							                    
+							                    <button type="button" class="grant-btn btn btn-outline-primary btn-sm">
+							                        권한 부여
+							                    </button>
+							                </form>
+							            </c:otherwise>
+							        </c:choose>
+							    </div>
+							</td>
+
                         		
                         		<%-- 가입일: JS로 포맷팅하기 위해 data 속성에 원본 날짜 저장 --%>
                         		<td class="createAt" data-date="${user.createAt}"></td> 

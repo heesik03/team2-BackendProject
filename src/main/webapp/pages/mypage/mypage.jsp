@@ -11,7 +11,7 @@
 
 <html lang="ko">
 <head>
-    <c:set var="pageTitle" value="마이페이지" />
+    <c:set var="pageTitle" value="Visit Japan - My Page" />
     <%@ include file="/components/pageHead.jsp" %>
 
     <%-- Google Maps API 로드 --%>

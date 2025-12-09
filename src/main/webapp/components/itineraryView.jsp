@@ -40,16 +40,32 @@
 	                    <%-- 일정 수정 페이지로 이동 버튼 --%>
 	                    <a href="${pageContext.request.contextPath}/mypage/edit-itinerary.do?id=${itineraryData.id}" class="btn-action btn-edit">
 	                        <i class="bi bi-pencil"></i> 수정
-	                    </a>
-	                    
-	                    <%-- 일정 공유 버튼 --%>
-	                    <a href="${pageContext.request.contextPath}/pages/community/create.jsp?id=${itineraryData.id}">
-	                        <i class="bi bi-pencil-square"></i> 공유
-	                    </a>         
+	                    </a>  
 	                </c:if>
 	                
+	                <%-- 일정 수정 or 공유 버튼 --%>
+					<c:choose>
+					    <c:when test="${not empty postData}">
+					    		<c:if test="${not empty sessionScope.id}">
+					        <%-- 공유된 게시글이고, 로그인 상태라면 수정 버튼을 보여줌 --%>
+						        <a href="${pageContext.request.contextPath}/pages/community/editShared.jsp?id=${postData.id}" 
+						           class="btn-action btn-edit">
+						            <i class="bi bi-pencil"></i> 수정
+						        </a>
+					        </c:if>
+					    </c:when>
+					
+					    <c:otherwise>
+					        <%-- 아니라면 공유 --%>
+					        <a href="${pageContext.request.contextPath}/pages/community/share.jsp?id=${itineraryData.id}" 
+					           class="btn-action btn-share">
+					            <i class="bi bi-share"></i> 공유
+					        </a>
+					    </c:otherwise>
+					</c:choose>
+	                
 	                <%-- 일정 삭제 버튼 (스크립트에서 처리) --%>
-                    <button type="button" class="btn-action btn-del delete-btn" data-id="${itineraryData.id}">
+                    <button type="button" class="btn-action btn-del delete-btn" data-id="${itineraryData.id}" class="btn-action btn-edit">
                         <i class="bi bi-trash"></i> 삭제
                     </button>                   
                     

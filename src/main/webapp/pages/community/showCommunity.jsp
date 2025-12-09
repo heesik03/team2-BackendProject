@@ -55,7 +55,7 @@
 		    color: white !important;
 		    border-color: #f0c419 !important;
 		}
-
+		
     </style>
 </head>
 
@@ -68,7 +68,8 @@
         		<jsp:include page="/components/itineraryView.jsp" />
         		
         		<article>
-        			<p>
+        			<%-- 게시글 내용 --%>
+        			<p class="fs-5">
         				${postData.content}
         			</p>
         			
@@ -83,7 +84,6 @@
         		<br>
         		<h4>댓글 작성</h4>
         		<form>
-        			
 			    <textarea
 			        id="comment-area"
 			        class="form-control mt-3"
@@ -93,7 +93,7 @@
 			    ></textarea>
 			    <br>
 			    
-			    <button type="button" id="btn-comment">제출</button>
+			    <button type="button" id="btn-comment" class="btn btn-outline-info">제출</button>
         		</form>
         		
         		<hr>
@@ -108,23 +108,32 @@
 	                 <%-- communityList가 있는 경우: 반복문을 통해 리스트 출력 --%>
 	                 <c:otherwise>
 	                     <c:forEach var="comment" items="${commentList}">
-	                     	<div class="comment-item">
-								<span class="createAt" data-date="${comment.commentCreateAt}"></span>
-								<span>${comment.authorName}</span>
-								<p>${comment.commentContent}</p>
-								
-								<c:if test="${not empty sessionScope.id}">
-									<button type="button" 
-										class="comment-item-delete" 
-										data-id="${comment.commentId}"
-										data-author-id="${comment.authorId}"
-									>
-										X
-									</button>
-								</c:if>
-								
-								<hr>
-	                     	</div>
+	                     
+							<div class="comment-item border rounded p-3 mb-3 bg-white">
+							    <div class="d-flex align-items-center justify-content-between mb-2">
+							        <div class="d-flex align-items-center">
+							            <!-- 날짜 -->
+							            <span class="text-muted small createAt" data-date="${comment.commentCreateAt}"></span>
+							            <!-- 구분선 -->
+							            <span class="border-start mx-2" style="height: 1em;"></span>
+							            <!-- 닉네임 -->
+							            <span>${comment.authorName}</span>
+							        </div>
+							
+							        <!-- 삭제 버튼 -->
+							        <c:if test="${not empty sessionScope.id}">
+							            <button type="button"
+							                    class="btn btn-sm btn-outline-danger comment-item-delete"
+							                    data-id="${comment.commentId}"
+							                    data-author-id="${comment.authorId}">
+							                X
+							            </button>
+							        </c:if>
+							    </div>
+							    <!-- 댓글 내용 -->
+							    <p class="mb-0">${comment.commentContent}</p>
+							</div>
+
 	                     </c:forEach>
 	                 </c:otherwise>
              	</c:choose>

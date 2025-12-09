@@ -26,8 +26,8 @@ document.querySelectorAll('.delete-btn').forEach(button => {
 			    alert("로그인이 필요합니다.");
 			    return;
 			}
-
-			return res.json().then(data => alert(data.message));
+			
+			alert("삭제 완료");
 		})
 		.catch(err => { 
 			alert("게시글 삭제 실패");
@@ -44,7 +44,7 @@ document.querySelectorAll('.add-like-btn').forEach(button => {
 		const params = new URLSearchParams(window.location.search); 
 		const id = params.get("id");
 		
-		fetch(`${contextPath}/community.do`, {
+		fetch(`${contextPath}/community/show.do`, {
 		    method: "PUT",
 		    headers: { "Content-Type": "application/json" },
 		    body: JSON.stringify({ id })
@@ -115,20 +115,27 @@ document.getElementById("btn-comment").addEventListener('click', function() {
 		    String(dateObj.getDate()).padStart(2, '0') + " " +
 		    String(dateObj.getHours()).padStart(2, '0') + ":" +
 		    String(dateObj.getMinutes()).padStart(2, '0');
+			
 
 		// 댓글 HTML 생성
 		const html = `
-		    <div class="comment-item">
-				<span class="createAt" data-date="${formatted}">${formatted}</span>
-				<span>${comment.authorName}</span>
-		        <p>${comment.commentContent}</p>
-		        <button type="button" class="comment-item-delete"
-		                data-id="${comment.commentId}"
-		                data-author-id="${comment.authorId}">
-		            X
-		        </button>
-		        <hr>
-		    </div>
+			<div class="comment-item border rounded p-3 mb-3 bg-white">
+			    <div class="d-flex align-items-center justify-content-between mb-2">
+			        <div class="d-flex align-items-center">
+			            <span class="text-muted small createAt" data-date="${formatted}">${formatted}</span>
+			            <span class="border-start mx-2" style="height: 1em;"></span>
+			            <span>${comment.authorName}</span>
+			        </div>
+	
+			        <button type="button"
+			                class="btn btn-sm btn-outline-danger comment-item-delete"
+			                data-id="${comment.commentId}"
+			                data-author-id="${comment.authorId}">
+			            X
+			        </button>
+			    </div>
+			    <p class="mb-0">${comment.commentContent}</p>
+			</div>
 		`;
 
 		commentSection.insertAdjacentHTML("afterbegin", html);
