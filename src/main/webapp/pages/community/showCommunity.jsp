@@ -93,7 +93,14 @@
 			    ></textarea>
 			    <br>
 			    
-			    <button type="button" id="btn-comment" class="btn btn-outline-info">제출</button>
+			    <%-- 댓글 버튼, 로그아웃 상태일시 클릭 안됨 --%>
+			    <button type="button"
+				        id="btn-comment"
+				        class="btn btn-outline-info"
+				        ${empty sessionScope.id ? 'disabled' : ''}>
+				    제출
+				</button>
+			    
         		</form>
         		
         		<hr>

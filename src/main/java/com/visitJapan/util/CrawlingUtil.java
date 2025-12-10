@@ -2,6 +2,7 @@ package com.visitJapan.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -99,47 +100,70 @@ public class CrawlingUtil {
     }
     
     public static String toKorean(String jp) {
-        switch (jp.trim()) {
-            case "晴":       // はれ
-            case "晴れ":
-                return "맑음";
+        if (jp == null || jp.isBlank()) return jp;
+        jp = jp.trim();
 
-            case "曇":       // くもり
-            case "曇り":
-                return "흐림";
-
-            case "雨":       // あめ
-                return "비";
-
-            case "雪":       // ゆき
-                return "눈";
-
-            case "雷":       // かみなり
-            case "雷雨":
-                return "뇌우";
-
-            case "暴風":
-            case "強風":
-                return "강풍";
-
-            case "霧":
-                return "안개";
-
-            case "みぞれ":
-                return "진눈깨비";
-
-            case "快晴":
-                return "쾌청";
-
-            case "所により雨":
-            case "一時雨":
-                return "한때 비";
-
-            case "所により雪":
-            case "一時雪":
-                return "한때 눈";
-            default:
-                return jp;
+        if (WEATHER_MAP.containsKey(jp)) {
+            return WEATHER_MAP.get(jp);
         }
+
+        // "X一時Y"  → "X, 한때 Y"
+        if (jp.contains("一時")) {
+            String[] parts = jp.split("一時");
+            if (parts.length == 2)
+                return toKorean(parts[0]) + ", 한때 " + toKorean(parts[1]);
+        }
+
+        // "X時々Y"  → "X, 가끔 Y"
+        if (jp.contains("時々")) {
+            String[] parts = jp.split("時々");
+            if (parts.length == 2)
+                return toKorean(parts[0]) + ", 가끔 " + toKorean(parts[1]);
+        }
+
+        // "XのちY" → "X 뒤에 Y"
+        if (jp.contains("のち")) {
+            String[] parts = jp.split("のち");
+            if (parts.length == 2)
+                return toKorean(parts[0]) + " 뒤에 " + toKorean(parts[1]);
+        }
+
+        // "所によりX" → "곳에 따라 X"
+        if (jp.contains("所により")) {
+            String after = jp.replace("所により", "");
+            return "곳에 따라 " + toKorean(after);
+        }
+
+        // 커버되지 않은 경우 원본 반환
+        return jp;
     }
+    
+    private static final Map<String, String> WEATHER_MAP = Map.ofEntries(
+            Map.entry("晴", "맑음"),
+            Map.entry("晴れ", "맑음"),
+            Map.entry("快晴", "쾌청"),
+
+            Map.entry("曇", "흐림"),
+            Map.entry("曇り", "흐림"),
+
+            Map.entry("雨", "비"),
+            Map.entry("雷雨", "뇌우"),
+
+            Map.entry("雪", "눈"),
+            Map.entry("みぞれ", "진눈깨비"),
+
+            Map.entry("雷", "뇌우"),
+            Map.entry("霧", "안개"),
+
+            Map.entry("暴風", "강풍"),
+            Map.entry("強風", "강풍"),
+
+            Map.entry("一時雨", "한때 비"),
+            Map.entry("時々雨", "가끔 비"),
+            Map.entry("所により雨", "곳에 따라 비"),
+
+            Map.entry("一時雪", "한때 눈"),
+            Map.entry("時々雪", "가끔 눈"),
+            Map.entry("所により雪", "곳에 따라 눈")
+        );
 }

@@ -14,6 +14,11 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/css/itineraryForm.css">
 </head>
 
+<c:if test="${empty sessionScope.id}">
+    <c:redirect url="/index.jsp" />
+</c:if>
+
+
 <body>
 
 	<%@ include file="/layout/header.jsp" %>
