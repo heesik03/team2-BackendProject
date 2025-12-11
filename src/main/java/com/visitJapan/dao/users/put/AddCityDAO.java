@@ -52,8 +52,6 @@ public class AddCityDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            MongoConnectUtil.close();
         }
         return result;
     }
