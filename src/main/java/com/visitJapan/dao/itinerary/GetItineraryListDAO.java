@@ -1,6 +1,7 @@
 package com.visitJapan.dao.itinerary;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -26,6 +27,7 @@ public class GetItineraryListDAO {
                         .into(new ArrayList<>()); // List<ItineraryDTO>로 반환
                 
 				if (itineraryList != null) {
+					Collections.reverse(itineraryList); // 일정 목록 뒤집음 (최신순 정렬)
 					findItinerarys = itineraryList;
 				}
 			}
