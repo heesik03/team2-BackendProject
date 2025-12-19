@@ -8,6 +8,13 @@
 - **BackEnd**: Java Servlet, MongoDB  
 - **FrontEnd**: JSP, Bootstrap, JavaScript
 
+## 🗂 ERD (Entity Relationship Diagram)
+
+> 본 프로젝트는 **MongoDB(NoSQL)** 를 사용하지만,  
+> 데이터 구조와 관계를 보다 쉽게 이해하기 위해 **ERD를 참고용으로 작성**하였습니다.
+
+![ERD](ERD.png)
+
 ## 🌐 크롤링 및 외부 API 사용
 
 - **맛집 정보 (크롤링)**: https://tabelog.com/kr/
