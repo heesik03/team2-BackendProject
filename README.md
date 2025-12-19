@@ -5,6 +5,8 @@
 ## 🖥 웹사이트 페이지 소개
 
 ## 📚 기술 스택
+- **BackEnd**: Java Servlet, MongoDB  
+- **FrontEnd**: JSP, Bootstrap, JavaScript  
 
 ## 👨‍💻 개발자
 - 김희식 (조장, 백엔드 및 개발 전반, cka8701@gmail.com)
