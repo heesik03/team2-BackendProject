@@ -1,4 +1,4 @@
-## team2-BackendProject
+## team2-BackendProject (Visit Japan)
 
 일본 여행 정보 제공, 일정 관리 웹사이트 입니다.
 
